@@ -33,7 +33,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
     protected captureBtn:BaseConsoleButton;
     private _captureVisible:boolean;
-    private captureKey:string = "";
+    private captureKey:string;
 
     constructor() {
         super();
@@ -41,6 +41,8 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
     protected construction():void {
         super.construction();
+
+        this.captureKey = "";
 
         this.contentToBgShift = new Point(10, 10);
         this._titleVisible = true;
@@ -57,7 +59,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.bgGraphics.interactive = true;
 
         this.dragHelper = new DragHelper();
-        this.dragHelper.view = this.bgGraphics;
+        this.dragHelper.view = (this.bgGraphics as any);
 
         this.contentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
         this.view.addChild(this.contentCont);

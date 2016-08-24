@@ -15,10 +15,10 @@ var BaseConsoleView = (function (_super) {
     __extends(BaseConsoleView, _super);
     function BaseConsoleView() {
         _super.call(this);
-        this.captureKey = "";
     }
     BaseConsoleView.prototype.construction = function () {
         _super.prototype.construction.call(this);
+        this.captureKey = "";
         this.contentToBgShift = new index_2.Point(10, 10);
         this._titleVisible = true;
         this._captureVisible = false;
