@@ -1,10 +1,4 @@
-import {
-    IDisplayObjectContainerWrapper,
-    EngineAdapter,
-    IGraphicsWrapper,
-    DisplayObjectWrapperMouseEvent,
-    ITextWrapper
-} from "fgraphics/dist/index";
+import {IDisplayObjectContainerWrapper, EngineAdapter, IGraphicsWrapper, ITextWrapper} from "fgraphics/dist/index";
 import {BaseEventListenerObject, EventListenerHelper, Point} from "fcore/dist/index";
 import {DragHelper, DragHelperEvent} from "flibs/dist/index";
 import {BaseConsoleButton} from "./BaseConsoleButton";
@@ -36,8 +30,6 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
     protected titleLabel:ITextWrapper;
     private _titleVisible:boolean;
-
-    private closeBtn:BaseConsoleButton;
 
     protected captureBtn:BaseConsoleButton;
     private _captureVisible:boolean;
@@ -89,9 +81,6 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.titleCont.addChild(this.captureBtn.view);
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
 
-        // this.createBtn("DL", this.onDisplayListClick);
-        this.closeBtn = this.createTitleBtn("X");
-
         this.commitData();
     }
 
@@ -124,12 +113,6 @@ export class BaseConsoleView extends BaseEventListenerObject {
             CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS,
             this.onCaptureKey
         );
-
-        this.eventListenerHelper.addEventListener(
-            this.closeBtn.view,
-            DisplayObjectWrapperMouseEvent.CLICK,
-            this.onCloseClick
-        );
     }
 
     private onDragStart():void {
@@ -144,9 +127,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.view.y = this.viewDragStartY + this.dragHelper.changeDragGlobalY;
     }
 
-    protected onCloseClick():void {
-        //CC.visible = false;
-        // this.visible = false;
+    protected onClose():void {
         CC.hideView(this);
     }
 

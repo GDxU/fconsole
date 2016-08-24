@@ -18,7 +18,6 @@ export declare class BaseConsoleView extends BaseEventListenerObject {
     private buttonsEventListenerHelper;
     protected titleLabel: ITextWrapper;
     private _titleVisible;
-    private closeBtn;
     protected captureBtn: BaseConsoleButton;
     private _captureVisible;
     private captureKey;
@@ -28,7 +27,7 @@ export declare class BaseConsoleView extends BaseEventListenerObject {
     protected addListeners(): void;
     private onDragStart();
     private onDragUpdate();
-    protected onCloseClick(): void;
+    protected onClose(): void;
     protected onCaptureKey(): void;
     visible: boolean;
     protected commitData(): void;

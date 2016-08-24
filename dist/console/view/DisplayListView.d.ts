@@ -2,6 +2,7 @@ import { BaseConsoleView } from "./BaseConsoleView";
 export declare class DisplayListView extends BaseConsoleView {
     private lastCheckedPos;
     private displayListField;
+    private closeBtn;
     constructor();
     protected construction(): void;
     protected addListeners(): void;

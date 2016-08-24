@@ -5,6 +5,7 @@ import {DisplayObjectWrapperMouseEvent} from "fgraphics/dist/index";
 export class ConsoleView extends BaseConsoleView {
 
     private displayListBtn:BaseConsoleButton;
+    private closeBtn:BaseConsoleButton;
 
     constructor() {
         super();
@@ -16,6 +17,7 @@ export class ConsoleView extends BaseConsoleView {
         this.titleVisible = false;
 
         this.displayListBtn = this.createTitleBtn("DL");
+        this.closeBtn = this.createTitleBtn("X");
     }
 
     protected addListeners():void {
@@ -25,6 +27,12 @@ export class ConsoleView extends BaseConsoleView {
             this.displayListBtn.view,
             DisplayObjectWrapperMouseEvent.CLICK,
             this.onDisplayListClick
+        );
+
+        this.eventListenerHelper.addEventListener(
+            this.closeBtn.view,
+            DisplayObjectWrapperMouseEvent.CLICK,
+            this.onClose
         );
     }
 

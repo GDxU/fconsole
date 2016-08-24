@@ -22,10 +22,12 @@ var DisplayListView = (function (_super) {
         this.displayListField.y = this.titleCont.y + this.titleCont.height + 5;
         this.displayListField.color = 0xCCCCCC;
         this.displayListField.size = 14;
+        this.closeBtn = this.createTitleBtn("X");
     };
     DisplayListView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
         this.eventListenerHelper.addEventListener(index_1.EngineAdapter.instance.mainTicker, index_1.TickerEvent.TICK, this.onTick);
+        this.eventListenerHelper.addEventListener(this.closeBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onClose);
     };
     DisplayListView.prototype.onTick = function () {
         if (this.visible) {

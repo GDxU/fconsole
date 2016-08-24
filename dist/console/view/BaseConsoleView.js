@@ -48,8 +48,6 @@ var BaseConsoleView = (function (_super) {
         this.captureBtn = new CaptureKeyButton_1.CaptureKeyButton();
         this.titleCont.addChild(this.captureBtn.view);
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
-        // this.createBtn("DL", this.onDisplayListClick);
-        this.closeBtn = this.createTitleBtn("X");
         this.commitData();
     };
     BaseConsoleView.prototype.destruction = function () {
@@ -64,7 +62,6 @@ var BaseConsoleView = (function (_super) {
         this.eventListenerHelper.addEventListener(this.dragHelper, index_3.DragHelperEvent.DRAG_START, this.onDragStart);
         this.eventListenerHelper.addEventListener(this.dragHelper, index_3.DragHelperEvent.DRAG_UPDATE, this.onDragUpdate);
         this.eventListenerHelper.addEventListener(this.captureBtn, CaptureKeyButtonEvent_1.CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS, this.onCaptureKey);
-        this.eventListenerHelper.addEventListener(this.closeBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onCloseClick);
     };
     BaseConsoleView.prototype.onDragStart = function () {
         this.viewDragStartX = this.view.x;
@@ -75,9 +72,7 @@ var BaseConsoleView = (function (_super) {
         this.view.x = this.viewDragStartX + this.dragHelper.changeDragGlobalX;
         this.view.y = this.viewDragStartY + this.dragHelper.changeDragGlobalY;
     };
-    BaseConsoleView.prototype.onCloseClick = function () {
-        //CC.visible = false;
-        // this.visible = false;
+    BaseConsoleView.prototype.onClose = function () {
         CC_1.CC.hideView(this);
     };
     BaseConsoleView.prototype.onCaptureKey = function () {

@@ -1,6 +1,7 @@
 import { BaseConsoleView } from "./BaseConsoleView";
 export declare class ConsoleView extends BaseConsoleView {
     private displayListBtn;
+    private closeBtn;
     constructor();
     protected construction(): void;
     protected addListeners(): void;

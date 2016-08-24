@@ -1,11 +1,19 @@
 import {BaseConsoleView} from "./BaseConsoleView";
-import {EngineAdapter, TickerEvent, IObjectUnderPointVO, ITextWrapper} from "fgraphics/dist/index";
+import {
+    EngineAdapter,
+    TickerEvent,
+    IObjectUnderPointVO,
+    ITextWrapper,
+    DisplayObjectWrapperMouseEvent
+} from "fgraphics/dist/index";
 import {Point} from "fcore/dist/index";
+import {BaseConsoleButton} from "./BaseConsoleButton";
 
 export class DisplayListView extends BaseConsoleView {
 
     private lastCheckedPos:Point;
     private displayListField:ITextWrapper;
+    private closeBtn:BaseConsoleButton;
 
     constructor() {
         super();
@@ -24,6 +32,8 @@ export class DisplayListView extends BaseConsoleView {
         this.displayListField.y = this.titleCont.y + this.titleCont.height + 5;
         this.displayListField.color = 0xCCCCCC;
         this.displayListField.size = 14;
+
+        this.closeBtn = this.createTitleBtn("X");
     }
 
     protected addListeners():void {
@@ -33,6 +43,12 @@ export class DisplayListView extends BaseConsoleView {
             EngineAdapter.instance.mainTicker,
             TickerEvent.TICK,
             this.onTick
+        );
+
+        this.eventListenerHelper.addEventListener(
+            this.closeBtn.view,
+            DisplayObjectWrapperMouseEvent.CLICK,
+            this.onClose
         );
     }
 
