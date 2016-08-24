@@ -49,6 +49,7 @@ var DisplayListView = (function (_super) {
         // Log the parsed structure
         console.group("Display list structure:");
         this.groupLogUnderPointData(underPointData);
+        console.groupEnd();
     };
     DisplayListView.prototype.getObjectsUnderMouse = function () {
         return index_1.EngineAdapter.instance.getNativeObjectsUnderPoint(index_1.EngineAdapter.instance.stage.object, index_1.EngineAdapter.instance.globalMouseX, index_1.EngineAdapter.instance.globalMouseY);
@@ -56,7 +57,7 @@ var DisplayListView = (function (_super) {
     DisplayListView.prototype.parseUnderPointData = function (data, prefix) {
         if (prefix === void 0) { prefix = "∟"; }
         var result = "";
-        if (data.object) {
+        if (data && data.object) {
             var tempName = data.object.toString();
             if (data.object.constructor) {
                 tempName = data.object.constructor.name;
@@ -72,7 +73,7 @@ var DisplayListView = (function (_super) {
     };
     DisplayListView.prototype.groupLogUnderPointData = function (data, prefix) {
         if (prefix === void 0) { prefix = "∟"; }
-        if (data.object) {
+        if (data && data.object) {
             //console.log(data.object);
             //console.dir(data.object);
             console.log(prefix, data.object);

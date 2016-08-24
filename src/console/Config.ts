@@ -15,10 +15,10 @@ export class Config {
 
         titleLabelColor: 0xFFFFFF,
         titleLabelSize: 14
-    }
+    };
 
     public displayListSettings = {
         hierarchyLabelColor: 0xCCCCCC,
         hierarchyLabelSize: 14
-    }
+    };
 }

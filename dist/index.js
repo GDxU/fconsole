@@ -5,6 +5,8 @@ function __export(m) {
 __export(require('./TestConsoleClass'));
 __export(require('./console/CC'));
 __export(require('./console/Config'));
+__export(require('./tooltip/BaseTooltip'));
+__export(require('./tooltip/TooltipManager'));
 __export(require('./console/view/BaseConsoleButton'));
 __export(require('./console/view/BaseConsoleView'));
 __export(require('./console/view/ConsoleView'));

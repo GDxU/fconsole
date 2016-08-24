@@ -85,8 +85,9 @@ export class DisplayListView extends BaseConsoleView {
         );
 
         // Log the parsed structure
-        console.group("Display list structure:")
+        console.group("Display list structure:");
         this.groupLogUnderPointData(underPointData);
+        console.groupEnd();
     }
 
     private getObjectsUnderMouse():IObjectUnderPointVO {
@@ -100,7 +101,7 @@ export class DisplayListView extends BaseConsoleView {
     private parseUnderPointData(data:IObjectUnderPointVO, prefix:string = "∟"):string {
         let result:string = "";
 
-        if (data.object) {
+        if (data && data.object) {
             let tempName:string = data.object.toString();
             if (data.object.constructor) {
                 tempName = data.object.constructor.name;
@@ -119,7 +120,7 @@ export class DisplayListView extends BaseConsoleView {
     }
 
     private groupLogUnderPointData(data:IObjectUnderPointVO, prefix:string = "∟"):void {
-        if (data.object) {
+        if (data && data.object) {
 
             //console.log(data.object);
             //console.dir(data.object);

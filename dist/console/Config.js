@@ -11,11 +11,11 @@ var Config = (function () {
             borderWidth: 1,
             borderColor: 0x660000,
             borderAlpha: 0.75,
-            titleLabelColor: 0x00FF00,
+            titleLabelColor: 0xFFFFFF,
             titleLabelSize: 14
         };
         this.displayListSettings = {
-            hierarchyLabelColor: 0xFF0000,
+            hierarchyLabelColor: 0xCCCCCC,
             hierarchyLabelSize: 14
         };
     }
