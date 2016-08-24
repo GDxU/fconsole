@@ -7,8 +7,7 @@ gulp.task(
     function (cb) {
         console.log("START! compile.js");
 
-        del(["dist/**/*"]).then(
-            gulp.src(".", {read: false})
+        gulp.src(".", {read: false})
             .pipe(shell([
                 "tsc"
             ]))
@@ -20,11 +19,10 @@ gulp.task(
                 }
 
             ).on(
-                "error",
-                function () {
-                    console.log("ERROR! compile.js");
-                }
-            )
+            "error",
+            function () {
+                console.log("ERROR! compile.js");
+            }
         );
     }
 );
