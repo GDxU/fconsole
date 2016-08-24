@@ -7,6 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var BaseConsoleView_1 = require("./BaseConsoleView");
 var index_1 = require("fgraphics/dist/index");
 var index_2 = require("fcore/dist/index");
+var CC_1 = require("../CC");
 var DisplayListView = (function (_super) {
     __extends(DisplayListView, _super);
     function DisplayListView() {
@@ -20,8 +21,8 @@ var DisplayListView = (function (_super) {
         this.displayListField = index_1.EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.displayListField);
         this.displayListField.y = this.titleCont.y + this.titleCont.height + 5;
-        this.displayListField.color = 0xCCCCCC;
-        this.displayListField.size = 14;
+        this.displayListField.color = CC_1.CC.config.displayListSettings.hierarchyLabelColor;
+        this.displayListField.size = CC_1.CC.config.displayListSettings.hierarchyLabelSize;
         this.closeBtn = this.createTitleBtn("X");
     };
     DisplayListView.prototype.addListeners = function () {

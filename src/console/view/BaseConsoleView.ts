@@ -67,8 +67,8 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
         this.titleLabel = EngineAdapter.instance.createTextWrapper();
         this.titleCont.addChild(this.titleLabel);
-        this.titleLabel.color = 0xFFFFFF;
-        this.titleLabel.size = 14;
+        this.titleLabel.color = CC.config.viewSettings.titleLabelColor;
+        this.titleLabel.size = CC.config.viewSettings.titleLabelSize;
         this.titleLabel.text = "Test Title";
 
         this.btnsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
@@ -191,8 +191,8 @@ export class BaseConsoleView extends BaseEventListenerObject {
         }
 
         this.bgGraphics.clear();
-        this.bgGraphics.beginFill(0x000000, 0.75);
-        this.bgGraphics.lineStyle(1, 0x660000, 0.75);
+        this.bgGraphics.beginFill(CC.config.viewSettings.bgColor, CC.config.viewSettings.bgAlpha);
+        this.bgGraphics.lineStyle(CC.config.viewSettings.borderWidth, CC.config.viewSettings.borderColor, CC.config.viewSettings.borderAlpha);
         this.bgGraphics.drawRect(
             0,
             0,

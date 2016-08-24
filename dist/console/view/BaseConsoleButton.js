@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var index_1 = require("fgraphics/dist/index");
 var index_2 = require("fcore/dist/index");
+var CC_1 = require("../CC");
 var BaseConsoleButton = (function (_super) {
     __extends(BaseConsoleButton, _super);
     function BaseConsoleButton() {
@@ -19,8 +20,8 @@ var BaseConsoleButton = (function (_super) {
         this.view.buttonMode = true;
         this.field = index_1.EngineAdapter.instance.createTextWrapper();
         this.view.addChild(this.field);
-        this.field.color = 0xFF9900;
-        this.field.size = 14;
+        this.field.color = CC_1.CC.config.btnSettings.labelColor;
+        this.field.size = CC_1.CC.config.btnSettings.labelSize;
         this.commitData();
         this.onOut();
     };

@@ -37,8 +37,8 @@ var BaseConsoleView = (function (_super) {
         this.contentCont.addChild(this.titleCont);
         this.titleLabel = index_1.EngineAdapter.instance.createTextWrapper();
         this.titleCont.addChild(this.titleLabel);
-        this.titleLabel.color = 0xFFFFFF;
-        this.titleLabel.size = 14;
+        this.titleLabel.color = CC_1.CC.config.viewSettings.titleLabelColor;
+        this.titleLabel.size = CC_1.CC.config.viewSettings.titleLabelSize;
         this.titleLabel.text = "Test Title";
         this.btnsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         this.titleCont.addChild(this.btnsCont);
@@ -127,8 +127,8 @@ var BaseConsoleView = (function (_super) {
             this.btnsCont.x = this.titleLabel.x;
         }
         this.bgGraphics.clear();
-        this.bgGraphics.beginFill(0x000000, 0.75);
-        this.bgGraphics.lineStyle(1, 0x660000, 0.75);
+        this.bgGraphics.beginFill(CC_1.CC.config.viewSettings.bgColor, CC_1.CC.config.viewSettings.bgAlpha);
+        this.bgGraphics.lineStyle(CC_1.CC.config.viewSettings.borderWidth, CC_1.CC.config.viewSettings.borderColor, CC_1.CC.config.viewSettings.borderAlpha);
         this.bgGraphics.drawRect(0, 0, this.contentCont.width + this.contentToBgShift.x, this.contentCont.height + this.contentToBgShift.y);
         this.bgGraphics.endFill();
         this.contentCont.x = this.bgGraphics.x + ((this.bgGraphics.width - this.contentCont.width) >> 1);

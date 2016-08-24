@@ -4,6 +4,7 @@ import {BaseConsoleView} from "./view/BaseConsoleView";
 import {DisplayListView} from "./view/DisplayListView";
 import {EventListenerHelper, KeyboardTools} from "fcore/dist/index";
 import {InputManager, InputManagerEvent, InputManagerEventData} from "flibs/dist/index";
+import {Config} from "./Config";
 
 export class CC {
     private static eventListenerHelper:EventListenerHelper<any> = new EventListenerHelper();
@@ -12,14 +13,21 @@ export class CC {
     private static password:string = "";
     private static passwordInputIndex:number = 0;
 
+    public static config:Config;
+
     private static view:ConsoleView;
     public static displayListView:DisplayListView;
 
-    static startInit(root:any, password:string = "`"):void {
+    static startInit(root:any, password:string = "`", config?:Config):void {
 
         // Config
         CC.root = EngineAdapter.instance.createDisplayWrapperBasedOnObject<IDisplayObjectContainerWrapper>(root);
         CC.password = password;
+
+        if (!config) {
+            config = new Config();
+        }
+        CC.config = config;
 
         // View
         CC.view = new ConsoleView();

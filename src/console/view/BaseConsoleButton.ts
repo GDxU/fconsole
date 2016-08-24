@@ -5,6 +5,7 @@ import {
     DisplayObjectWrapperMouseEvent
 } from "fgraphics/dist/index";
 import {BaseEventListenerObject} from "fcore/dist/index";
+import {CC} from "../CC";
 
 export class BaseConsoleButton extends BaseEventListenerObject {
 
@@ -26,8 +27,8 @@ export class BaseConsoleButton extends BaseEventListenerObject {
 
         this.field = EngineAdapter.instance.createTextWrapper();
         this.view.addChild(this.field);
-        this.field.color = 0xFF9900;
-        this.field.size = 14;
+        this.field.color = CC.config.btnSettings.labelColor;
+        this.field.size = CC.config.btnSettings.labelSize;
 
         this.commitData();
         this.onOut();

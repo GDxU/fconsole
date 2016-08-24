@@ -8,6 +8,7 @@ import {
 } from "fgraphics/dist/index";
 import {Point} from "fcore/dist/index";
 import {BaseConsoleButton} from "./BaseConsoleButton";
+import {CC} from "../CC";
 
 export class DisplayListView extends BaseConsoleView {
 
@@ -30,8 +31,8 @@ export class DisplayListView extends BaseConsoleView {
         this.displayListField = EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.displayListField);
         this.displayListField.y = this.titleCont.y + this.titleCont.height + 5;
-        this.displayListField.color = 0xCCCCCC;
-        this.displayListField.size = 14;
+        this.displayListField.color = CC.config.displayListSettings.hierarchyLabelColor;
+        this.displayListField.size = CC.config.displayListSettings.hierarchyLabelSize;
 
         this.closeBtn = this.createTitleBtn("X");
     }

@@ -4,14 +4,19 @@ var ConsoleView_1 = require("./view/ConsoleView");
 var DisplayListView_1 = require("./view/DisplayListView");
 var index_2 = require("fcore/dist/index");
 var index_3 = require("flibs/dist/index");
+var Config_1 = require("./Config");
 var CC = (function () {
     function CC() {
     }
-    CC.startInit = function (root, password) {
+    CC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
         // Config
         CC.root = index_1.EngineAdapter.instance.createDisplayWrapperBasedOnObject(root);
         CC.password = password;
+        if (!config) {
+            config = new Config_1.Config();
+        }
+        CC.config = config;
         // View
         CC.view = new ConsoleView_1.ConsoleView();
         CC.displayListView = new DisplayListView_1.DisplayListView();
