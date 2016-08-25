@@ -43,7 +43,7 @@ var BaseConsoleButton = (function (_super) {
         CC_1.CC.tooltipManager.hide();
     };
     BaseConsoleButton.prototype.onClick = function () {
-        this.onOver();
+        this.onOut();
     };
     BaseConsoleButton.prototype.commitData = function () {
         _super.prototype.commitData.call(this);
