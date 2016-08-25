@@ -2,32 +2,49 @@ import {IDisplayObjectContainerWrapper, EngineAdapter, DisplayObjectTools} from 
 import {ConsoleView} from "./view/ConsoleView";
 import {BaseConsoleView} from "./view/BaseConsoleView";
 import {DisplayListView} from "./view/DisplayListView";
-import {EventListenerHelper, KeyboardTools} from "fcore/dist/index";
+import {EventListenerHelper, KeyboardTools, Point} from "fcore/dist/index";
 import {InputManager, InputManagerEvent, InputManagerEventData} from "flibs/dist/index";
 import {Config} from "./Config";
+import {TooltipManager} from "../tooltip/TooltipManager";
+import {ConsoleTooltip} from "./view/tooltip/ConsoleTooltip";
 
 export class CC {
     private static eventListenerHelper:EventListenerHelper<any> = new EventListenerHelper();
 
     private static root:IDisplayObjectContainerWrapper;
+    private static viewsCont:IDisplayObjectContainerWrapper;
+    private static tooltipsCont:IDisplayObjectContainerWrapper;
+
     private static password:string = "";
     private static passwordInputIndex:number = 0;
 
     public static config:Config;
+    public static tooltipManager:TooltipManager;
 
     private static view:ConsoleView;
     public static displayListView:DisplayListView;
 
     static startInit(root:any, password:string = "`", config?:Config):void {
 
-        // Config
         CC.root = EngineAdapter.instance.createDisplayWrapperBasedOnObject<IDisplayObjectContainerWrapper>(root);
+
+        CC.viewsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        CC.root.addChild(CC.viewsCont);
+
+        CC.tooltipsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        CC.root.addChild(CC.tooltipsCont);
+
         CC.password = password;
 
         if (!config) {
             config = new Config();
         }
         CC.config = config;
+
+        let tempTooltip = new ConsoleTooltip();
+        CC.tooltipManager = new TooltipManager(tempTooltip);
+        CC.tooltipManager.tooltipCont = CC.tooltipsCont;
+        CC.tooltipManager.mouseShift = new Point(10, 15);
 
         // View
         CC.view = new ConsoleView();
@@ -65,6 +82,9 @@ export class CC {
     public static set visible(value:boolean) {
         if (value) {
             CC.showView(CC.view, false);
+            DisplayObjectTools.moveObjectToTopLayer(CC.viewsCont);
+            DisplayObjectTools.moveObjectToTopLayer(CC.tooltipsCont);
+
         }else {
             CC.hideView(CC.view);
         }
@@ -72,7 +92,7 @@ export class CC {
 
 
     public static showView(view:BaseConsoleView, moveToMouse:boolean = true):void {
-        CC.root.addChild(view.view);
+        CC.viewsCont.addChild(view.view);
         view.visible = true;
         CC.moveViewToTopLayer(view);
 
@@ -99,6 +119,5 @@ export class CC {
 
     public static moveViewToTopLayer(view:BaseConsoleView):void {
         DisplayObjectTools.moveObjectToTopLayer(view.view);
-
     }
 }

@@ -34,7 +34,10 @@ export class DisplayListView extends BaseConsoleView {
         this.displayListField.color = CC.config.displayListSettings.hierarchyLabelColor;
         this.displayListField.size = CC.config.displayListSettings.hierarchyLabelSize;
 
-        this.closeBtn = this.createTitleBtn("X");
+        this.closeBtn = this.createTitleBtn(
+            "X",
+            {title: CC.config.localization.closeBtnTooltipTitle}
+        );
     }
 
     protected addListeners():void {
@@ -126,7 +129,7 @@ export class DisplayListView extends BaseConsoleView {
             //console.dir(data.object);
             console.log(prefix, data.object);
 
-            if(data.children && data.children.length > 0) {
+            if (data.children && data.children.length > 0) {
                 // console.group(" children");
 
                 let childrenCount:number = data.children.length;

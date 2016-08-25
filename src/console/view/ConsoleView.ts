@@ -16,8 +16,17 @@ export class ConsoleView extends BaseConsoleView {
 
         this.titleVisible = false;
 
-        this.displayListBtn = this.createTitleBtn("DL");
-        this.closeBtn = this.createTitleBtn("X");
+        this.displayListBtn = this.createTitleBtn(
+            "DL",
+            {
+                title: CC.config.localization.displayListBtnTooltipTitle,
+                text: CC.config.localization.displayListBtnTooltipText
+            }
+        );
+        this.closeBtn = this.createTitleBtn(
+            "X",
+            {title: CC.config.localization.closeBtnTooltipTitle}
+        );
     }
 
     protected addListeners():void {

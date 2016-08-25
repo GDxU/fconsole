@@ -1,10 +1,11 @@
 import {IDisplayObjectContainerWrapper, EngineAdapter, IGraphicsWrapper, ITextWrapper} from "fgraphics/dist/index";
-import {BaseEventListenerObject, EventListenerHelper, Point} from "fcore/dist/index";
+import {BaseEventListenerObject, EventListenerHelper} from "fcore/dist/index";
 import {DragHelper, DragHelperEvent} from "flibs/dist/index";
 import {BaseConsoleButton} from "./BaseConsoleButton";
 import {CC} from "../CC";
 import {CaptureKeyButton} from "./capturekey/CaptureKeyButton";
 import {CaptuerKeyButtonEvent} from "./capturekey/CaptureKeyButtonEvent";
+import {ITooltipData} from "../../tooltip/ITooltipData";
 
 export class BaseConsoleView extends BaseEventListenerObject {
 
@@ -14,7 +15,6 @@ export class BaseConsoleView extends BaseEventListenerObject {
     public view:IDisplayObjectContainerWrapper;
     private bgGraphics:IGraphicsWrapper;
 
-    protected contentToBgShift:Point;
     protected contentCont:IDisplayObjectContainerWrapper;
     protected titleCont:IDisplayObjectContainerWrapper;
 
@@ -44,7 +44,6 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
         this.captureKey = "";
 
-        this.contentToBgShift = new Point(10, 10);
         this._titleVisible = true;
         this._captureVisible = false;
 
@@ -76,12 +75,11 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.btnsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
         this.titleCont.addChild(this.btnsCont);
 
-        /*this.captureBtn = this.createBtn(BaseConsoleView.CAPTURE_LABEL_FIRST_PART, this.onCaptureClick);
-        this.titleCont.addChild(this.captureBtn.view);
-        this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;*/
         this.captureBtn = new CaptureKeyButton();
         this.titleCont.addChild(this.captureBtn.view);
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
+        //
+        this.captureBtn.tooltipData = {title: CC.config.localization.captureKeyBtnTooltipTitle};
 
         this.commitData();
     }
@@ -198,8 +196,8 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.bgGraphics.drawRect(
             0,
             0,
-            this.contentCont.width + this.contentToBgShift.x,
-            this.contentCont.height + this.contentToBgShift.y
+            this.contentCont.width + CC.config.viewSettings.bgToContentShift.x,
+            this.contentCont.height + CC.config.viewSettings.bgToContentShift.y
         );
         this.bgGraphics.endFill();
 
@@ -207,10 +205,11 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.contentCont.y = this.bgGraphics.y + ((this.bgGraphics.height - this.contentCont.height) >> 1);
     }
 
-    protected createTitleBtn(label:string):BaseConsoleButton {
+    protected createTitleBtn(label:string, tooltipData?:ITooltipData):BaseConsoleButton {
         let tempBtn = new BaseConsoleButton();
         this.btnsCont.addChild(tempBtn.view);
         tempBtn.label = label;
+        tempBtn.tooltipData = tooltipData;
 
         this.buttonsList.push(tempBtn);
 

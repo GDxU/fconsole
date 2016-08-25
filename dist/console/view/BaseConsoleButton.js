@@ -34,9 +34,13 @@ var BaseConsoleButton = (function (_super) {
     };
     BaseConsoleButton.prototype.onOver = function () {
         this.view.alpha = 1;
+        if (this.tooltipData) {
+            CC_1.CC.tooltipManager.show(this.tooltipData);
+        }
     };
     BaseConsoleButton.prototype.onOut = function () {
         this.view.alpha = 0.75;
+        CC_1.CC.tooltipManager.hide();
     };
     BaseConsoleButton.prototype.onClick = function () {
         this.onOver();

@@ -1,7 +1,9 @@
 import { IDisplayObjectContainerWrapper } from "fgraphics/dist/index";
+import { ITooltipData } from "./ITooltipData";
 import { BaseObject } from "fcore/dist/index";
-export declare class BaseTooltip extends BaseObject {
+export declare abstract class BaseTooltip extends BaseObject {
     view: IDisplayObjectContainerWrapper;
-    private tooltipData;
+    protected tooltipData: ITooltipData;
+    protected construction(): void;
     protected commitData(): void;
 }

@@ -19,7 +19,6 @@ var BaseConsoleView = (function (_super) {
     BaseConsoleView.prototype.construction = function () {
         _super.prototype.construction.call(this);
         this.captureKey = "";
-        this.contentToBgShift = new index_2.Point(10, 10);
         this._titleVisible = true;
         this._captureVisible = false;
         this.buttonsList = [];
@@ -42,12 +41,11 @@ var BaseConsoleView = (function (_super) {
         this.titleLabel.text = "Test Title";
         this.btnsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         this.titleCont.addChild(this.btnsCont);
-        /*this.captureBtn = this.createBtn(BaseConsoleView.CAPTURE_LABEL_FIRST_PART, this.onCaptureClick);
-        this.titleCont.addChild(this.captureBtn.view);
-        this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;*/
         this.captureBtn = new CaptureKeyButton_1.CaptureKeyButton();
         this.titleCont.addChild(this.captureBtn.view);
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
+        //
+        this.captureBtn.tooltipData = { title: CC_1.CC.config.localization.captureKeyBtnTooltipTitle };
         this.commitData();
     };
     BaseConsoleView.prototype.destruction = function () {
@@ -129,15 +127,16 @@ var BaseConsoleView = (function (_super) {
         this.bgGraphics.clear();
         this.bgGraphics.beginFill(CC_1.CC.config.viewSettings.bgColor, CC_1.CC.config.viewSettings.bgAlpha);
         this.bgGraphics.lineStyle(CC_1.CC.config.viewSettings.borderWidth, CC_1.CC.config.viewSettings.borderColor, CC_1.CC.config.viewSettings.borderAlpha);
-        this.bgGraphics.drawRect(0, 0, this.contentCont.width + this.contentToBgShift.x, this.contentCont.height + this.contentToBgShift.y);
+        this.bgGraphics.drawRect(0, 0, this.contentCont.width + CC_1.CC.config.viewSettings.bgToContentShift.x, this.contentCont.height + CC_1.CC.config.viewSettings.bgToContentShift.y);
         this.bgGraphics.endFill();
         this.contentCont.x = this.bgGraphics.x + ((this.bgGraphics.width - this.contentCont.width) >> 1);
         this.contentCont.y = this.bgGraphics.y + ((this.bgGraphics.height - this.contentCont.height) >> 1);
     };
-    BaseConsoleView.prototype.createTitleBtn = function (label) {
+    BaseConsoleView.prototype.createTitleBtn = function (label, tooltipData) {
         var tempBtn = new BaseConsoleButton_1.BaseConsoleButton();
         this.btnsCont.addChild(tempBtn.view);
         tempBtn.label = label;
+        tempBtn.tooltipData = tooltipData;
         this.buttonsList.push(tempBtn);
         return tempBtn;
     };

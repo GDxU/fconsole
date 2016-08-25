@@ -8,6 +8,7 @@ var BaseConsoleButton_1 = require("../BaseConsoleButton");
 var index_1 = require("flibs/dist/index");
 var index_2 = require("fcore/dist/index");
 var CaptureKeyButtonEvent_1 = require("./CaptureKeyButtonEvent");
+var CC_1 = require("../../CC");
 var CaptureKeyButton = (function (_super) {
     __extends(CaptureKeyButton, _super);
     function CaptureKeyButton() {
@@ -22,7 +23,7 @@ var CaptureKeyButton = (function (_super) {
     };
     CaptureKeyButton.prototype.onClick = function () {
         _super.prototype.onClick.call(this);
-        this.isClicked = true;
+        this.isClicked = !this.isClicked;
     };
     CaptureKeyButton.prototype.onKeyPress = function (data) {
         if (this.isClicked) {
@@ -40,13 +41,13 @@ var CaptureKeyButton = (function (_super) {
     CaptureKeyButton.prototype.commitData = function () {
         _super.prototype.commitData.call(this);
         if (this.isClicked) {
-            this.label = CaptureKeyButton.CLICKED_HELP_TEXT;
+            this.label = CC_1.CC.config.localization.captureKeyBtnPressedLabel;
         }
         else if (this.captureKey) {
-            this.label = CaptureKeyButton.CAPTURE_LABEL_FIRST_PART + " " + this.captureKey;
+            this.label = index_2.StringTools.substituteList(CC_1.CC.config.localization.captureKeyBtnNormalLabel, this.captureKey);
         }
         else {
-            this.label = CaptureKeyButton.CAPTURE_LABEL_FIRST_PART + " " + CaptureKeyButton.NO_CAPTURE_KEY_TEXT;
+            this.label = index_2.StringTools.substituteList(CC_1.CC.config.localization.captureKeyBtnNormalLabel, CC_1.CC.config.localization.captureKeyBtnNoKeyHelpText);
         }
     };
     CaptureKeyButton.prototype.arrange = function () {
@@ -66,9 +67,6 @@ var CaptureKeyButton = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    CaptureKeyButton.CAPTURE_LABEL_FIRST_PART = "Capture key:";
-    CaptureKeyButton.NO_CAPTURE_KEY_TEXT = "(click to add)";
-    CaptureKeyButton.CLICKED_HELP_TEXT = "Press a key";
     return CaptureKeyButton;
 }(BaseConsoleButton_1.BaseConsoleButton));
 exports.CaptureKeyButton = CaptureKeyButton;

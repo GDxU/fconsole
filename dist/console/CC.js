@@ -5,18 +5,27 @@ var DisplayListView_1 = require("./view/DisplayListView");
 var index_2 = require("fcore/dist/index");
 var index_3 = require("flibs/dist/index");
 var Config_1 = require("./Config");
+var TooltipManager_1 = require("../tooltip/TooltipManager");
+var ConsoleTooltip_1 = require("./view/tooltip/ConsoleTooltip");
 var CC = (function () {
     function CC() {
     }
     CC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
-        // Config
         CC.root = index_1.EngineAdapter.instance.createDisplayWrapperBasedOnObject(root);
+        CC.viewsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        CC.root.addChild(CC.viewsCont);
+        CC.tooltipsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        CC.root.addChild(CC.tooltipsCont);
         CC.password = password;
         if (!config) {
             config = new Config_1.Config();
         }
         CC.config = config;
+        var tempTooltip = new ConsoleTooltip_1.ConsoleTooltip();
+        CC.tooltipManager = new TooltipManager_1.TooltipManager(tempTooltip);
+        CC.tooltipManager.tooltipCont = CC.tooltipsCont;
+        CC.tooltipManager.mouseShift = new index_2.Point(10, 15);
         // View
         CC.view = new ConsoleView_1.ConsoleView();
         CC.displayListView = new DisplayListView_1.DisplayListView();
@@ -45,6 +54,8 @@ var CC = (function () {
         set: function (value) {
             if (value) {
                 CC.showView(CC.view, false);
+                index_1.DisplayObjectTools.moveObjectToTopLayer(CC.viewsCont);
+                index_1.DisplayObjectTools.moveObjectToTopLayer(CC.tooltipsCont);
             }
             else {
                 CC.hideView(CC.view);
@@ -55,7 +66,7 @@ var CC = (function () {
     });
     CC.showView = function (view, moveToMouse) {
         if (moveToMouse === void 0) { moveToMouse = true; }
-        CC.root.addChild(view.view);
+        CC.viewsCont.addChild(view.view);
         view.visible = true;
         CC.moveViewToTopLayer(view);
         if (moveToMouse) {

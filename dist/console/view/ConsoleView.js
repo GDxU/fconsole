@@ -15,8 +15,11 @@ var ConsoleView = (function (_super) {
     ConsoleView.prototype.construction = function () {
         _super.prototype.construction.call(this);
         this.titleVisible = false;
-        this.displayListBtn = this.createTitleBtn("DL");
-        this.closeBtn = this.createTitleBtn("X");
+        this.displayListBtn = this.createTitleBtn("DL", {
+            title: CC_1.CC.config.localization.displayListBtnTooltipTitle,
+            text: CC_1.CC.config.localization.displayListBtnTooltipText
+        });
+        this.closeBtn = this.createTitleBtn("X", { title: CC_1.CC.config.localization.closeBtnTooltipTitle });
     };
     ConsoleView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);

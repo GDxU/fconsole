@@ -1,12 +1,12 @@
 import { IDisplayObjectContainerWrapper, ITextWrapper } from "fgraphics/dist/index";
-import { BaseEventListenerObject, Point } from "fcore/dist/index";
+import { BaseEventListenerObject } from "fcore/dist/index";
 import { BaseConsoleButton } from "./BaseConsoleButton";
+import { ITooltipData } from "../../tooltip/ITooltipData";
 export declare class BaseConsoleView extends BaseEventListenerObject {
     private static CAPTURE_LABEL_FIRST_PART;
     private static NO_CAPTURE_KEY_TEXT;
     view: IDisplayObjectContainerWrapper;
     private bgGraphics;
-    protected contentToBgShift: Point;
     protected contentCont: IDisplayObjectContainerWrapper;
     protected titleCont: IDisplayObjectContainerWrapper;
     private _visible;
@@ -32,7 +32,7 @@ export declare class BaseConsoleView extends BaseEventListenerObject {
     visible: boolean;
     protected commitData(): void;
     protected arrange(): void;
-    protected createTitleBtn(label: string): BaseConsoleButton;
+    protected createTitleBtn(label: string, tooltipData?: ITooltipData): BaseConsoleButton;
     titleVisible: boolean;
     captureVisible: boolean;
 }

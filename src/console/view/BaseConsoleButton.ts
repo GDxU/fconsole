@@ -6,6 +6,7 @@ import {
 } from "fgraphics/dist/index";
 import {BaseEventListenerObject} from "fcore/dist/index";
 import {CC} from "../CC";
+import {ITooltipData} from "../../tooltip/ITooltipData";
 
 export class BaseConsoleButton extends BaseEventListenerObject {
 
@@ -13,6 +14,8 @@ export class BaseConsoleButton extends BaseEventListenerObject {
     private field:ITextWrapper;
 
     private _label:string = "";
+
+    public tooltipData:ITooltipData;
 
     constructor() {
         super();
@@ -63,10 +66,16 @@ export class BaseConsoleButton extends BaseEventListenerObject {
 
     private onOver():void {
         this.view.alpha = 1;
+
+        if (this.tooltipData) {
+            CC.tooltipManager.show(this.tooltipData);
+        }
     }
 
     private onOut():void {
         this.view.alpha = 0.75;
+
+        CC.tooltipManager.hide();
     }
 
     protected onClick():void {
