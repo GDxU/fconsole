@@ -79,7 +79,7 @@ export class BaseConsoleButton extends BaseEventListenerObject {
     }
 
     protected onClick():void {
-        this.onOver();
+        this.onOut();
     }
 
 
