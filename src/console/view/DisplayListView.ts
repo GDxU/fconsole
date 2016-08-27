@@ -58,8 +58,8 @@ export class DisplayListView extends BaseConsoleView {
 
     private onTick():void {
         if (this.visible) {
-            if (this.lastCheckedPos.x != EngineAdapter.instance.globalMouseX ||
-                this.lastCheckedPos.y != EngineAdapter.instance.globalMouseY) {
+            /*if (this.lastCheckedPos.x != EngineAdapter.instance.globalMouseX ||
+                this.lastCheckedPos.y != EngineAdapter.instance.globalMouseY) {*/
 
                 this.lastCheckedPos.x = EngineAdapter.instance.globalMouseX;
                 this.lastCheckedPos.y = EngineAdapter.instance.globalMouseY;
@@ -74,7 +74,7 @@ export class DisplayListView extends BaseConsoleView {
                 this.displayListField.text = listText;
 
                 this.arrange();
-            }
+            // }
         }
     }
 

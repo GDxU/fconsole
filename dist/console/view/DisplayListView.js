@@ -32,15 +32,14 @@ var DisplayListView = (function (_super) {
     };
     DisplayListView.prototype.onTick = function () {
         if (this.visible) {
-            if (this.lastCheckedPos.x != index_1.EngineAdapter.instance.globalMouseX ||
-                this.lastCheckedPos.y != index_1.EngineAdapter.instance.globalMouseY) {
-                this.lastCheckedPos.x = index_1.EngineAdapter.instance.globalMouseX;
-                this.lastCheckedPos.y = index_1.EngineAdapter.instance.globalMouseY;
-                var underPointData = index_1.EngineAdapter.instance.getNativeObjectsUnderPoint(index_1.EngineAdapter.instance.stage.object, index_1.EngineAdapter.instance.globalMouseX, index_1.EngineAdapter.instance.globalMouseY);
-                var listText = this.parseUnderPointData(underPointData);
-                this.displayListField.text = listText;
-                this.arrange();
-            }
+            /*if (this.lastCheckedPos.x != EngineAdapter.instance.globalMouseX ||
+                this.lastCheckedPos.y != EngineAdapter.instance.globalMouseY) {*/
+            this.lastCheckedPos.x = index_1.EngineAdapter.instance.globalMouseX;
+            this.lastCheckedPos.y = index_1.EngineAdapter.instance.globalMouseY;
+            var underPointData = index_1.EngineAdapter.instance.getNativeObjectsUnderPoint(index_1.EngineAdapter.instance.stage.object, index_1.EngineAdapter.instance.globalMouseX, index_1.EngineAdapter.instance.globalMouseY);
+            var listText = this.parseUnderPointData(underPointData);
+            this.displayListField.text = listText;
+            this.arrange();
         }
     };
     DisplayListView.prototype.onCaptureKey = function () {
