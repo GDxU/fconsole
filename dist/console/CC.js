@@ -12,7 +12,7 @@ var CC = (function () {
     }
     CC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
-        CC.root = index_1.EngineAdapter.instance.createDisplayWrapperBasedOnObject(root);
+        CC.root = root;
         CC.viewsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         CC.root.addChild(CC.viewsCont);
         CC.tooltipsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();

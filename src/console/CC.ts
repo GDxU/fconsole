@@ -24,9 +24,9 @@ export class CC {
     private static view:ConsoleView;
     public static displayListView:DisplayListView;
 
-    static startInit(root:any, password:string = "`", config?:Config):void {
+    static startInit(root:IDisplayObjectContainerWrapper, password:string = "`", config?:Config):void {
 
-        CC.root = EngineAdapter.instance.createDisplayWrapperBasedOnObject<IDisplayObjectContainerWrapper>(root);
+        CC.root = root;
 
         CC.viewsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
         CC.root.addChild(CC.viewsCont);

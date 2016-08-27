@@ -1,3 +1,4 @@
+import { IDisplayObjectContainerWrapper } from "fgraphics/dist/index";
 import { BaseConsoleView } from "./view/BaseConsoleView";
 import { DisplayListView } from "./view/DisplayListView";
 import { Config } from "./Config";
@@ -13,7 +14,7 @@ export declare class CC {
     static tooltipManager: TooltipManager;
     private static view;
     static displayListView: DisplayListView;
-    static startInit(root: any, password?: string, config?: Config): void;
+    static startInit(root: IDisplayObjectContainerWrapper, password?: string, config?: Config): void;
     private static onPasswordInput();
     static visible: boolean;
     static showView(view: BaseConsoleView, moveToMouse?: boolean): void;
