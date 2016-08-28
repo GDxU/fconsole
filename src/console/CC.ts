@@ -12,6 +12,7 @@ export class CC {
     private static eventListenerHelper:EventListenerHelper<any> = new EventListenerHelper();
 
     private static root:IDisplayObjectContainerWrapper;
+    private static contentCont:IDisplayObjectContainerWrapper;
     private static viewsCont:IDisplayObjectContainerWrapper;
     private static tooltipsCont:IDisplayObjectContainerWrapper;
 
@@ -28,11 +29,14 @@ export class CC {
 
         CC.root = root;
 
+        CC.contentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        CC.root.addChild(CC.contentCont);
+
         CC.viewsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.root.addChild(CC.viewsCont);
+        CC.contentCont.addChild(CC.viewsCont);
 
         CC.tooltipsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.root.addChild(CC.tooltipsCont);
+        CC.contentCont.addChild(CC.tooltipsCont);
 
         CC.password = password;
 
