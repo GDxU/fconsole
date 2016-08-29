@@ -1,11 +1,11 @@
 # FConsole
 FConsole is a bunch* of useful debug tools for speeding up development process written in [TypeScript](https://github.com/Microsoft/TypeScript).
 
-> Use with Google Chrome for better experience and debug functionality
-
 *Inspired by [Flash-Console](https://github.com/junkbyte/flash-console)*
 
+> Use with Google Chrome for better experience and debug functionality
 
+# Demo
 ### **[Demo](https://flashist.github.io/fexamples/) | [Demo Source](https://github.com/flashist/fexamples)**
 
 # Features
