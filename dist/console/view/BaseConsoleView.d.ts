@@ -21,6 +21,8 @@ export declare class BaseConsoleView extends BaseEventListenerObject {
     protected captureBtn: BaseConsoleButton;
     private _captureVisible;
     private captureKey;
+    lastBgWidth: number;
+    lastBgHeight: number;
     constructor();
     protected construction(): void;
     destruction(): void;

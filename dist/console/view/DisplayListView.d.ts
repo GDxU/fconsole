@@ -3,6 +3,7 @@ export declare class DisplayListView extends BaseConsoleView {
     private lastCheckedPos;
     private displayListField;
     private closeBtn;
+    private lastUnderPointData;
     constructor();
     protected construction(): void;
     protected addListeners(): void;
@@ -11,4 +12,5 @@ export declare class DisplayListView extends BaseConsoleView {
     private getObjectsUnderMouse();
     private parseUnderPointData(data, prefix?);
     private groupLogUnderPointData(data, prefix?);
+    private checkUnderPointDataEqual(data1, data2);
 }

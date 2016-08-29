@@ -2,7 +2,7 @@ import {IDisplayObjectContainerWrapper, EngineAdapter, DisplayObjectTools} from 
 import {ConsoleView} from "./view/ConsoleView";
 import {BaseConsoleView} from "./view/BaseConsoleView";
 import {DisplayListView} from "./view/DisplayListView";
-import {EventListenerHelper, KeyboardTools, Point} from "fcore/dist/index";
+import {EventListenerHelper, KeyboardTools, Point, Logger} from "fcore/dist/index";
 import {InputManager, InputManagerEvent, InputManagerEventData} from "flibs/dist/index";
 import {Config} from "./Config";
 import {TooltipManager} from "../tooltip/TooltipManager";
@@ -26,6 +26,8 @@ export class CC {
     public static displayListView:DisplayListView;
 
     static startInit(root:IDisplayObjectContainerWrapper, password:string = "`", config?:Config):void {
+
+        Logger.log("CC: ", CC);
 
         CC.root = root;
 

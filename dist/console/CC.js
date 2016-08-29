@@ -12,6 +12,7 @@ var CC = (function () {
     }
     CC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
+        index_2.Logger.log("CC: ", CC);
         CC.root = root;
         CC.contentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         CC.root.addChild(CC.contentCont);

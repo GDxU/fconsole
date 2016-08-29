@@ -37,9 +37,12 @@ var DisplayListView = (function (_super) {
             this.lastCheckedPos.x = index_1.EngineAdapter.instance.globalMouseX;
             this.lastCheckedPos.y = index_1.EngineAdapter.instance.globalMouseY;
             var underPointData = index_1.EngineAdapter.instance.getNativeObjectsUnderPoint(index_1.EngineAdapter.instance.stage.object, index_1.EngineAdapter.instance.globalMouseX, index_1.EngineAdapter.instance.globalMouseY);
-            var listText = this.parseUnderPointData(underPointData);
-            this.displayListField.text = listText;
-            this.arrange();
+            if (!this.checkUnderPointDataEqual(underPointData, this.lastUnderPointData)) {
+                this.lastUnderPointData = underPointData;
+                var listText = this.parseUnderPointData(underPointData);
+                this.displayListField.text = listText;
+                this.arrange();
+            }
         }
     };
     DisplayListView.prototype.onCaptureKey = function () {
@@ -84,6 +87,38 @@ var DisplayListView = (function (_super) {
                 }
             }
         }
+    };
+    DisplayListView.prototype.checkUnderPointDataEqual = function (data1, data2) {
+        var result = true;
+        // If one of the data objects exists and other doesn't
+        if (!!data1 != !!data2) {
+            result = false;
+        }
+        else if (data1 && data2) {
+            if (data1.object != data2.object) {
+                result = false;
+            }
+            else if (!!data1.children != !!data2.children) {
+                result = false;
+            }
+            else if (data1.children && data2.children) {
+                // If length of the children lists are not equal, then data objects are not equal too
+                if (data1.children.length != data2.children.length) {
+                    result = false;
+                }
+                else {
+                    var childrenCount = data1.children.length;
+                    for (var childIndex = 0; childIndex < childrenCount; childIndex++) {
+                        // If one of the children are not equeal, than stop checking and break the loop
+                        if (!this.checkUnderPointDataEqual(data1.children[childIndex], data2.children[childIndex])) {
+                            result = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     };
     return DisplayListView;
 }(BaseConsoleView_1.BaseConsoleView));

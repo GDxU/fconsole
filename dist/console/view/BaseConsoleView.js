@@ -15,6 +15,8 @@ var BaseConsoleView = (function (_super) {
     __extends(BaseConsoleView, _super);
     function BaseConsoleView() {
         _super.call(this);
+        this.lastBgWidth = 0;
+        this.lastBgHeight = 0;
     }
     BaseConsoleView.prototype.construction = function () {
         _super.prototype.construction.call(this);
@@ -124,11 +126,17 @@ var BaseConsoleView = (function (_super) {
         else {
             this.btnsCont.x = this.titleLabel.x;
         }
-        this.bgGraphics.clear();
-        this.bgGraphics.beginFill(CC_1.CC.config.viewSettings.bgColor, CC_1.CC.config.viewSettings.bgAlpha);
-        this.bgGraphics.lineStyle(CC_1.CC.config.viewSettings.borderWidth, CC_1.CC.config.viewSettings.borderColor, CC_1.CC.config.viewSettings.borderAlpha);
-        this.bgGraphics.drawRect(0, 0, this.contentCont.width + CC_1.CC.config.viewSettings.bgToContentShift.x, this.contentCont.height + CC_1.CC.config.viewSettings.bgToContentShift.y);
-        this.bgGraphics.endFill();
+        var tempWidth = this.contentCont.width + CC_1.CC.config.viewSettings.bgToContentShift.x;
+        var tempHeight = this.contentCont.height + CC_1.CC.config.viewSettings.bgToContentShift.y;
+        if (tempWidth != this.lastBgWidth || tempHeight != this.lastBgHeight) {
+            this.lastBgWidth = tempWidth;
+            this.lastBgHeight = tempHeight;
+            this.bgGraphics.clear();
+            this.bgGraphics.beginFill(CC_1.CC.config.viewSettings.bgColor, CC_1.CC.config.viewSettings.bgAlpha);
+            this.bgGraphics.lineStyle(CC_1.CC.config.viewSettings.borderWidth, CC_1.CC.config.viewSettings.borderColor, CC_1.CC.config.viewSettings.borderAlpha);
+            this.bgGraphics.drawRect(0, 0, tempWidth, tempHeight);
+            this.bgGraphics.endFill();
+        }
         this.contentCont.x = this.bgGraphics.x + ((this.bgGraphics.width - this.contentCont.width) >> 1);
         this.contentCont.y = this.bgGraphics.y + ((this.bgGraphics.height - this.contentCont.height) >> 1);
     };

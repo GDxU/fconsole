@@ -35,6 +35,9 @@ export class BaseConsoleView extends BaseEventListenerObject {
     private _captureVisible:boolean;
     private captureKey:string;
 
+    public lastBgWidth:number = 0;
+    public lastBgHeight:number = 0;
+
     constructor() {
         super();
     }
@@ -190,16 +193,24 @@ export class BaseConsoleView extends BaseEventListenerObject {
             this.btnsCont.x = this.titleLabel.x;
         }
 
-        this.bgGraphics.clear();
-        this.bgGraphics.beginFill(CC.config.viewSettings.bgColor, CC.config.viewSettings.bgAlpha);
-        this.bgGraphics.lineStyle(CC.config.viewSettings.borderWidth, CC.config.viewSettings.borderColor, CC.config.viewSettings.borderAlpha);
-        this.bgGraphics.drawRect(
-            0,
-            0,
-            this.contentCont.width + CC.config.viewSettings.bgToContentShift.x,
-            this.contentCont.height + CC.config.viewSettings.bgToContentShift.y
-        );
-        this.bgGraphics.endFill();
+        let tempWidth:number = this.contentCont.width + CC.config.viewSettings.bgToContentShift.x;
+        let tempHeight:number = this.contentCont.height + CC.config.viewSettings.bgToContentShift.y;
+        if (tempWidth != this.lastBgWidth || tempHeight != this.lastBgHeight) {
+
+            this.lastBgWidth = tempWidth;
+            this.lastBgHeight = tempHeight;
+
+            this.bgGraphics.clear();
+            this.bgGraphics.beginFill(CC.config.viewSettings.bgColor, CC.config.viewSettings.bgAlpha);
+            this.bgGraphics.lineStyle(CC.config.viewSettings.borderWidth, CC.config.viewSettings.borderColor, CC.config.viewSettings.borderAlpha);
+            this.bgGraphics.drawRect(
+                0,
+                0,
+                tempWidth,
+                tempHeight
+            );
+            this.bgGraphics.endFill();
+        }
 
         this.contentCont.x = this.bgGraphics.x + ((this.bgGraphics.width - this.contentCont.width) >> 1);
         this.contentCont.y = this.bgGraphics.y + ((this.bgGraphics.height - this.contentCont.height) >> 1);

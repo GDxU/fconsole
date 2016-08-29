@@ -15,6 +15,7 @@ export class DisplayListView extends BaseConsoleView {
     private lastCheckedPos:Point;
     private displayListField:ITextWrapper;
     private closeBtn:BaseConsoleButton;
+    private lastUnderPointData:IObjectUnderPointVO;
 
     constructor() {
         super();
@@ -70,10 +71,14 @@ export class DisplayListView extends BaseConsoleView {
                     EngineAdapter.instance.globalMouseY
                 );
 
-                let listText:string = this.parseUnderPointData(underPointData);
-                this.displayListField.text = listText;
+                if (!this.checkUnderPointDataEqual(underPointData, this.lastUnderPointData)) {
+                    this.lastUnderPointData = underPointData;
 
-                this.arrange();
+                    let listText:string = this.parseUnderPointData(underPointData);
+                    this.displayListField.text = listText;
+
+                    this.arrange();
+                }
             // }
         }
     }
@@ -140,5 +145,45 @@ export class DisplayListView extends BaseConsoleView {
                 // console.groupEnd();
             }
         }
+    }
+
+    private checkUnderPointDataEqual(data1:IObjectUnderPointVO, data2:IObjectUnderPointVO):boolean {
+        let result:boolean = true;
+
+        // If one of the data objects exists and other doesn't
+        if(!!data1 != !!data2) {
+            result = false;
+
+        // If 2 data objects are available
+        } else if(data1 && data2) {
+
+            if (data1.object != data2.object) {
+                result = false;
+
+            // If one of data has children and other doesn't have
+            }else if(!!data1.children != !!data2.children) {
+                result = false;
+
+            // If there are children arrays in the both data objects
+            }else if(data1.children && data2.children) {
+                // If length of the children lists are not equal, then data objects are not equal too
+                if (data1.children.length != data2.children.length) {
+                    result = false;
+
+                }else {
+
+                    let childrenCount:number = data1.children.length;
+                    for (let childIndex:number = 0; childIndex < childrenCount; childIndex++) {
+                        // If one of the children are not equeal, than stop checking and break the loop
+                        if (!this.checkUnderPointDataEqual(data1.children[childIndex], data2.children[childIndex])) {
+                            result = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 }
