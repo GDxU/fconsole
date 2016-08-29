@@ -1,7 +1,10 @@
 # FConsole
 FConsole is a bunch* of useful debug tools for speeding up development process written in [TypeScript](https://github.com/Microsoft/TypeScript).
 
+> Use with Google Chrome for better experience and debug functionality
+
 *Inspired by [Flash-Console](https://github.com/junkbyte/flash-console)*
+
 
 ### **[Demo](https://flashist.github.io/fexamples/) | [Demo Source](https://github.com/flashist/fexamples)**
 
@@ -24,7 +27,7 @@ FConsole is a bunch* of useful debug tools for speeding up development process w
 1. Assing a capture key to the Display List popup (click to the **Capture key** button and press a key).
 2. Move cursor above some visual elements.
 3. Press the assinged key (see #1).
-4. Open Developer Tools Console in browser (for Google Chrome on Mac: CMD + Alt + I, on Win: F12 or Ctrl + Shift + I).
+4. Open Developer Tools Console in browser (Google Chrome Win: F12 or Ctrl + Shift + I, MacOS: CMD + Alt + I).
 5. Check the display list hierarchy in the console.
 6. Expand an object and change it's properties
 7. (Optional, Google Chrome) Store an object as a Global Variable from context menu (right click on the object)
