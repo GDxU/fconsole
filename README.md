@@ -1,5 +1,5 @@
 # FConsole
-FConsole is a bunch* of useful debug tools for speeding up development process written in [TypeScript](https://github.com/Microsoft/TypeScript).
+FConsole is a bunch* of useful debug tools for speeding up development process of canvas(pixi.js)-based applications. Written in [TypeScript](https://github.com/Microsoft/TypeScript).
 
 *Inspired by [Flash-Console](https://github.com/junkbyte/flash-console)*
 
