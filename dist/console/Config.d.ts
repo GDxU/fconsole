@@ -8,6 +8,7 @@ export declare class Config {
         captureKeyBtnPressedLabel: string;
         captureKeyBtnNoKeyHelpText: string;
         displayListTitle: string;
+        displayListCapturedKeyText: string;
     };
     btnSettings: {
         labelSize: number;

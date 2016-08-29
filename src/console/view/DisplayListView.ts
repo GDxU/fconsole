@@ -39,6 +39,8 @@ export class DisplayListView extends BaseConsoleView {
             "X",
             {title: CC.config.localization.closeBtnTooltipTitle}
         );
+
+        this.captureBtn.tooltipData.text = CC.config.localization.displayListCapturedKeyText;
     }
 
     protected addListeners():void {

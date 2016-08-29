@@ -12,6 +12,7 @@ export class Config {
         captureKeyBtnNoKeyHelpText: "(click to add)",
 
         displayListTitle: "Display List Inspector",
+        displayListCapturedKeyText: "Press an assinged key\nto add display list hierarchy\nto the browser console",
     };
 
     public btnSettings = {

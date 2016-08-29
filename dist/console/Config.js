@@ -10,6 +10,7 @@ var Config = (function () {
             captureKeyBtnPressedLabel: "Press a key",
             captureKeyBtnNoKeyHelpText: "(click to add)",
             displayListTitle: "Display List Inspector",
+            displayListCapturedKeyText: "Press an assinged key\nto add display list hierarchy\nto the browser console",
         };
         this.btnSettings = {
             labelSize: 14,
