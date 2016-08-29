@@ -24,6 +24,7 @@ var DisplayListView = (function (_super) {
         this.displayListField.color = CC_1.CC.config.displayListSettings.hierarchyLabelColor;
         this.displayListField.size = CC_1.CC.config.displayListSettings.hierarchyLabelSize;
         this.closeBtn = this.createTitleBtn("X", { title: CC_1.CC.config.localization.closeBtnTooltipTitle });
+        this.captureBtn.tooltipData.text = CC_1.CC.config.localization.displayListCapturedKeyText;
     };
     DisplayListView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
