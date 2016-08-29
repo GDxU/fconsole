@@ -91,5 +91,26 @@ CC.startInit(EngineAdapter.instance.stage);
 CC.visible = true;
 ```
 
+## SystemJS config (example)
+```TypeScript
+SystemJS.config(
+ {
+  packages: {
+   "src": {defaultExtension: "ts"},
+   "fcore": {defaultExtension: "js"},
+   "fgraphics": {defaultExtension: "js"},
+   "flibs": {defaultExtension: "js"},
+   "fconsole": {defaultExtension: "js"}
+  },
+  map: {
+   "fcore": "node_modules/fcore",
+   "fgraphics": "node_modules/fgraphics",
+   "flibs": "node_modules/flibs",
+   "fconsole": "node_modules/fconsole"
+  }
+ }
+);
+```
+
 # Notes
 * Actually, there are only 2 implemented features yet (up to the August 29, 2016): Display List Inspector and Properties Editing. In my opinion, these two are the most useful and important features from [Flash-Console](https://github.com/junkbyte/flash-console) and I wanted to implement them the first. Other features are planned to be implemented.
