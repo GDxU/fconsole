@@ -14,9 +14,7 @@ FConsole is a bunch* of useful debug tools for speeding up development process.
 
 ####How to:
 1. Open the console by inputting a password (default is **`**). In the [demo](https://flashist.github.io/fexamples/) the console is shown from the beginning.
- 
 2. Click on the **DL** button.
-
 3. Move mouse above some visual elements.
 
 ### Properties Editing
