@@ -6,6 +6,7 @@ import { TooltipManager } from "../tooltip/TooltipManager";
 export declare class CC {
     private static eventListenerHelper;
     private static root;
+    private static contentCont;
     private static viewsCont;
     private static tooltipsCont;
     private static password;

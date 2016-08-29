@@ -13,10 +13,12 @@ var CC = (function () {
     CC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
         CC.root = root;
+        CC.contentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        CC.root.addChild(CC.contentCont);
         CC.viewsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.root.addChild(CC.viewsCont);
+        CC.contentCont.addChild(CC.viewsCont);
         CC.tooltipsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.root.addChild(CC.tooltipsCont);
+        CC.contentCont.addChild(CC.tooltipsCont);
         CC.password = password;
         if (!config) {
             config = new Config_1.Config();
