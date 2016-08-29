@@ -9,6 +9,8 @@ FConsole is a bunch of useful debug tools for speeding up development process.
 
 # Display List Inspector
 
+## Hierarchy
+![Display List Inspector - Hierarchy](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspecotr_hierarchy-1.gif?raw=true)
 
-![Image of Yaktocat](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspecotr_hierarchy-1.gif?raw=true)
-![Image of Yaktocat 2](http://vignette2.wikia.nocookie.net/adventuretimewithfinnandjake/images/a/ad/Small-shakin-it.gif/revision/latest?cb=20121210211519)
+## Properties editing
+![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_editing-1.gif?raw=true)
