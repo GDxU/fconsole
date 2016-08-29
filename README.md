@@ -1,9 +1,9 @@
 # FConsole
-FConsole is a bunch* of useful debug tools for speeding up development process of [Pixi.js](https://github.com/pixijs/pixi.js) based applications. Written in [TypeScript](https://github.com/Microsoft/TypeScript).
+Bunch* of useful debug tools for speeding up development process of [Pixi.js](https://github.com/pixijs/pixi.js) based applications. Written in [TypeScript](https://github.com/Microsoft/TypeScript).
 
-*Inspired by [Flash-Console](https://github.com/junkbyte/flash-console)*
+*Inspired by [Flash-Console](https://github.com/junkbyte/flash-console).*
 
-> Use with Google Chrome for better experience and debug functionality
+> Use with Google Chrome for better experience and debug functionality.
 
 # Demo
 ### **[Demo](https://flashist.github.io/fexamples/) | [Demo Source](https://github.com/flashist/fexamples)**
