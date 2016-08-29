@@ -1,5 +1,5 @@
 # FConsole
-FConsole is a bunch* of useful debug tools for speeding up development process.
+FConsole is a bunch* of useful debug tools for speeding up development process written in [TypeScript](https://github.com/Microsoft/TypeScript).
 
 *Inspired by [Flash-Console](https://github.com/junkbyte/flash-console)*
 
@@ -28,6 +28,65 @@ FConsole is a bunch* of useful debug tools for speeding up development process.
 5. Check the display list hierarchy in the console.
 6. Expand an object and change it's properties
 7. (Optional, Google Chrome) Store an object as a Global Variable from context menu (right click on the object)
+ 
+# Installation
+
+FConsole can be installed with [NPM](https://docs.npmjs.com/getting-started/what-is-npm):
+
+```
+$> npm install fconsole
+```
+
+# Usage Example (TypeScript)
+
+## With native pixi.js
+```TypeScript
+import {EngineAdapter, PixiAdapter} from "fgraphics/dist/index";
+import {CC} from "fconsole/dist/index";
+
+// Native Pixi.JS renderer
+let renderer = PIXI.autoDetectRenderer(800, 600);
+document.body.appendChild(renderer.view);
+// Native main container
+let stage = new PIXI.Container();
+
+// At the very beginning we need to instantiate a graphics adapter (in our case the Pixi.JS adapter).
+EngineAdapter.instance = new PixiAdapter({renderer: renderer, nativeStage: stage});
+// Initialization of the console (should be initialized after initialization of the adapter)
+CC.startInit(EngineAdapter.instance.createDisplayObjectContainerWrapper(stage));
+// Optional (to make the console visible from the beginning)
+CC.visible = true;
+```
+
+## With the [Graphics Adapter API](https://github.com/flashist/fgraphics)
+```TypeScript
+
+// Initialization of the grpahics adapter (in our case the Pixi.JS adapter)
+EngineAdapter.instance = new PixiAdapter(
+  {
+    rendererSettings: {
+      backgroundColor: 0xAAAAAA
+    },
+    rendererWidth: 800,
+    rendererHeight: 600
+  }
+);
+// Append the renderer canvas to the DOM
+document.body.appendChild(EngineAdapter.instance.canvas);
+
+// Render graphics by ticker events
+EngineAdapter.instance.mainTicker.addEventListener(
+  TickerEvent.TICK,
+  () => {
+    EngineAdapter.instance.renderGraphics();
+  }
+);
+
+// Initialization of the console (should be initialized after initialization of the adapter)
+CC.startInit(EngineAdapter.instance.stage);
+// Optional (to make the console visible from the beginning)
+CC.visible = true;
+```
 
 # Notes
 * Actually, there are only 2 implemented features yet (up to the August 29, 2016): Display List Inspector and Properties Editing. In my opinion, these two are the most useful and important features from [Flash-Console](https://github.com/junkbyte/flash-console) and I wanted to implement them the first. Other features are planned to be implemented.
