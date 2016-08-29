@@ -94,21 +94,21 @@ CC.visible = true;
 ## SystemJS config (example)
 ```TypeScript
 SystemJS.config(
- {
-  packages: {
-   "src": {defaultExtension: "ts"},
-   "fcore": {defaultExtension: "js"},
-   "fgraphics": {defaultExtension: "js"},
-   "flibs": {defaultExtension: "js"},
-   "fconsole": {defaultExtension: "js"}
-  },
-  map: {
-   "fcore": "node_modules/fcore",
-   "fgraphics": "node_modules/fgraphics",
-   "flibs": "node_modules/flibs",
-   "fconsole": "node_modules/fconsole"
+  {
+    packages: {
+      "src": {defaultExtension: "ts"},
+      "fcore": {defaultExtension: "js"},
+      "fgraphics": {defaultExtension: "js"},
+      "flibs": {defaultExtension: "js"},
+      "fconsole": {defaultExtension: "js"}
+    },
+    map: {
+      "fcore": "node_modules/fcore",
+      "fgraphics": "node_modules/fgraphics",
+      "flibs": "node_modules/flibs",
+      "fconsole": "node_modules/fconsole"
+    }
   }
- }
 );
 ```
 
