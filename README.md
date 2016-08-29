@@ -95,6 +95,7 @@ CC.visible = true;
 ```TypeScript
 SystemJS.config(
   {
+    transpiler: "typescript",
     packages: {
       "src": {defaultExtension: "ts"},
       "fcore": {defaultExtension: "js"},
