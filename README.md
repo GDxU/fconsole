@@ -18,7 +18,7 @@ FConsole is a bunch* of useful debug tools for speeding up development process w
 3. Move cursor above some visual elements.
 
 ### Properties Editing
-![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/%20display-list-inspector_editing-1.gif?raw=true)
+![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_editing-1.gif?raw=truep)
 
 ####How to:
 1. Assing a capture key to the Display List popup (click to the **Capture key** button and press a key).
@@ -39,18 +39,18 @@ $> npm install fconsole
 
 # Usage Example (TypeScript)
 
-## With native pixi.js
+## With native [Pixi.js](https://github.com/pixijs/pixi.js)
 ```TypeScript
 import {EngineAdapter, PixiAdapter} from "fgraphics/dist/index";
 import {CC} from "fconsole/dist/index";
 
-// Native Pixi.JS renderer
+// Native Pixi.js renderer
 let renderer = PIXI.autoDetectRenderer(800, 600);
 document.body.appendChild(renderer.view);
 // Native main container
 let stage = new PIXI.Container();
 
-// At the very beginning we need to instantiate a graphics adapter (in our case the Pixi.JS adapter).
+// At the very beginning we need to instantiate a graphics adapter (in our case the Pixi.js adapter).
 EngineAdapter.instance = new PixiAdapter({renderer: renderer, nativeStage: stage});
 // Initialization of the console (should be initialized after initialization of the adapter)
 CC.startInit(EngineAdapter.instance.createDisplayObjectContainerWrapper(stage));
@@ -61,7 +61,7 @@ CC.visible = true;
 ## With the [Graphics Adapter API](https://github.com/flashist/fgraphics)
 ```TypeScript
 
-// Initialization of the grpahics adapter (in our case the Pixi.JS adapter)
+// Initialization of the grpahics adapter (in our case the Pixi.js adapter)
 EngineAdapter.instance = new PixiAdapter(
   {
     rendererSettings: {
