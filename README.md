@@ -93,7 +93,7 @@ CC.startInit(EngineAdapter.instance.stage);
 CC.visible = true;
 ```
 
-## SystemJS config (example)
+## [SystemJS](https://github.com/systemjs/systemjs) config (example)
 ```TypeScript
 SystemJS.config(
   {
