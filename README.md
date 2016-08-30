@@ -63,6 +63,8 @@ CC.visible = true;
 
 ## With the [Graphics Adapter API](https://github.com/flashist/fgraphics)
 ```TypeScript
+import {EngineAdapter, PixiAdapter, TickerEvent} from "fgraphics/dist/index";
+import {CC} from "fconsole/dist/index";
 
 // Initialization of the grpahics adapter (in our case the Pixi.js adapter)
 EngineAdapter.instance = new PixiAdapter(
