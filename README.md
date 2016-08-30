@@ -116,4 +116,4 @@ SystemJS.config(
 ```
 
 # Notes
-* Actually, there are only 2 implemented features yet (up to the August 29, 2016): Display List Inspector and Properties Editing. In my opinion, these two are the most useful and important features from [Flash-Console](https://github.com/junkbyte/flash-console) and I wanted to implement them the first. Other features are planned to be implemented.
+* Actually, there are only 2 implemented features yet (up to the August 29, 2016): Display List Inspector and Properties Editing. In my opinion, these two are the most useful and important features from [Flash-Console](https://github.com/junkbyte/flash-console) and I wanted to implement them the first. [Other features are planned](https://github.com/flashist/fconsole/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) to be implemented.
