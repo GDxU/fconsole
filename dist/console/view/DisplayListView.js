@@ -66,10 +66,12 @@ var DisplayListView = (function (_super) {
                 tempName = data.object.constructor.name;
             }
             result += prefix + " " + tempName;
-            var childPrefix = "- " + prefix;
-            var childrenCount = data.children.length;
-            for (var childIndex = 0; childIndex < childrenCount; childIndex++) {
-                result += "\n" + this.parseUnderPointData(data.children[childIndex], childPrefix);
+            if (data.children && data.children.length > 0) {
+                var childPrefix = "- " + prefix;
+                var childrenCount = data.children.length;
+                for (var childIndex = 0; childIndex < childrenCount; childIndex++) {
+                    result += "\n" + this.parseUnderPointData(data.children[childIndex], childPrefix);
+                }
             }
         }
         return result;
