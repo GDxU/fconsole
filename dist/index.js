@@ -11,7 +11,7 @@ __export(require('./console/view/BaseConsoleButton'));
 __export(require('./console/view/BaseConsoleView'));
 __export(require('./console/view/ConsoleView'));
 __export(require('./console/view/DisplayListView'));
-__export(require('./console/view/tooltip/ConsoleTooltip'));
 __export(require('./console/view/capturekey/CaptureKeyButton'));
 __export(require('./console/view/capturekey/CaptureKeyButtonEvent'));
+__export(require('./console/view/tooltip/ConsoleTooltip'));
 //# sourceMappingURL=index.js.map

@@ -8,6 +8,6 @@ export * from './console/view/BaseConsoleButton';
 export * from './console/view/BaseConsoleView';
 export * from './console/view/ConsoleView';
 export * from './console/view/DisplayListView';
-export * from './console/view/tooltip/ConsoleTooltip';
 export * from './console/view/capturekey/CaptureKeyButton';
 export * from './console/view/capturekey/CaptureKeyButtonEvent';
+export * from './console/view/tooltip/ConsoleTooltip';
