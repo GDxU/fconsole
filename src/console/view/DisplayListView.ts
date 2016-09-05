@@ -119,10 +119,12 @@ export class DisplayListView extends BaseConsoleView {
 
             result += prefix + " " + tempName;
 
-            let childPrefix:string = "- " + prefix;
-            let childrenCount:number = data.children.length;
-            for (let childIndex:number = 0; childIndex < childrenCount; childIndex++) {
-                result += "\n" + this.parseUnderPointData(data.children[childIndex], childPrefix);
+            if (data.children && data.children.length > 0) {
+                let childPrefix:string = "- " + prefix;
+                let childrenCount:number = data.children.length;
+                for (let childIndex:number = 0; childIndex < childrenCount; childIndex++) {
+                    result += "\n" + this.parseUnderPointData(data.children[childIndex], childPrefix);
+                }
             }
         }
 
