@@ -5,7 +5,7 @@ import { Config } from "./Config";
 import { TooltipManager } from "../tooltip/TooltipManager";
 export declare class CC {
     private static eventListenerHelper;
-    private static root;
+    private static _root;
     private static contentCont;
     private static viewsCont;
     private static tooltipsCont;
@@ -22,4 +22,5 @@ export declare class CC {
     static hideView(view: BaseConsoleView): void;
     static toggleView(view: BaseConsoleView, moveToMouse?: boolean): void;
     static moveViewToTopLayer(view: BaseConsoleView): void;
+    static root: IDisplayObjectContainerWrapper;
 }

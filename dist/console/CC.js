@@ -13,9 +13,7 @@ var CC = (function () {
     CC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
         index_2.Logger.log("CC: ", CC);
-        CC.root = root;
         CC.contentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.root.addChild(CC.contentCont);
         CC.viewsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         CC.contentCont.addChild(CC.viewsCont);
         CC.tooltipsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
@@ -46,6 +44,7 @@ var CC = (function () {
                 CC.passwordInputIndex = 0;
             }
         });
+        CC.root = root;
     };
     CC.onPasswordInput = function () {
         CC.visible = !CC.visible;
@@ -95,6 +94,24 @@ var CC = (function () {
     CC.moveViewToTopLayer = function (view) {
         index_1.DisplayObjectTools.moveObjectToTopLayer(view.view);
     };
+    Object.defineProperty(CC, "root", {
+        get: function () {
+            return CC._root;
+        },
+        set: function (value) {
+            // Remove from the previous main container, if there was one
+            if (CC.root) {
+                CC.root.removeChild(CC.contentCont);
+            }
+            CC._root = value;
+            // Add to the new main container, if there is one
+            if (CC.root) {
+                CC.root.addChild(CC.contentCont);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     CC.eventListenerHelper = new index_2.EventListenerHelper();
     CC.password = "";
     CC.passwordInputIndex = 0;

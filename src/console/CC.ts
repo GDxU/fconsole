@@ -11,7 +11,7 @@ import {ConsoleTooltip} from "./view/tooltip/ConsoleTooltip";
 export class CC {
     private static eventListenerHelper:EventListenerHelper<any> = new EventListenerHelper();
 
-    private static root:IDisplayObjectContainerWrapper;
+    private static _root:IDisplayObjectContainerWrapper;
     private static contentCont:IDisplayObjectContainerWrapper;
     private static viewsCont:IDisplayObjectContainerWrapper;
     private static tooltipsCont:IDisplayObjectContainerWrapper;
@@ -29,10 +29,7 @@ export class CC {
 
         Logger.log("CC: ", CC);
 
-        CC.root = root;
-
         CC.contentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.root.addChild(CC.contentCont);
 
         CC.viewsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
         CC.contentCont.addChild(CC.viewsCont);
@@ -76,6 +73,8 @@ export class CC {
                 }
             }
         );
+
+        CC.root = root;
     }
 
     private static onPasswordInput():void {
@@ -125,5 +124,23 @@ export class CC {
 
     public static moveViewToTopLayer(view:BaseConsoleView):void {
         DisplayObjectTools.moveObjectToTopLayer(view.view);
+    }
+
+
+    static get root():IDisplayObjectContainerWrapper {
+        return CC._root;
+    }
+    static set root(value:IDisplayObjectContainerWrapper) {
+        // Remove from the previous main container, if there was one
+        if (CC.root) {
+            CC.root.removeChild(CC.contentCont);
+        }
+
+        CC._root = value;
+
+        // Add to the new main container, if there is one
+        if (CC.root) {
+            CC.root.addChild(CC.contentCont);
+        }
     }
 }
