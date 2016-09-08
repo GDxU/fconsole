@@ -9,6 +9,9 @@ export declare class Config {
         captureKeyBtnNoKeyHelpText: string;
         displayListTitle: string;
         displayListCapturedKeyText: string;
+        additionalInfoBtnNormalLabel: string;
+        additionalInfoBtnPressedLabel: string;
+        additionalInfoBtnTooltipTitle: string;
     };
     btnSettings: {
         labelSize: number;
@@ -30,6 +33,22 @@ export declare class Config {
     displayListSettings: {
         hierarchyLabelColor: number;
         hierarchyLabelSize: number;
+        additionalInfoParams: {
+            "x": {
+                toFixed: number;
+            };
+            "y": {
+                toFixed: number;
+            };
+            "width": {
+                visualName: string;
+                toFixed: number;
+            };
+            "height": {
+                visualName: string;
+                toFixed: number;
+            };
+        };
     };
     tooltipSettings: {
         bgColor: number;

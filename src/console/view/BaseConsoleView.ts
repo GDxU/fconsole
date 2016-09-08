@@ -17,6 +17,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
     protected contentCont:IDisplayObjectContainerWrapper;
     protected titleCont:IDisplayObjectContainerWrapper;
+    protected insideContentCont:IDisplayObjectContainerWrapper;
 
     private _visible:boolean;
 
@@ -33,7 +34,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
     protected captureBtn:BaseConsoleButton;
     private _captureVisible:boolean;
-    private captureKey:string;
+    // private captureKey:string;
 
     public lastBgWidth:number = 0;
     public lastBgHeight:number = 0;
@@ -45,7 +46,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
     protected construction():void {
         super.construction();
 
-        this.captureKey = "";
+        // this.captureKey = "";
 
         this._titleVisible = true;
         this._captureVisible = false;
@@ -84,7 +85,8 @@ export class BaseConsoleView extends BaseEventListenerObject {
         //
         this.captureBtn.tooltipData = {title: FC.config.localization.captureKeyBtnTooltipTitle};
 
-        this.commitData();
+        this.insideContentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.contentCont.addChild(this.insideContentCont);
     }
 
     public destruction():void {
@@ -156,11 +158,6 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
         this.titleLabel.visible = this.titleVisible;
         this.captureBtn.view.visible = this.captureVisible;
-        if (this.captureKey) {
-            this.captureBtn.label = BaseConsoleView.CAPTURE_LABEL_FIRST_PART + " " + this.captureKey;
-        } else {
-            this.captureBtn.label = BaseConsoleView.CAPTURE_LABEL_FIRST_PART + " " + BaseConsoleView.NO_CAPTURE_KEY_TEXT;
-        }
 
         this.arrange();
     }
@@ -185,6 +182,12 @@ export class BaseConsoleView extends BaseEventListenerObject {
             this.btnsCont.x = this.titleLabel.x + this.titleLabel.width + 10;
         } else {
             this.btnsCont.x = this.titleLabel.x;
+        }
+
+        if (this.insideContentCont.visible) {
+            this.insideContentCont.y = this.titleCont.y + this.titleCont.height;
+        }else {
+            this.insideContentCont.y = 0;
         }
 
         let tempWidth:number = this.contentCont.width + FC.config.viewSettings.bgToContentShift.x;

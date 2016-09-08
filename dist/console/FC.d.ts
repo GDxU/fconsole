@@ -16,7 +16,7 @@ export declare class FC {
     static tooltipManager: TooltipManager;
     static view: ConsoleView;
     static displayListView: DisplayListView;
-    static startInit(root: IDisplayObjectContainerWrapper, password?: string, config?: Config): void;
+    static startInit(root?: IDisplayObjectContainerWrapper, password?: string, config?: Config): void;
     private static onPasswordInput();
     static visible: boolean;
     static showView(view: BaseConsoleView, moveToMouse?: boolean): void;

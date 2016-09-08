@@ -11,6 +11,9 @@ var Config = (function () {
             captureKeyBtnNoKeyHelpText: "(click to add)",
             displayListTitle: "Display List Inspector",
             displayListCapturedKeyText: "Press an assinged key\nto add display list hierarchy\nto the browser console",
+            additionalInfoBtnNormalLabel: "Additional Info: off",
+            additionalInfoBtnPressedLabel: "Additional Info: on",
+            additionalInfoBtnTooltipTitle: "Show additional info",
         };
         this.btnSettings = {
             labelSize: 14,
@@ -28,7 +31,13 @@ var Config = (function () {
         };
         this.displayListSettings = {
             hierarchyLabelColor: 0xCCCCCC,
-            hierarchyLabelSize: 14
+            hierarchyLabelSize: 14,
+            additionalInfoParams: {
+                "x": { toFixed: 2 },
+                "y": { toFixed: 2 },
+                "width": { visualName: "w", toFixed: 2 },
+                "height": { visualName: "h", toFixed: 2 }
+            }
         };
         this.tooltipSettings = {
             bgColor: 0x000000,

@@ -7,6 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var BaseConsoleView_1 = require("./BaseConsoleView");
 var index_1 = require("fgraphics/dist/index");
 var index_2 = require("fcore/dist/index");
+var BaseConsoleButton_1 = require("./BaseConsoleButton");
 var FC_1 = require("../FC");
 var DisplayListView = (function (_super) {
     __extends(DisplayListView, _super);
@@ -18,9 +19,13 @@ var DisplayListView = (function (_super) {
         this.captureVisible = true;
         this.lastCheckedPos = new index_2.Point();
         this.titleLabel.text = "Display List";
+        this.insideContentCont.visible = true;
+        this.additionalInfoBtn = new BaseConsoleButton_1.BaseConsoleButton();
+        this.insideContentCont.addChild(this.additionalInfoBtn.view);
+        this.additionalInfoBtn.tooltipData = { title: FC_1.FC.config.localization.additionalInfoBtnTooltipTitle };
         this.displayListField = index_1.EngineAdapter.instance.createTextWrapper();
-        this.contentCont.addChild(this.displayListField);
-        this.displayListField.y = this.titleCont.y + this.titleCont.height + 5;
+        this.insideContentCont.addChild(this.displayListField);
+        this.displayListField.y = this.additionalInfoBtn.view.y + this.additionalInfoBtn.view.height + 5;
         this.displayListField.color = FC_1.FC.config.displayListSettings.hierarchyLabelColor;
         this.displayListField.size = FC_1.FC.config.displayListSettings.hierarchyLabelSize;
         this.closeBtn = this.createTitleBtn("X", { title: FC_1.FC.config.localization.closeBtnTooltipTitle });
@@ -30,6 +35,7 @@ var DisplayListView = (function (_super) {
         _super.prototype.addListeners.call(this);
         this.eventListenerHelper.addEventListener(index_1.EngineAdapter.instance.mainTicker, index_1.TickerEvent.TICK, this.onTick);
         this.eventListenerHelper.addEventListener(this.closeBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onClose);
+        this.eventListenerHelper.addEventListener(this.additionalInfoBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onAdditionalBtn);
     };
     DisplayListView.prototype.onTick = function () {
         if (this.visible) {
@@ -54,6 +60,9 @@ var DisplayListView = (function (_super) {
         this.groupLogUnderPointData(underPointData);
         console.groupEnd();
     };
+    DisplayListView.prototype.onAdditionalBtn = function () {
+        this.isAdditionalInfoPressed = !this._isAdditionalInfoPressed;
+    };
     DisplayListView.prototype.getObjectsUnderMouse = function () {
         return index_1.EngineAdapter.instance.getNativeObjectsUnderPoint(index_1.EngineAdapter.instance.stage.object, index_1.EngineAdapter.instance.globalMouseX, index_1.EngineAdapter.instance.globalMouseY);
     };
@@ -66,6 +75,40 @@ var DisplayListView = (function (_super) {
                 tempName = data.object.constructor.name;
             }
             result += prefix + " " + tempName;
+            if (this.isAdditionalInfoPressed) {
+                if (FC_1.FC.config.displayListSettings.additionalInfoParams) {
+                    result += " [ ";
+                    var parsedData = void 0;
+                    var tempParamConfig = void 0;
+                    var keys = Object.keys(FC_1.FC.config.displayListSettings.additionalInfoParams);
+                    var tempKey = void 0;
+                    var tempVisualKey = void 0;
+                    var keysCount = keys.length;
+                    for (var keyIndex = 0; keyIndex < keysCount; keyIndex++) {
+                        tempKey = keys[keyIndex];
+                        if (data.object[tempKey] !== undefined) {
+                            if (keyIndex > 0) {
+                                result += ", ";
+                            }
+                            parsedData = data.object[tempKey];
+                            //
+                            tempParamConfig = FC_1.FC.config.displayListSettings.additionalInfoParams[tempKey];
+                            if (tempParamConfig.toFixed || tempParamConfig.toFixed === 0) {
+                                if (parsedData !== Math.floor(parsedData)) {
+                                    parsedData = parsedData.toFixed(tempParamConfig.toFixed);
+                                }
+                            }
+                            //
+                            tempVisualKey = tempKey;
+                            if (tempParamConfig.visualName) {
+                                tempVisualKey = tempParamConfig.visualName;
+                            }
+                            result += tempVisualKey + ": " + parsedData;
+                        }
+                    }
+                    result += " ]";
+                }
+            }
             if (data.children && data.children.length > 0) {
                 var childPrefix = "- " + prefix;
                 var childrenCount = data.children.length;
@@ -122,6 +165,31 @@ var DisplayListView = (function (_super) {
             }
         }
         return result;
+    };
+    Object.defineProperty(DisplayListView.prototype, "isAdditionalInfoPressed", {
+        get: function () {
+            return this._isAdditionalInfoPressed;
+        },
+        set: function (value) {
+            if (value == this._isAdditionalInfoPressed) {
+                return;
+            }
+            this._isAdditionalInfoPressed = value;
+            this.commitData();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DisplayListView.prototype.commitData = function () {
+        _super.prototype.commitData.call(this);
+        if (this.additionalInfoBtn) {
+            if (this.isAdditionalInfoPressed) {
+                this.additionalInfoBtn.label = FC_1.FC.config.localization.additionalInfoBtnPressedLabel;
+            }
+            else {
+                this.additionalInfoBtn.label = FC_1.FC.config.localization.additionalInfoBtnNormalLabel;
+            }
+        }
     };
     return DisplayListView;
 }(BaseConsoleView_1.BaseConsoleView));

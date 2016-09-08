@@ -13,6 +13,10 @@ export class Config {
 
         displayListTitle: "Display List Inspector",
         displayListCapturedKeyText: "Press an assinged key\nto add display list hierarchy\nto the browser console",
+
+        additionalInfoBtnNormalLabel: "Additional Info: off",
+        additionalInfoBtnPressedLabel: "Additional Info: on",
+        additionalInfoBtnTooltipTitle: "Show additional info",
     };
 
     public btnSettings = {
@@ -35,7 +39,14 @@ export class Config {
 
     public displayListSettings = {
         hierarchyLabelColor: 0xCCCCCC,
-        hierarchyLabelSize: 14
+        hierarchyLabelSize: 14,
+
+        additionalInfoParams: {
+            "x": {toFixed: 2},
+            "y": {toFixed: 2},
+            "width": {visualName: "w", toFixed: 2},
+            "height": {visualName: "h", toFixed: 2}
+        }
     };
 
     public tooltipSettings = {

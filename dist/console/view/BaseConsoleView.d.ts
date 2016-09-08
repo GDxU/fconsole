@@ -9,6 +9,7 @@ export declare class BaseConsoleView extends BaseEventListenerObject {
     private bgGraphics;
     protected contentCont: IDisplayObjectContainerWrapper;
     protected titleCont: IDisplayObjectContainerWrapper;
+    protected insideContentCont: IDisplayObjectContainerWrapper;
     private _visible;
     private dragHelper;
     private viewDragStartX;
@@ -20,7 +21,6 @@ export declare class BaseConsoleView extends BaseEventListenerObject {
     private _titleVisible;
     protected captureBtn: BaseConsoleButton;
     private _captureVisible;
-    private captureKey;
     lastBgWidth: number;
     lastBgHeight: number;
     constructor();

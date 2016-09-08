@@ -17,6 +17,10 @@ export class DisplayListView extends BaseConsoleView {
     private closeBtn:BaseConsoleButton;
     private lastUnderPointData:IObjectUnderPointVO;
 
+    protected additionalInfoBtn:BaseConsoleButton;
+
+    private _isAdditionalInfoPressed:boolean;
+
     constructor() {
         super();
     }
@@ -29,9 +33,16 @@ export class DisplayListView extends BaseConsoleView {
         this.lastCheckedPos = new Point();
         this.titleLabel.text = "Display List";
 
+
+        this.insideContentCont.visible = true;
+
+        this.additionalInfoBtn = new BaseConsoleButton();
+        this.insideContentCont.addChild(this.additionalInfoBtn.view);
+        this.additionalInfoBtn.tooltipData = {title: FC.config.localization.additionalInfoBtnTooltipTitle};
+
         this.displayListField = EngineAdapter.instance.createTextWrapper();
-        this.contentCont.addChild(this.displayListField);
-        this.displayListField.y = this.titleCont.y + this.titleCont.height + 5;
+        this.insideContentCont.addChild(this.displayListField);
+        this.displayListField.y = this.additionalInfoBtn.view.y + this.additionalInfoBtn.view.height + 5;
         this.displayListField.color = FC.config.displayListSettings.hierarchyLabelColor;
         this.displayListField.size = FC.config.displayListSettings.hierarchyLabelSize;
 
@@ -56,6 +67,12 @@ export class DisplayListView extends BaseConsoleView {
             this.closeBtn.view,
             DisplayObjectWrapperMouseEvent.CLICK,
             this.onClose
+        );
+
+        this.eventListenerHelper.addEventListener(
+            this.additionalInfoBtn.view,
+            DisplayObjectWrapperMouseEvent.CLICK,
+            this.onAdditionalBtn
         );
     }
 
@@ -100,6 +117,10 @@ export class DisplayListView extends BaseConsoleView {
         console.groupEnd();
     }
 
+    protected onAdditionalBtn():void {
+        this.isAdditionalInfoPressed = !this._isAdditionalInfoPressed;
+    }
+
     private getObjectsUnderMouse():IObjectUnderPointVO {
         return EngineAdapter.instance.getNativeObjectsUnderPoint(
             EngineAdapter.instance.stage.object,
@@ -118,6 +139,48 @@ export class DisplayListView extends BaseConsoleView {
             }
 
             result += prefix + " " + tempName;
+            if (this.isAdditionalInfoPressed) {
+                if (FC.config.displayListSettings.additionalInfoParams) {
+                    result += " [ ";
+
+                    let parsedData;
+                    let tempParamConfig;
+
+                    let keys:string[] = Object.keys(FC.config.displayListSettings.additionalInfoParams);
+                    let tempKey:string;
+                    let tempVisualKey:string;
+                    let keysCount:number = keys.length;
+                    for (let keyIndex:number = 0; keyIndex < keysCount; keyIndex++) {
+                        tempKey = keys[keyIndex];
+
+                        if (data.object[tempKey] !== undefined) {
+
+                            if (keyIndex > 0) {
+                                result += ", "
+                            }
+
+                            parsedData = data.object[tempKey];
+                            //
+                            tempParamConfig = FC.config.displayListSettings.additionalInfoParams[tempKey];
+                            if (tempParamConfig.toFixed || tempParamConfig.toFixed === 0) {
+                                if (parsedData !== Math.floor(parsedData)) {
+                                    parsedData = (parsedData as number).toFixed(tempParamConfig.toFixed);
+                                }
+                            }
+
+                            //
+                            tempVisualKey = tempKey;
+                            if (tempParamConfig.visualName) {
+                                tempVisualKey = tempParamConfig.visualName;
+                            }
+
+                            result += tempVisualKey + ": " + parsedData;
+                        }
+                    }
+
+                    result += " ]";
+                }
+            }
 
             if (data.children && data.children.length > 0) {
                 let childPrefix:string = "- " + prefix;
@@ -189,5 +252,31 @@ export class DisplayListView extends BaseConsoleView {
         }
 
         return result;
+    }
+
+
+    get isAdditionalInfoPressed():boolean {
+        return this._isAdditionalInfoPressed;
+    }
+    set isAdditionalInfoPressed(value:boolean) {
+        if (value == this._isAdditionalInfoPressed) {
+            return;
+        }
+
+        this._isAdditionalInfoPressed = value;
+
+        this.commitData();
+    }
+
+    protected commitData():void {
+        super.commitData();
+
+        if (this.additionalInfoBtn) {
+            if (this.isAdditionalInfoPressed) {
+                this.additionalInfoBtn.label = FC.config.localization.additionalInfoBtnPressedLabel;
+            } else {
+                this.additionalInfoBtn.label = FC.config.localization.additionalInfoBtnNormalLabel;
+            }
+        }
     }
 }

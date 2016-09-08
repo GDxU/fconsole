@@ -15,12 +15,13 @@ var BaseConsoleView = (function (_super) {
     __extends(BaseConsoleView, _super);
     function BaseConsoleView() {
         _super.call(this);
+        // private captureKey:string;
         this.lastBgWidth = 0;
         this.lastBgHeight = 0;
     }
     BaseConsoleView.prototype.construction = function () {
         _super.prototype.construction.call(this);
-        this.captureKey = "";
+        // this.captureKey = "";
         this._titleVisible = true;
         this._captureVisible = false;
         this.buttonsList = [];
@@ -48,7 +49,8 @@ var BaseConsoleView = (function (_super) {
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
         //
         this.captureBtn.tooltipData = { title: FC_1.FC.config.localization.captureKeyBtnTooltipTitle };
-        this.commitData();
+        this.insideContentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.contentCont.addChild(this.insideContentCont);
     };
     BaseConsoleView.prototype.destruction = function () {
         _super.prototype.destruction.call(this);
@@ -95,12 +97,6 @@ var BaseConsoleView = (function (_super) {
         _super.prototype.commitData.call(this);
         this.titleLabel.visible = this.titleVisible;
         this.captureBtn.view.visible = this.captureVisible;
-        if (this.captureKey) {
-            this.captureBtn.label = BaseConsoleView.CAPTURE_LABEL_FIRST_PART + " " + this.captureKey;
-        }
-        else {
-            this.captureBtn.label = BaseConsoleView.CAPTURE_LABEL_FIRST_PART + " " + BaseConsoleView.NO_CAPTURE_KEY_TEXT;
-        }
         this.arrange();
     };
     BaseConsoleView.prototype.arrange = function () {
@@ -120,6 +116,12 @@ var BaseConsoleView = (function (_super) {
         }
         else {
             this.btnsCont.x = this.titleLabel.x;
+        }
+        if (this.insideContentCont.visible) {
+            this.insideContentCont.y = this.titleCont.y + this.titleCont.height;
+        }
+        else {
+            this.insideContentCont.y = 0;
         }
         var tempWidth = this.contentCont.width + FC_1.FC.config.viewSettings.bgToContentShift.x;
         var tempHeight = this.contentCont.height + FC_1.FC.config.viewSettings.bgToContentShift.y;

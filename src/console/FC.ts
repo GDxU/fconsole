@@ -25,7 +25,7 @@ export class FC {
     public static view:ConsoleView;
     public static displayListView:DisplayListView;
 
-    static startInit(root:IDisplayObjectContainerWrapper, password:string = "`", config?:Config):void {
+    static startInit(root?:IDisplayObjectContainerWrapper, password:string = "`", config?:Config):void {
 
         Logger.log("CC: ", FC);
 
