@@ -13,7 +13,13 @@ var Config = (function () {
             displayListCapturedKeyText: "Press an assinged key\nto add display list hierarchy\nto the browser console",
             additionalInfoBtnNormalLabel: "Additional Info: off",
             additionalInfoBtnPressedLabel: "Additional Info: on",
-            additionalInfoBtnTooltipTitle: "Show additional info",
+            additionalInfoBtnTooltipTitle: "Additional visual objects info",
+            additionalInfoBtnTooltipText: "Position, width, height, etc. (configurable)",
+            moveHelperBtnNormalLabel: "Move Helper: off",
+            moveHelperBtnPressedLabel: "Move Helper: on",
+            moveHelperTooltipTitle: "Move Helper",
+            moveHelperTooltipText: "Enable Move Helper and press CTRL\nfor choosing an object to move\nwith arrow keys (← ↑ → ↓)",
+            movableObjectText: "(MOVABLE)",
         };
         this.btnSettings = {
             labelSize: 14,

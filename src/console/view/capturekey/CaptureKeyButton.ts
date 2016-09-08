@@ -32,7 +32,7 @@ export class CaptureKeyButton extends BaseConsoleButton {
             InputManager.instance,
             InputManagerEvent.KEY_PRESS,
             this.onKeyPress
-        )
+        );
     }
 
 

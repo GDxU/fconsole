@@ -12,6 +12,12 @@ export declare class Config {
         additionalInfoBtnNormalLabel: string;
         additionalInfoBtnPressedLabel: string;
         additionalInfoBtnTooltipTitle: string;
+        additionalInfoBtnTooltipText: string;
+        moveHelperBtnNormalLabel: string;
+        moveHelperBtnPressedLabel: string;
+        moveHelperTooltipTitle: string;
+        moveHelperTooltipText: string;
+        movableObjectText: string;
     };
     btnSettings: {
         labelSize: number;
