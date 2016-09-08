@@ -6,7 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var index_1 = require("fgraphics/dist/index");
 var index_2 = require("fcore/dist/index");
-var CC_1 = require("../CC");
+var FC_1 = require("../FC");
 var BaseConsoleButton = (function (_super) {
     __extends(BaseConsoleButton, _super);
     function BaseConsoleButton() {
@@ -20,8 +20,8 @@ var BaseConsoleButton = (function (_super) {
         this.view.buttonMode = true;
         this.field = index_1.EngineAdapter.instance.createTextWrapper();
         this.view.addChild(this.field);
-        this.field.color = CC_1.CC.config.btnSettings.labelColor;
-        this.field.size = CC_1.CC.config.btnSettings.labelSize;
+        this.field.color = FC_1.FC.config.btnSettings.labelColor;
+        this.field.size = FC_1.FC.config.btnSettings.labelSize;
         this.commitData();
         this.onOut();
     };
@@ -35,12 +35,12 @@ var BaseConsoleButton = (function (_super) {
     BaseConsoleButton.prototype.onOver = function () {
         this.view.alpha = 1;
         if (this.tooltipData) {
-            CC_1.CC.tooltipManager.show(this.tooltipData);
+            FC_1.FC.tooltipManager.show(this.tooltipData);
         }
     };
     BaseConsoleButton.prototype.onOut = function () {
         this.view.alpha = 0.75;
-        CC_1.CC.tooltipManager.hide();
+        FC_1.FC.tooltipManager.hide();
     };
     BaseConsoleButton.prototype.onClick = function () {
         this.onOut();

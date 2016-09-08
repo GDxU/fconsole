@@ -8,7 +8,7 @@ var BaseConsoleButton_1 = require("../BaseConsoleButton");
 var index_1 = require("flibs/dist/index");
 var index_2 = require("fcore/dist/index");
 var CaptureKeyButtonEvent_1 = require("./CaptureKeyButtonEvent");
-var CC_1 = require("../../CC");
+var FC_1 = require("../../FC");
 var CaptureKeyButton = (function (_super) {
     __extends(CaptureKeyButton, _super);
     function CaptureKeyButton() {
@@ -41,13 +41,13 @@ var CaptureKeyButton = (function (_super) {
     CaptureKeyButton.prototype.commitData = function () {
         _super.prototype.commitData.call(this);
         if (this.isClicked) {
-            this.label = CC_1.CC.config.localization.captureKeyBtnPressedLabel;
+            this.label = FC_1.FC.config.localization.captureKeyBtnPressedLabel;
         }
         else if (this.captureKey) {
-            this.label = index_2.StringTools.substituteList(CC_1.CC.config.localization.captureKeyBtnNormalLabel, this.captureKey);
+            this.label = index_2.StringTools.substituteList(FC_1.FC.config.localization.captureKeyBtnNormalLabel, this.captureKey);
         }
         else {
-            this.label = index_2.StringTools.substituteList(CC_1.CC.config.localization.captureKeyBtnNormalLabel, CC_1.CC.config.localization.captureKeyBtnNoKeyHelpText);
+            this.label = index_2.StringTools.substituteList(FC_1.FC.config.localization.captureKeyBtnNormalLabel, FC_1.FC.config.localization.captureKeyBtnNoKeyHelpText);
         }
     };
     CaptureKeyButton.prototype.arrange = function () {

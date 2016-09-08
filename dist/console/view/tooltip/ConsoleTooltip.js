@@ -6,7 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var BaseTooltip_1 = require("../../../tooltip/BaseTooltip");
 var index_1 = require("fgraphics/dist/index");
-var CC_1 = require("../../CC");
+var FC_1 = require("../../FC");
 var ConsoleTooltip = (function (_super) {
     __extends(ConsoleTooltip, _super);
     function ConsoleTooltip() {
@@ -21,13 +21,13 @@ var ConsoleTooltip = (function (_super) {
         this.titleLabel = index_1.EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.titleLabel);
         this.titleLabel.align = index_1.TextWrapperAlign.CENTER;
-        this.titleLabel.color = CC_1.CC.config.tooltipSettings.titleLabelColor;
-        this.titleLabel.size = CC_1.CC.config.tooltipSettings.titleLabelSize;
+        this.titleLabel.color = FC_1.FC.config.tooltipSettings.titleLabelColor;
+        this.titleLabel.size = FC_1.FC.config.tooltipSettings.titleLabelSize;
         this.textLabel = index_1.EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.textLabel);
         this.textLabel.align = index_1.TextWrapperAlign.CENTER;
-        this.textLabel.color = CC_1.CC.config.tooltipSettings.textLabelColor;
-        this.textLabel.size = CC_1.CC.config.tooltipSettings.textLabelSize;
+        this.textLabel.color = FC_1.FC.config.tooltipSettings.textLabelColor;
+        this.textLabel.size = FC_1.FC.config.tooltipSettings.textLabelSize;
     };
     ConsoleTooltip.prototype.commitData = function () {
         _super.prototype.commitData.call(this);
@@ -56,9 +56,9 @@ var ConsoleTooltip = (function (_super) {
             this.titleLabel.x = 0;
         }
         this.bg.clear();
-        this.bg.beginFill(CC_1.CC.config.tooltipSettings.bgColor, CC_1.CC.config.tooltipSettings.bgAlpha);
-        this.bg.lineStyle(CC_1.CC.config.tooltipSettings.borderWidth, CC_1.CC.config.tooltipSettings.borderColor, CC_1.CC.config.tooltipSettings.borderAlpha);
-        this.bg.drawRect(0, 0, this.contentCont.width + CC_1.CC.config.tooltipSettings.bgToContentShift.x, this.contentCont.height + CC_1.CC.config.tooltipSettings.bgToContentShift.y);
+        this.bg.beginFill(FC_1.FC.config.tooltipSettings.bgColor, FC_1.FC.config.tooltipSettings.bgAlpha);
+        this.bg.lineStyle(FC_1.FC.config.tooltipSettings.borderWidth, FC_1.FC.config.tooltipSettings.borderColor, FC_1.FC.config.tooltipSettings.borderAlpha);
+        this.bg.drawRect(0, 0, this.contentCont.width + FC_1.FC.config.tooltipSettings.bgToContentShift.x, this.contentCont.height + FC_1.FC.config.tooltipSettings.bgToContentShift.y);
         this.bg.endFill();
         this.contentCont.x = this.bg.x + ((this.bg.width - this.contentCont.width) >> 1);
         this.contentCont.y = this.bg.y + ((this.bg.height - this.contentCont.height) >> 1);

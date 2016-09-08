@@ -3,7 +3,7 @@ import { BaseConsoleView } from "./view/BaseConsoleView";
 import { DisplayListView } from "./view/DisplayListView";
 import { Config } from "./Config";
 import { TooltipManager } from "../tooltip/TooltipManager";
-export declare class CC {
+export declare class FC {
     private static eventListenerHelper;
     private static _root;
     private static contentCont;

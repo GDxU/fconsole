@@ -7,7 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var BaseConsoleView_1 = require("./BaseConsoleView");
 var index_1 = require("fgraphics/dist/index");
 var index_2 = require("fcore/dist/index");
-var CC_1 = require("../CC");
+var FC_1 = require("../FC");
 var DisplayListView = (function (_super) {
     __extends(DisplayListView, _super);
     function DisplayListView() {
@@ -21,10 +21,10 @@ var DisplayListView = (function (_super) {
         this.displayListField = index_1.EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.displayListField);
         this.displayListField.y = this.titleCont.y + this.titleCont.height + 5;
-        this.displayListField.color = CC_1.CC.config.displayListSettings.hierarchyLabelColor;
-        this.displayListField.size = CC_1.CC.config.displayListSettings.hierarchyLabelSize;
-        this.closeBtn = this.createTitleBtn("X", { title: CC_1.CC.config.localization.closeBtnTooltipTitle });
-        this.captureBtn.tooltipData.text = CC_1.CC.config.localization.displayListCapturedKeyText;
+        this.displayListField.color = FC_1.FC.config.displayListSettings.hierarchyLabelColor;
+        this.displayListField.size = FC_1.FC.config.displayListSettings.hierarchyLabelSize;
+        this.closeBtn = this.createTitleBtn("X", { title: FC_1.FC.config.localization.closeBtnTooltipTitle });
+        this.captureBtn.tooltipData.text = FC_1.FC.config.localization.displayListCapturedKeyText;
     };
     DisplayListView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);

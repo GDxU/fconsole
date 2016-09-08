@@ -8,7 +8,7 @@ var index_1 = require("fgraphics/dist/index");
 var index_2 = require("fcore/dist/index");
 var index_3 = require("flibs/dist/index");
 var BaseConsoleButton_1 = require("./BaseConsoleButton");
-var CC_1 = require("../CC");
+var FC_1 = require("../FC");
 var CaptureKeyButton_1 = require("./capturekey/CaptureKeyButton");
 var CaptureKeyButtonEvent_1 = require("./capturekey/CaptureKeyButtonEvent");
 var BaseConsoleView = (function (_super) {
@@ -38,8 +38,8 @@ var BaseConsoleView = (function (_super) {
         this.contentCont.addChild(this.titleCont);
         this.titleLabel = index_1.EngineAdapter.instance.createTextWrapper();
         this.titleCont.addChild(this.titleLabel);
-        this.titleLabel.color = CC_1.CC.config.viewSettings.titleLabelColor;
-        this.titleLabel.size = CC_1.CC.config.viewSettings.titleLabelSize;
+        this.titleLabel.color = FC_1.FC.config.viewSettings.titleLabelColor;
+        this.titleLabel.size = FC_1.FC.config.viewSettings.titleLabelSize;
         this.titleLabel.text = "Test Title";
         this.btnsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         this.titleCont.addChild(this.btnsCont);
@@ -47,7 +47,7 @@ var BaseConsoleView = (function (_super) {
         this.titleCont.addChild(this.captureBtn.view);
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
         //
-        this.captureBtn.tooltipData = { title: CC_1.CC.config.localization.captureKeyBtnTooltipTitle };
+        this.captureBtn.tooltipData = { title: FC_1.FC.config.localization.captureKeyBtnTooltipTitle };
         this.commitData();
     };
     BaseConsoleView.prototype.destruction = function () {
@@ -66,14 +66,14 @@ var BaseConsoleView = (function (_super) {
     BaseConsoleView.prototype.onDragStart = function () {
         this.viewDragStartX = this.view.x;
         this.viewDragStartY = this.view.y;
-        CC_1.CC.moveViewToTopLayer(this);
+        FC_1.FC.moveViewToTopLayer(this);
     };
     BaseConsoleView.prototype.onDragUpdate = function () {
         this.view.x = this.viewDragStartX + this.dragHelper.changeDragGlobalX;
         this.view.y = this.viewDragStartY + this.dragHelper.changeDragGlobalY;
     };
     BaseConsoleView.prototype.onClose = function () {
-        CC_1.CC.hideView(this);
+        FC_1.FC.hideView(this);
     };
     BaseConsoleView.prototype.onCaptureKey = function () {
     };
@@ -86,11 +86,6 @@ var BaseConsoleView = (function (_super) {
                 return;
             }
             this._visible = value;
-            /*if (this.visible) {
-                CC.showView(this);
-            } else {
-                CC.hideView(this);
-            }*/
             this.commitData();
         },
         enumerable: true,
@@ -126,14 +121,14 @@ var BaseConsoleView = (function (_super) {
         else {
             this.btnsCont.x = this.titleLabel.x;
         }
-        var tempWidth = this.contentCont.width + CC_1.CC.config.viewSettings.bgToContentShift.x;
-        var tempHeight = this.contentCont.height + CC_1.CC.config.viewSettings.bgToContentShift.y;
+        var tempWidth = this.contentCont.width + FC_1.FC.config.viewSettings.bgToContentShift.x;
+        var tempHeight = this.contentCont.height + FC_1.FC.config.viewSettings.bgToContentShift.y;
         if (tempWidth != this.lastBgWidth || tempHeight != this.lastBgHeight) {
             this.lastBgWidth = tempWidth;
             this.lastBgHeight = tempHeight;
             this.bgGraphics.clear();
-            this.bgGraphics.beginFill(CC_1.CC.config.viewSettings.bgColor, CC_1.CC.config.viewSettings.bgAlpha);
-            this.bgGraphics.lineStyle(CC_1.CC.config.viewSettings.borderWidth, CC_1.CC.config.viewSettings.borderColor, CC_1.CC.config.viewSettings.borderAlpha);
+            this.bgGraphics.beginFill(FC_1.FC.config.viewSettings.bgColor, FC_1.FC.config.viewSettings.bgAlpha);
+            this.bgGraphics.lineStyle(FC_1.FC.config.viewSettings.borderWidth, FC_1.FC.config.viewSettings.borderColor, FC_1.FC.config.viewSettings.borderAlpha);
             this.bgGraphics.drawRect(0, 0, tempWidth, tempHeight);
             this.bgGraphics.endFill();
         }

@@ -5,7 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var BaseConsoleView_1 = require("./BaseConsoleView");
-var CC_1 = require("../CC");
+var FC_1 = require("../FC");
 var index_1 = require("fgraphics/dist/index");
 var ConsoleView = (function (_super) {
     __extends(ConsoleView, _super);
@@ -16,10 +16,10 @@ var ConsoleView = (function (_super) {
         _super.prototype.construction.call(this);
         this.titleVisible = false;
         this.displayListBtn = this.createTitleBtn("DL", {
-            title: CC_1.CC.config.localization.displayListBtnTooltipTitle,
-            text: CC_1.CC.config.localization.displayListBtnTooltipText
+            title: FC_1.FC.config.localization.displayListBtnTooltipTitle,
+            text: FC_1.FC.config.localization.displayListBtnTooltipText
         });
-        this.closeBtn = this.createTitleBtn("X", { title: CC_1.CC.config.localization.closeBtnTooltipTitle });
+        this.closeBtn = this.createTitleBtn("X", { title: FC_1.FC.config.localization.closeBtnTooltipTitle });
     };
     ConsoleView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
@@ -27,7 +27,7 @@ var ConsoleView = (function (_super) {
         this.eventListenerHelper.addEventListener(this.closeBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onClose);
     };
     ConsoleView.prototype.onDisplayListClick = function () {
-        CC_1.CC.toggleView(CC_1.CC.displayListView);
+        FC_1.FC.toggleView(FC_1.FC.displayListView);
     };
     return ConsoleView;
 }(BaseConsoleView_1.BaseConsoleView));
