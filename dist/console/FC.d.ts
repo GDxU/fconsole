@@ -1,4 +1,5 @@
 import { IDisplayObjectContainerWrapper } from "fgraphics/dist/index";
+import { ConsoleView } from "./view/ConsoleView";
 import { BaseConsoleView } from "./view/BaseConsoleView";
 import { DisplayListView } from "./view/DisplayListView";
 import { Config } from "./Config";
@@ -13,7 +14,7 @@ export declare class FC {
     private static passwordInputIndex;
     static config: Config;
     static tooltipManager: TooltipManager;
-    private static view;
+    static view: ConsoleView;
     static displayListView: DisplayListView;
     static startInit(root: IDisplayObjectContainerWrapper, password?: string, config?: Config): void;
     private static onPasswordInput();

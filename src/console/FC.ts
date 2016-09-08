@@ -22,7 +22,7 @@ export class FC {
     public static config:Config;
     public static tooltipManager:TooltipManager;
 
-    private static view:ConsoleView;
+    public static view:ConsoleView;
     public static displayListView:DisplayListView;
 
     static startInit(root:IDisplayObjectContainerWrapper, password:string = "`", config?:Config):void {
@@ -102,8 +102,9 @@ export class FC {
         FC.moveViewToTopLayer(view);
 
         if (moveToMouse) {
-            view.view.x = EngineAdapter.instance.globalMouseX + 1;
-            view.view.y = EngineAdapter.instance.globalMouseY + 1;
+            let localPos:Point = view.view.parent.toLocal(new Point(EngineAdapter.instance.globalMouseX + 1, EngineAdapter.instance.globalMouseY + 1))
+            view.view.x = localPos.x;
+            view.view.y = localPos.y;
         }
     }
 

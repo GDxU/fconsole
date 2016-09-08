@@ -72,8 +72,9 @@ var FC = (function () {
         view.visible = true;
         FC.moveViewToTopLayer(view);
         if (moveToMouse) {
-            view.view.x = index_1.EngineAdapter.instance.globalMouseX + 1;
-            view.view.y = index_1.EngineAdapter.instance.globalMouseY + 1;
+            var localPos = view.view.parent.toLocal(new index_2.Point(index_1.EngineAdapter.instance.globalMouseX + 1, index_1.EngineAdapter.instance.globalMouseY + 1));
+            view.view.x = localPos.x;
+            view.view.y = localPos.y;
         }
     };
     FC.hideView = function (view) {
