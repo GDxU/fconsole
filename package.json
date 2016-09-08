@@ -27,7 +27,6 @@
   "typings": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "dependencies": {
-    "eventemitter3": "^1.2.0",
     "flibs": "0.0.17"
   },
   "devDependencies": {
