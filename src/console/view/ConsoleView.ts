@@ -1,5 +1,5 @@
 import {BaseConsoleView} from "./BaseConsoleView";
-import {CC} from "../CC";
+import {FC} from "../FC";
 import {BaseConsoleButton} from "./BaseConsoleButton";
 import {DisplayObjectWrapperMouseEvent} from "fgraphics/dist/index";
 export class ConsoleView extends BaseConsoleView {
@@ -19,13 +19,13 @@ export class ConsoleView extends BaseConsoleView {
         this.displayListBtn = this.createTitleBtn(
             "DL",
             {
-                title: CC.config.localization.displayListBtnTooltipTitle,
-                text: CC.config.localization.displayListBtnTooltipText
+                title: FC.config.localization.displayListBtnTooltipTitle,
+                text: FC.config.localization.displayListBtnTooltipText
             }
         );
         this.closeBtn = this.createTitleBtn(
             "X",
-            {title: CC.config.localization.closeBtnTooltipTitle}
+            {title: FC.config.localization.closeBtnTooltipTitle}
         );
     }
 
@@ -47,6 +47,6 @@ export class ConsoleView extends BaseConsoleView {
 
 
     private onDisplayListClick():void {
-        CC.toggleView(CC.displayListView);
+        FC.toggleView(FC.displayListView);
     }
 }

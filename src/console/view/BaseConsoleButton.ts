@@ -5,7 +5,7 @@ import {
     DisplayObjectWrapperMouseEvent
 } from "fgraphics/dist/index";
 import {BaseEventListenerObject} from "fcore/dist/index";
-import {CC} from "../CC";
+import {FC} from "../FC";
 import {ITooltipData} from "../../tooltip/ITooltipData";
 
 export class BaseConsoleButton extends BaseEventListenerObject {
@@ -30,8 +30,8 @@ export class BaseConsoleButton extends BaseEventListenerObject {
 
         this.field = EngineAdapter.instance.createTextWrapper();
         this.view.addChild(this.field);
-        this.field.color = CC.config.btnSettings.labelColor;
-        this.field.size = CC.config.btnSettings.labelSize;
+        this.field.color = FC.config.btnSettings.labelColor;
+        this.field.size = FC.config.btnSettings.labelSize;
 
         this.commitData();
         this.onOut();
@@ -68,14 +68,14 @@ export class BaseConsoleButton extends BaseEventListenerObject {
         this.view.alpha = 1;
 
         if (this.tooltipData) {
-            CC.tooltipManager.show(this.tooltipData);
+            FC.tooltipManager.show(this.tooltipData);
         }
     }
 
     private onOut():void {
         this.view.alpha = 0.75;
 
-        CC.tooltipManager.hide();
+        FC.tooltipManager.hide();
     }
 
     protected onClick():void {

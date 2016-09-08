@@ -2,7 +2,7 @@ import {IDisplayObjectContainerWrapper, EngineAdapter, IGraphicsWrapper, ITextWr
 import {BaseEventListenerObject, EventListenerHelper} from "fcore/dist/index";
 import {DragHelper, DragHelperEvent} from "flibs/dist/index";
 import {BaseConsoleButton} from "./BaseConsoleButton";
-import {CC} from "../CC";
+import {FC} from "../FC";
 import {CaptureKeyButton} from "./capturekey/CaptureKeyButton";
 import {CaptuerKeyButtonEvent} from "./capturekey/CaptureKeyButtonEvent";
 import {ITooltipData} from "../../tooltip/ITooltipData";
@@ -71,8 +71,8 @@ export class BaseConsoleView extends BaseEventListenerObject {
 
         this.titleLabel = EngineAdapter.instance.createTextWrapper();
         this.titleCont.addChild(this.titleLabel);
-        this.titleLabel.color = CC.config.viewSettings.titleLabelColor;
-        this.titleLabel.size = CC.config.viewSettings.titleLabelSize;
+        this.titleLabel.color = FC.config.viewSettings.titleLabelColor;
+        this.titleLabel.size = FC.config.viewSettings.titleLabelSize;
         this.titleLabel.text = "Test Title";
 
         this.btnsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
@@ -82,7 +82,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.titleCont.addChild(this.captureBtn.view);
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
         //
-        this.captureBtn.tooltipData = {title: CC.config.localization.captureKeyBtnTooltipTitle};
+        this.captureBtn.tooltipData = {title: FC.config.localization.captureKeyBtnTooltipTitle};
 
         this.commitData();
     }
@@ -122,7 +122,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.viewDragStartX = this.view.x;
         this.viewDragStartY = this.view.y;
 
-        CC.moveViewToTopLayer(this);
+        FC.moveViewToTopLayer(this);
     }
 
     private onDragUpdate():void {
@@ -131,7 +131,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
     }
 
     protected onClose():void {
-        CC.hideView(this);
+        FC.hideView(this);
     }
 
     protected onCaptureKey():void {
@@ -147,12 +147,6 @@ export class BaseConsoleView extends BaseEventListenerObject {
             return;
         }
         this._visible = value;
-
-        /*if (this.visible) {
-            CC.showView(this);
-        } else {
-            CC.hideView(this);
-        }*/
 
         this.commitData();
     }
@@ -193,16 +187,16 @@ export class BaseConsoleView extends BaseEventListenerObject {
             this.btnsCont.x = this.titleLabel.x;
         }
 
-        let tempWidth:number = this.contentCont.width + CC.config.viewSettings.bgToContentShift.x;
-        let tempHeight:number = this.contentCont.height + CC.config.viewSettings.bgToContentShift.y;
+        let tempWidth:number = this.contentCont.width + FC.config.viewSettings.bgToContentShift.x;
+        let tempHeight:number = this.contentCont.height + FC.config.viewSettings.bgToContentShift.y;
         if (tempWidth != this.lastBgWidth || tempHeight != this.lastBgHeight) {
 
             this.lastBgWidth = tempWidth;
             this.lastBgHeight = tempHeight;
 
             this.bgGraphics.clear();
-            this.bgGraphics.beginFill(CC.config.viewSettings.bgColor, CC.config.viewSettings.bgAlpha);
-            this.bgGraphics.lineStyle(CC.config.viewSettings.borderWidth, CC.config.viewSettings.borderColor, CC.config.viewSettings.borderAlpha);
+            this.bgGraphics.beginFill(FC.config.viewSettings.bgColor, FC.config.viewSettings.bgAlpha);
+            this.bgGraphics.lineStyle(FC.config.viewSettings.borderWidth, FC.config.viewSettings.borderColor, FC.config.viewSettings.borderAlpha);
             this.bgGraphics.drawRect(
                 0,
                 0,

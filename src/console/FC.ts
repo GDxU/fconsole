@@ -8,7 +8,7 @@ import {Config} from "./Config";
 import {TooltipManager} from "../tooltip/TooltipManager";
 import {ConsoleTooltip} from "./view/tooltip/ConsoleTooltip";
 
-export class CC {
+export class FC {
     private static eventListenerHelper:EventListenerHelper<any> = new EventListenerHelper();
 
     private static _root:IDisplayObjectContainerWrapper;
@@ -27,79 +27,79 @@ export class CC {
 
     static startInit(root:IDisplayObjectContainerWrapper, password:string = "`", config?:Config):void {
 
-        Logger.log("CC: ", CC);
+        Logger.log("CC: ", FC);
 
-        CC.contentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        FC.contentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
 
-        CC.viewsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.contentCont.addChild(CC.viewsCont);
+        FC.viewsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        FC.contentCont.addChild(FC.viewsCont);
 
-        CC.tooltipsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        CC.contentCont.addChild(CC.tooltipsCont);
+        FC.tooltipsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        FC.contentCont.addChild(FC.tooltipsCont);
 
-        CC.password = password;
+        FC.password = password;
 
         if (!config) {
             config = new Config();
         }
-        CC.config = config;
+        FC.config = config;
 
         let tempTooltip = new ConsoleTooltip();
-        CC.tooltipManager = new TooltipManager(tempTooltip);
-        CC.tooltipManager.tooltipCont = CC.tooltipsCont;
-        CC.tooltipManager.mouseShift = new Point(10, 15);
+        FC.tooltipManager = new TooltipManager(tempTooltip);
+        FC.tooltipManager.tooltipCont = FC.tooltipsCont;
+        FC.tooltipManager.mouseShift = new Point(10, 15);
 
         // View
-        CC.view = new ConsoleView();
-        CC.displayListView = new DisplayListView();
+        FC.view = new ConsoleView();
+        FC.displayListView = new DisplayListView();
 
         // Events
-        CC.eventListenerHelper.addEventListener(
+        FC.eventListenerHelper.addEventListener(
             InputManager.instance,
             InputManagerEvent.KEY_PRESS,
             (data:InputManagerEventData):void => {
                 let charCode:number = KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
 
-                if (charCode === CC.password.charCodeAt(CC.passwordInputIndex)) {
-                    CC.passwordInputIndex++;
+                if (charCode === FC.password.charCodeAt(FC.passwordInputIndex)) {
+                    FC.passwordInputIndex++;
 
-                    if (CC.passwordInputIndex >= CC.password.length) {
-                        CC.onPasswordInput();
-                        CC.passwordInputIndex = 0;
+                    if (FC.passwordInputIndex >= FC.password.length) {
+                        FC.onPasswordInput();
+                        FC.passwordInputIndex = 0;
                     }
 
                 } else {
-                    CC.passwordInputIndex = 0;
+                    FC.passwordInputIndex = 0;
                 }
             }
         );
 
-        CC.root = root;
+        FC.root = root;
     }
 
     private static onPasswordInput():void {
-        CC.visible = !CC.visible;
+        FC.visible = !FC.visible;
     }
 
     public static get visible():boolean {
-        return CC.view.visible;
+        return FC.view.visible;
     }
     public static set visible(value:boolean) {
         if (value) {
-            CC.showView(CC.view, false);
-            DisplayObjectTools.moveObjectToTopLayer(CC.viewsCont);
-            DisplayObjectTools.moveObjectToTopLayer(CC.tooltipsCont);
+            FC.showView(FC.view, false);
+            DisplayObjectTools.moveObjectToTopLayer(FC.viewsCont);
+            DisplayObjectTools.moveObjectToTopLayer(FC.tooltipsCont);
 
         }else {
-            CC.hideView(CC.view);
+            FC.hideView(FC.view);
         }
     }
 
 
     public static showView(view:BaseConsoleView, moveToMouse:boolean = true):void {
-        CC.viewsCont.addChild(view.view);
+        FC.viewsCont.addChild(view.view);
         view.visible = true;
-        CC.moveViewToTopLayer(view);
+        FC.moveViewToTopLayer(view);
 
         if (moveToMouse) {
             view.view.x = EngineAdapter.instance.globalMouseX + 1;
@@ -116,9 +116,9 @@ export class CC {
 
     public static toggleView(view:BaseConsoleView, moveToMouse:boolean = true):void {
         if (view.visible) {
-            CC.hideView(view);
+            FC.hideView(view);
         }else {
-            CC.showView(view, moveToMouse);
+            FC.showView(view, moveToMouse);
         }
     }
 
@@ -128,19 +128,19 @@ export class CC {
 
 
     static get root():IDisplayObjectContainerWrapper {
-        return CC._root;
+        return FC._root;
     }
     static set root(value:IDisplayObjectContainerWrapper) {
         // Remove from the previous main container, if there was one
-        if (CC.root) {
-            CC.root.removeChild(CC.contentCont);
+        if (FC.root) {
+            FC.root.removeChild(FC.contentCont);
         }
 
-        CC._root = value;
+        FC._root = value;
 
         // Add to the new main container, if there is one
-        if (CC.root) {
-            CC.root.addChild(CC.contentCont);
+        if (FC.root) {
+            FC.root.addChild(FC.contentCont);
         }
     }
 }

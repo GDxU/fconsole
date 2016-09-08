@@ -2,7 +2,7 @@ import {BaseConsoleButton} from "../BaseConsoleButton";
 import {InputManager, InputManagerEvent, InputManagerEventData} from "flibs/dist/index";
 import {KeyboardTools, StringTools} from "fcore/dist/index";
 import {CaptuerKeyButtonEvent} from "./CaptureKeyButtonEvent";
-import {CC} from "../../CC";
+import {FC} from "../../FC";
 
 export class CaptureKeyButton extends BaseConsoleButton {
 
@@ -62,18 +62,18 @@ export class CaptureKeyButton extends BaseConsoleButton {
         super.commitData();
 
         if (this.isClicked) {
-            this.label = CC.config.localization.captureKeyBtnPressedLabel;
+            this.label = FC.config.localization.captureKeyBtnPressedLabel;
 
         }else if(this.captureKey) {
             this.label = StringTools.substituteList(
-                CC.config.localization.captureKeyBtnNormalLabel,
+                FC.config.localization.captureKeyBtnNormalLabel,
                 this.captureKey
             );
 
         }else {
             this.label = StringTools.substituteList(
-                CC.config.localization.captureKeyBtnNormalLabel,
-                CC.config.localization.captureKeyBtnNoKeyHelpText
+                FC.config.localization.captureKeyBtnNormalLabel,
+                FC.config.localization.captureKeyBtnNoKeyHelpText
             );
         }
     }

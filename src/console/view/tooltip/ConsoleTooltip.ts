@@ -6,7 +6,7 @@ import {
     EngineAdapter,
     TextWrapperAlign
 } from "fgraphics/dist/index";
-import {CC} from "../../CC";
+import {FC} from "../../FC";
 
 export class ConsoleTooltip extends BaseTooltip {
 
@@ -32,14 +32,14 @@ export class ConsoleTooltip extends BaseTooltip {
         this.titleLabel = EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.titleLabel);
         this.titleLabel.align = TextWrapperAlign.CENTER;
-        this.titleLabel.color = CC.config.tooltipSettings.titleLabelColor;
-        this.titleLabel.size = CC.config.tooltipSettings.titleLabelSize;
+        this.titleLabel.color = FC.config.tooltipSettings.titleLabelColor;
+        this.titleLabel.size = FC.config.tooltipSettings.titleLabelSize;
 
         this.textLabel = EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.textLabel);
         this.textLabel.align = TextWrapperAlign.CENTER;
-        this.textLabel.color = CC.config.tooltipSettings.textLabelColor;
-        this.textLabel.size = CC.config.tooltipSettings.textLabelSize;
+        this.textLabel.color = FC.config.tooltipSettings.textLabelColor;
+        this.textLabel.size = FC.config.tooltipSettings.textLabelSize;
     }
 
 
@@ -77,17 +77,17 @@ export class ConsoleTooltip extends BaseTooltip {
         }
 
         this.bg.clear();
-        this.bg.beginFill(CC.config.tooltipSettings.bgColor, CC.config.tooltipSettings.bgAlpha);
+        this.bg.beginFill(FC.config.tooltipSettings.bgColor, FC.config.tooltipSettings.bgAlpha);
         this.bg.lineStyle(
-            CC.config.tooltipSettings.borderWidth,
-            CC.config.tooltipSettings.borderColor,
-            CC.config.tooltipSettings.borderAlpha
+            FC.config.tooltipSettings.borderWidth,
+            FC.config.tooltipSettings.borderColor,
+            FC.config.tooltipSettings.borderAlpha
         );
         this.bg.drawRect(
             0,
             0,
-            this.contentCont.width + CC.config.tooltipSettings.bgToContentShift.x,
-            this.contentCont.height + CC.config.tooltipSettings.bgToContentShift.y
+            this.contentCont.width + FC.config.tooltipSettings.bgToContentShift.x,
+            this.contentCont.height + FC.config.tooltipSettings.bgToContentShift.y
         );
         this.bg.endFill();
 
