@@ -45,7 +45,7 @@ $> npm install fconsole
 ## With native [Pixi.js](https://github.com/pixijs/pixi.js)
 ```TypeScript
 import {EngineAdapter, PixiAdapter} from "fgraphics/dist/index";
-import {CC} from "fconsole/dist/index";
+import {FC} from "fconsole/dist/index";
 
 // Native Pixi.js renderer
 let renderer = PIXI.autoDetectRenderer(800, 600);
@@ -56,15 +56,15 @@ let stage = new PIXI.Container();
 // At the very beginning we need to instantiate a graphics adapter (in our case the Pixi.js adapter).
 EngineAdapter.instance = new PixiAdapter({renderer: renderer, nativeStage: stage});
 // Initialization of the console (should be initialized after initialization of the adapter)
-CC.startInit(EngineAdapter.instance.createDisplayObjectContainerWrapper(stage));
+FC.startInit(EngineAdapter.instance.createDisplayObjectContainerWrapper(stage));
 // Optional (to make the console visible from the beginning)
-CC.visible = true;
+FC.visible = true;
 ```
 
 ## With the [Graphics Adapter API](https://github.com/flashist/fgraphics)
 ```TypeScript
 import {EngineAdapter, PixiAdapter, TickerEvent} from "fgraphics/dist/index";
-import {CC} from "fconsole/dist/index";
+import {FC} from "fconsole/dist/index";
 
 // Initialization of the grpahics adapter (in our case the Pixi.js adapter)
 EngineAdapter.instance = new PixiAdapter(
@@ -88,9 +88,9 @@ EngineAdapter.instance.mainTicker.addEventListener(
 );
 
 // Initialization of the console (should be initialized after initialization of the adapter)
-CC.startInit(EngineAdapter.instance.stage);
+FC.startInit(EngineAdapter.instance.stage);
 // Optional (to make the console visible from the beginning)
-CC.visible = true;
+FC.visible = true;
 ```
 
 ## [SystemJS](https://github.com/systemjs/systemjs) config (example)
@@ -103,13 +103,15 @@ SystemJS.config(
       "fcore": {defaultExtension: "js"},
       "fgraphics": {defaultExtension: "js"},
       "flibs": {defaultExtension: "js"},
-      "fconsole": {defaultExtension: "js"}
+      "fconsole": {defaultExtension: "js"},
+      "eventemitter3": {defaultExtension: "js"}
     },
     map: {
       "fcore": "node_modules/fcore",
       "fgraphics": "node_modules/fgraphics",
       "flibs": "node_modules/flibs",
-      "fconsole": "node_modules/fconsole"
+      "fconsole": "node_modules/fconsole",
+      "eventemitter3": "node_modules/eventemitter3/index.js"
     }
   }
 );
