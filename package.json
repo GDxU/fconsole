@@ -27,7 +27,7 @@
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
   "dependencies": {
-    "flibs": "0.0.19"
+    "flibs": "0.0.20"
   },
   "devDependencies": {
     "del": "2.2.2",
