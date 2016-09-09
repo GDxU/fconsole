@@ -8,6 +8,11 @@ Bunch* of useful debug tools for speeding up development process of [Pixi.js](ht
 # Demo
 ### **[Demo](https://flashist.github.io/fexamples/) | [Demo Source](https://github.com/flashist/fexamples)**
 
+# Feedback
+- Slack Channel: https://flashist.slack.com/messages/fconsole/
+- Skype: flashist-ru
+- Email: ruFlashist@gmail.com
+
 # Features
 
 ## Display List Inspector
