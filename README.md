@@ -47,7 +47,7 @@ Bunch* of useful debug tools for speeding up development process of [Pixi.js](ht
 4. (Optional) Parameters shown in the additional info mode can be modified by changing the `FC.config.displayListSettings.additionalInfoParams` parameter.
 
 ### Move Helper
-![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_move-helper?raw=true)
+![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_move-helper.gif?raw=true)
 
 ####How to:
 1. Click on the **Move Helper** button.
