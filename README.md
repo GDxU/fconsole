@@ -41,10 +41,20 @@ Bunch* of useful debug tools for speeding up development process of [Pixi.js](ht
 ![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_additional-info.gif?raw=true)
 
 ####How to:
-1. Click on the **Additional info** button.
+1. Click on the **Additional Info** button.
 2. Move cursor over some visual elements.
 3. Check the additional information next to the hierarchy visual elements.
 4. (Optional) Parameters shown in the additional info mode can be modified by changing the `FC.config.displayListSettings.additionalInfoParams` parameter.
+
+### Move Helper
+![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_move-helper?raw=true)
+
+####How to:
+1. Click on the **Move Helper** button.
+2. Move cursor over some visual elements.
+3. Press the **CTRL** button.
+4. The text **[MOVABLE]** will be shown next to the current active movable object (if there is no **[MOVABLE]** text, it means that there is no selected objects).
+5. Press the arrow keys (← ↑ → ↓) to move the active movable object. Combine the **SHIFT** key and the arrow keys to move objects to the 10px in any direction.
  
 # Installation
 
