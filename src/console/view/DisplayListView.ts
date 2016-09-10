@@ -58,6 +58,7 @@ export class DisplayListView extends BaseConsoleView {
             title: FC.config.localization.additionalInfoBtnTooltipTitle,
             text: FC.config.localization.additionalInfoBtnTooltipText
         };
+        this.additionalInfoBtn.field.size = FC.config.btnSettings.smallSize;
         //
         this.additionalInfoBtn.view.y = 5;
 
@@ -67,6 +68,7 @@ export class DisplayListView extends BaseConsoleView {
             title: FC.config.localization.moveHelperTooltipTitle,
             text: FC.config.localization.moveHelperTooltipText
         };
+        this.moveHelperBtn.field.size = FC.config.btnSettings.smallSize;
         //
         this.moveHelperBtn.view.y = this.additionalInfoBtn.view.y + this.additionalInfoBtn.view.height;
 
@@ -235,6 +237,12 @@ export class DisplayListView extends BaseConsoleView {
 
             result += prefix + " " + tempName;
 
+            if (FC.config.displayListSettings.nameParamName) {
+                if (data.object[FC.config.displayListSettings.nameParamName]) {
+                    result += " (" + data.object[FC.config.displayListSettings.nameParamName] + ")";
+                }
+            }
+
             if (this.isMoveHelperEnabled) {
                 if (data.object == this.moveObjectWrapper.object) {
                     result += " " + FC.config.localization.movableObjectText;
@@ -243,7 +251,7 @@ export class DisplayListView extends BaseConsoleView {
 
             if (this.isAdditionalInfoEnabled) {
                 if (FC.config.displayListSettings.additionalInfoParams) {
-                    result += "    { ";
+                    result += " - { ";
 
                     let parsedData;
                     let tempParamConfig;

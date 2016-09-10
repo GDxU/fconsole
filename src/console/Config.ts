@@ -23,12 +23,13 @@ export class Config {
         moveHelperBtnPressedLabel: "Move Helper: on",
         moveHelperTooltipTitle: "Move Helper",
         moveHelperTooltipText: "Enable Move Helper and press CTRL\nfor choosing an object to move\nwith arrow keys (← ↑ → ↓)",
-        movableObjectText: "(MOVABLE)",
+        movableObjectText: "[MOVABLE]",
     };
 
     public btnSettings = {
         labelSize: 14,
-        labelColor: 0xFF9900
+        labelColor: 0xFF9900,
+        smallSize: 12
     };
 
     public viewSettings = {
@@ -48,6 +49,7 @@ export class Config {
         hierarchyLabelColor: 0xCCCCCC,
         hierarchyLabelSize: 14,
 
+        nameParamName: "name",
         additionalInfoParams: {
             "x": {toFixed: 2},
             "y": {toFixed: 2},

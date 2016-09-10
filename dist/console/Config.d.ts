@@ -22,6 +22,7 @@ export declare class Config {
     btnSettings: {
         labelSize: number;
         labelColor: number;
+        smallSize: number;
     };
     viewSettings: {
         bgColor: number;
@@ -39,6 +40,7 @@ export declare class Config {
     displayListSettings: {
         hierarchyLabelColor: number;
         hierarchyLabelSize: number;
+        nameParamName: string;
         additionalInfoParams: {
             "x": {
                 toFixed: number;

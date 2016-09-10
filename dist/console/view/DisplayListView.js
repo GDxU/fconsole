@@ -29,6 +29,7 @@ var DisplayListView = (function (_super) {
             title: FC_1.FC.config.localization.additionalInfoBtnTooltipTitle,
             text: FC_1.FC.config.localization.additionalInfoBtnTooltipText
         };
+        this.additionalInfoBtn.field.size = FC_1.FC.config.btnSettings.smallSize;
         //
         this.additionalInfoBtn.view.y = 5;
         this.moveHelperBtn = new BaseConsoleButton_1.BaseConsoleButton();
@@ -37,6 +38,7 @@ var DisplayListView = (function (_super) {
             title: FC_1.FC.config.localization.moveHelperTooltipTitle,
             text: FC_1.FC.config.localization.moveHelperTooltipText
         };
+        this.moveHelperBtn.field.size = FC_1.FC.config.btnSettings.smallSize;
         //
         this.moveHelperBtn.view.y = this.additionalInfoBtn.view.y + this.additionalInfoBtn.view.height;
         this.displayListField = index_1.EngineAdapter.instance.createTextWrapper();
@@ -142,6 +144,11 @@ var DisplayListView = (function (_super) {
                 tempName = data.object.constructor.name;
             }
             result += prefix + " " + tempName;
+            if (FC_1.FC.config.displayListSettings.nameParamName) {
+                if (data.object[FC_1.FC.config.displayListSettings.nameParamName]) {
+                    result += " (" + data.object[FC_1.FC.config.displayListSettings.nameParamName] + ")";
+                }
+            }
             if (this.isMoveHelperEnabled) {
                 if (data.object == this.moveObjectWrapper.object) {
                     result += " " + FC_1.FC.config.localization.movableObjectText;
@@ -149,7 +156,7 @@ var DisplayListView = (function (_super) {
             }
             if (this.isAdditionalInfoEnabled) {
                 if (FC_1.FC.config.displayListSettings.additionalInfoParams) {
-                    result += "    { ";
+                    result += " - { ";
                     var parsedData = void 0;
                     var tempParamConfig = void 0;
                     var keys = Object.keys(FC_1.FC.config.displayListSettings.additionalInfoParams);

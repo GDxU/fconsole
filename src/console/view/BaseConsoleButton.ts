@@ -11,7 +11,7 @@ import {ITooltipData} from "../../tooltip/ITooltipData";
 export class BaseConsoleButton extends BaseEventListenerObject {
 
     public view:IDisplayObjectContainerWrapper;
-    private field:ITextWrapper;
+    public field:ITextWrapper;
 
     private _label:string = "";
 
