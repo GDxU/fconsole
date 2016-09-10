@@ -18,24 +18,33 @@ Bunch* of useful debug tools for speeding up development process of [Pixi.js](ht
 ## Display List Inspector
 
 ### Hierarchy
-![Display List Inspector - Hierarchy](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspecotr_hierarchy-1.gif?raw=true)
+![Display List Inspector - Hierarchy](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_hierarchy.gif?raw=true)
 
 ####How to:
 1. Open the console by inputting a password (default is **`**). In the [demo](https://flashist.github.io/fexamples/) the console is shown from the beginning.
 2. Click on the **DL** button.
-3. Move cursor above some visual elements.
+3. Move cursor over some visual elements.
 
 ### Properties Editing
-![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_editing-1.gif?raw=truep)
+![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_editing.gif?raw=true)
 
 ####How to:
 1. Assing a capture key to the Display List popup (click to the **Capture key** button and press a key).
-2. Move cursor above some visual elements.
+2. Move cursor over some visual elements.
 3. Press the assinged key (see #1).
 4. Open Developer Tools Console in browser (Google Chrome Win: F12 or Ctrl + Shift + I, MacOS: CMD + Alt + I).
 5. Check the display list hierarchy in the console.
 6. Expand an object and change it's properties
 7. (Optional, Google Chrome) Store an object as a Global Variable from context menu (right click on the object)
+
+### Additional Information
+![Display List Inspector - Editing](https://github.com/flashist/flashist.github.io/blob/master/fexamples/images/demo/display-list-inspector_additional-info.gif?raw=true)
+
+####How to:
+1. Click on the **Additional info** button.
+2. Move cursor over some visual elements.
+3. Check the additional information next to the hierarchy visual elements.
+4. (Optional) Parameters shown in the additional info mode can be modified by changing the `FC.config.displayListSettings.additionalInfoParams` parameter.
  
 # Installation
 
