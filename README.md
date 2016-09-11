@@ -142,6 +142,6 @@ SystemJS.config(
 ```
 
 # Notes
-\* Actually, there are only 2 implemented features yet (up to the August 29, 2016): Display List Inspector and Properties Editing. In my opinion, these two are the most useful and important features from [Flash-Console](https://github.com/junkbyte/flash-console) and I wanted to implement them the first. [Other features are planned](https://github.com/flashist/fconsole/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement) to be implemented.
+\* Not all of the planned features are implemented yet, there are [some enhancements to be done](https://github.com/flashist/fconsole/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement).
 
 \*\* At the current moment (up to the August 29, 2016) the console works only with Pixi.js library but the [fgraphics](https://github.com/flashist/fgraphics) lib was developed to be enhanced for supporting different game engines. [The next major adapter which is planned](https://github.com/flashist/fconsole/issues/4) to be implemented is the [EaselJS](https://github.com/CreateJS/EaselJS) adapter.
