@@ -13,6 +13,8 @@ var FC = (function () {
     FC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
         index_2.Logger.log("CC: ", FC);
+        // HTML
+        //
         FC.contentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         FC.viewsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         FC.contentCont.addChild(FC.viewsCont);
