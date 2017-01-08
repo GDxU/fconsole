@@ -4,20 +4,8 @@ var gulp = require("gulp"),
 
 gulp.task(
     "test",
-    function (cb) {
-        tsProject.src()
+    function () {
+        return tsProject.src()
             .pipe(ts(tsProject))
-            .on(
-                "error",
-                function () {
-                    console.log("ERROR! test.js");
-                }
-            ).on(
-                "finish",
-                function() {
-                    console.log("FINISH! test.js");
-                    cb();
-                }
-            );
     }
 );

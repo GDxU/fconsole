@@ -9,7 +9,7 @@ var index_2 = require("fgraphics/dist/index");
 var TooltipManager = (function (_super) {
     __extends(TooltipManager, _super);
     function TooltipManager(tooltip) {
-        _super.call(this, tooltip);
+        return _super.call(this, tooltip) || this;
     }
     TooltipManager.prototype.construction = function (tooltip) {
         _super.prototype.construction.call(this);
@@ -114,8 +114,8 @@ var TooltipManager = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    TooltipManager.SHOW_DELAY = 0.5;
     return TooltipManager;
 }(index_1.BaseEventListenerObject));
+TooltipManager.SHOW_DELAY = 0.5;
 exports.TooltipManager = TooltipManager;
 //# sourceMappingURL=TooltipManager.js.map

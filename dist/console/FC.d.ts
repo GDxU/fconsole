@@ -1,4 +1,4 @@
-import { IDisplayObjectContainerWrapper } from "fgraphics/dist/index";
+import { IDisplayObjectContainerWrapper } from "fgraphics";
 import { ConsoleView } from "./view/ConsoleView";
 import { BaseConsoleView } from "./view/BaseConsoleView";
 import { DisplayListView } from "./view/DisplayListView";

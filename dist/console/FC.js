@@ -1,9 +1,9 @@
 "use strict";
-var index_1 = require("fgraphics/dist/index");
+var fgraphics_1 = require("fgraphics");
 var ConsoleView_1 = require("./view/ConsoleView");
 var DisplayListView_1 = require("./view/DisplayListView");
-var index_2 = require("fcore/dist/index");
-var index_3 = require("flibs/dist/index");
+var index_1 = require("fcore/dist/index");
+var index_2 = require("flibs/dist/index");
 var Config_1 = require("./Config");
 var TooltipManager_1 = require("../tooltip/TooltipManager");
 var ConsoleTooltip_1 = require("./view/tooltip/ConsoleTooltip");
@@ -12,11 +12,11 @@ var FC = (function () {
     }
     FC.startInit = function (root, password, config) {
         if (password === void 0) { password = "`"; }
-        index_2.Logger.log("CC: ", FC);
-        FC.contentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        FC.viewsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        index_1.Logger.log("CC: ", FC);
+        FC.contentCont = fgraphics_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        FC.viewsCont = fgraphics_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         FC.contentCont.addChild(FC.viewsCont);
-        FC.tooltipsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        FC.tooltipsCont = fgraphics_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         FC.contentCont.addChild(FC.tooltipsCont);
         FC.password = password;
         if (!config) {
@@ -26,13 +26,13 @@ var FC = (function () {
         var tempTooltip = new ConsoleTooltip_1.ConsoleTooltip();
         FC.tooltipManager = new TooltipManager_1.TooltipManager(tempTooltip);
         FC.tooltipManager.tooltipCont = FC.tooltipsCont;
-        FC.tooltipManager.mouseShift = new index_2.Point(10, 15);
+        FC.tooltipManager.mouseShift = new index_1.Point(10, 15);
         // View
         FC.view = new ConsoleView_1.ConsoleView();
         FC.displayListView = new DisplayListView_1.DisplayListView();
         // Events
-        FC.eventListenerHelper.addEventListener(index_3.InputManager.instance, index_3.InputManagerEvent.KEY_PRESS, function (data) {
-            var charCode = index_2.KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
+        FC.eventListenerHelper.addEventListener(index_2.InputManager.instance, index_2.InputManagerEvent.KEY_PRESS, function (data) {
+            var charCode = index_1.KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
             if (charCode === FC.password.charCodeAt(FC.passwordInputIndex)) {
                 FC.passwordInputIndex++;
                 if (FC.passwordInputIndex >= FC.password.length) {
@@ -42,6 +42,11 @@ var FC = (function () {
             }
             else {
                 FC.passwordInputIndex = 0;
+            }
+        });
+        FC.eventListenerHelper.addEventListener(fgraphics_1.EngineAdapter.instance.mainTicker, fgraphics_1.TickerEvent.TICK, function () {
+            if (FC.config.console.aboveAll) {
+                fgraphics_1.DisplayObjectTools.moveObjectToTopLayer(FC.contentCont);
             }
         });
         FC.root = root;
@@ -56,8 +61,8 @@ var FC = (function () {
         set: function (value) {
             if (value) {
                 FC.showView(FC.view, false);
-                index_1.DisplayObjectTools.moveObjectToTopLayer(FC.viewsCont);
-                index_1.DisplayObjectTools.moveObjectToTopLayer(FC.tooltipsCont);
+                fgraphics_1.DisplayObjectTools.moveObjectToTopLayer(FC.viewsCont);
+                fgraphics_1.DisplayObjectTools.moveObjectToTopLayer(FC.tooltipsCont);
             }
             else {
                 FC.hideView(FC.view);
@@ -72,7 +77,7 @@ var FC = (function () {
         view.visible = true;
         FC.moveViewToTopLayer(view);
         if (moveToMouse) {
-            var localPos = view.view.parent.toLocal(new index_2.Point(index_1.EngineAdapter.instance.globalMouseX + 1, index_1.EngineAdapter.instance.globalMouseY + 1));
+            var localPos = view.view.parent.toLocal(new index_1.Point(fgraphics_1.EngineAdapter.instance.globalMouseX + 1, fgraphics_1.EngineAdapter.instance.globalMouseY + 1));
             view.view.x = localPos.x;
             view.view.y = localPos.y;
         }
@@ -93,7 +98,7 @@ var FC = (function () {
         }
     };
     FC.moveViewToTopLayer = function (view) {
-        index_1.DisplayObjectTools.moveObjectToTopLayer(view.view);
+        fgraphics_1.DisplayObjectTools.moveObjectToTopLayer(view.view);
     };
     Object.defineProperty(FC, "root", {
         get: function () {
@@ -113,10 +118,10 @@ var FC = (function () {
         enumerable: true,
         configurable: true
     });
-    FC.eventListenerHelper = new index_2.EventListenerHelper();
-    FC.password = "";
-    FC.passwordInputIndex = 0;
     return FC;
 }());
+FC.eventListenerHelper = new index_1.EventListenerHelper();
+FC.password = "";
+FC.passwordInputIndex = 0;
 exports.FC = FC;
 //# sourceMappingURL=FC.js.map

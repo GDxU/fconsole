@@ -15,5 +15,11 @@
   "exclude": [
     "node_modules",
     "dist"
+  ],
+  "include": [
+    "src/**/*"
+  ],
+  "files": [
+    "typings/tsd.d.ts"
   ]
 }

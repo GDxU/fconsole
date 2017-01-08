@@ -9,7 +9,7 @@ var index_2 = require("fcore/dist/index");
 var BaseTooltip = (function (_super) {
     __extends(BaseTooltip, _super);
     function BaseTooltip() {
-        _super.apply(this, arguments);
+        return _super.apply(this, arguments) || this;
     }
     BaseTooltip.prototype.construction = function () {
         _super.prototype.construction.call(this);

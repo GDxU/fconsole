@@ -5,27 +5,28 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var BaseTooltip_1 = require("../../../tooltip/BaseTooltip");
-var index_1 = require("fgraphics/dist/index");
+var fgraphics_1 = require("fgraphics");
+var fcore_1 = require("fcore");
 var FC_1 = require("../../FC");
 var ConsoleTooltip = (function (_super) {
     __extends(ConsoleTooltip, _super);
     function ConsoleTooltip() {
-        _super.call(this);
+        return _super.call(this) || this;
     }
     ConsoleTooltip.prototype.construction = function () {
         _super.prototype.construction.call(this);
-        this.bg = index_1.EngineAdapter.instance.createGraphicsWrapper();
+        this.bg = fgraphics_1.EngineAdapter.instance.createGraphicsWrapper();
         this.view.addChild(this.bg);
-        this.contentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.contentCont = fgraphics_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
         this.view.addChild(this.contentCont);
-        this.titleLabel = index_1.EngineAdapter.instance.createTextWrapper();
+        this.titleLabel = fgraphics_1.EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.titleLabel);
-        this.titleLabel.align = index_1.TextWrapperAlign.CENTER;
+        this.titleLabel.align = fcore_1.Align.CENTER;
         this.titleLabel.color = FC_1.FC.config.tooltipSettings.titleLabelColor;
         this.titleLabel.size = FC_1.FC.config.tooltipSettings.titleLabelSize;
-        this.textLabel = index_1.EngineAdapter.instance.createTextWrapper();
+        this.textLabel = fgraphics_1.EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.textLabel);
-        this.textLabel.align = index_1.TextWrapperAlign.CENTER;
+        this.textLabel.align = fcore_1.Align.CENTER;
         this.textLabel.color = FC_1.FC.config.tooltipSettings.textLabelColor;
         this.textLabel.size = FC_1.FC.config.tooltipSettings.textLabelSize;
     };

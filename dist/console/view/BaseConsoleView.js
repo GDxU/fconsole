@@ -14,10 +14,11 @@ var CaptureKeyButtonEvent_1 = require("./capturekey/CaptureKeyButtonEvent");
 var BaseConsoleView = (function (_super) {
     __extends(BaseConsoleView, _super);
     function BaseConsoleView() {
-        _super.call(this);
+        var _this = _super.call(this) || this;
         // private captureKey:string;
-        this.lastBgWidth = 0;
-        this.lastBgHeight = 0;
+        _this.lastBgWidth = 0;
+        _this.lastBgHeight = 0;
+        return _this;
     }
     BaseConsoleView.prototype.construction = function () {
         _super.prototype.construction.call(this);
@@ -173,9 +174,9 @@ var BaseConsoleView = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    BaseConsoleView.CAPTURE_LABEL_FIRST_PART = "Capture key:";
-    BaseConsoleView.NO_CAPTURE_KEY_TEXT = "(click to add)";
     return BaseConsoleView;
 }(index_2.BaseEventListenerObject));
+BaseConsoleView.CAPTURE_LABEL_FIRST_PART = "Capture key:";
+BaseConsoleView.NO_CAPTURE_KEY_TEXT = "(click to add)";
 exports.BaseConsoleView = BaseConsoleView;
 //# sourceMappingURL=BaseConsoleView.js.map

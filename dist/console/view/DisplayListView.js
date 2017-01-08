@@ -13,7 +13,7 @@ var FC_1 = require("../FC");
 var DisplayListView = (function (_super) {
     __extends(DisplayListView, _super);
     function DisplayListView() {
-        _super.call(this);
+        return _super.call(this) || this;
     }
     DisplayListView.prototype.construction = function () {
         _super.prototype.construction.call(this);
@@ -326,8 +326,8 @@ var DisplayListView = (function (_super) {
             this.prevMoveObject = this.moveObjectWrapper.object;
         }
     };
-    DisplayListView.ARROW_KEY_CODES = [index_2.KeyCodes.LEFT_ARROW, index_2.KeyCodes.RIGHT_ARROW, index_2.KeyCodes.UP_ARROW, index_2.KeyCodes.DOWN_ARROW];
     return DisplayListView;
 }(BaseConsoleView_1.BaseConsoleView));
+DisplayListView.ARROW_KEY_CODES = [index_2.KeyCodes.LEFT_ARROW, index_2.KeyCodes.RIGHT_ARROW, index_2.KeyCodes.UP_ARROW, index_2.KeyCodes.DOWN_ARROW];
 exports.DisplayListView = DisplayListView;
 //# sourceMappingURL=DisplayListView.js.map

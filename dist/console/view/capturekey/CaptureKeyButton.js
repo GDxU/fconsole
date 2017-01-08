@@ -12,7 +12,7 @@ var FC_1 = require("../../FC");
 var CaptureKeyButton = (function (_super) {
     __extends(CaptureKeyButton, _super);
     function CaptureKeyButton() {
-        _super.call(this);
+        return _super.call(this) || this;
     }
     CaptureKeyButton.prototype.construction = function () {
         _super.prototype.construction.call(this);

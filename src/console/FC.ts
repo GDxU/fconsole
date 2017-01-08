@@ -1,4 +1,4 @@
-import {IDisplayObjectContainerWrapper, EngineAdapter, DisplayObjectTools} from "fgraphics/dist/index";
+import {IDisplayObjectContainerWrapper, EngineAdapter, DisplayObjectTools, TickerEvent} from "fgraphics";
 import {ConsoleView} from "./view/ConsoleView";
 import {BaseConsoleView} from "./view/BaseConsoleView";
 import {DisplayListView} from "./view/DisplayListView";
@@ -70,6 +70,15 @@ export class FC {
 
                 } else {
                     FC.passwordInputIndex = 0;
+                }
+            }
+        );
+        FC.eventListenerHelper.addEventListener(
+            EngineAdapter.instance.mainTicker,
+            TickerEvent.TICK,
+            () => {
+                if (FC.config.console.aboveAll) {
+                    DisplayObjectTools.moveObjectToTopLayer(FC.contentCont);
                 }
             }
         );

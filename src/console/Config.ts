@@ -26,6 +26,10 @@ export class Config {
         movableObjectText: "[MOVABLE]",
     };
 
+    public console = {
+        aboveAll: true
+    };
+
     public btnSettings = {
         labelSize: 14,
         labelColor: 0xFF9900,

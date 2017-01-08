@@ -10,8 +10,9 @@ var FC_1 = require("../FC");
 var BaseConsoleButton = (function (_super) {
     __extends(BaseConsoleButton, _super);
     function BaseConsoleButton() {
-        _super.call(this);
-        this._label = "";
+        var _this = _super.call(this) || this;
+        _this._label = "";
+        return _this;
     }
     BaseConsoleButton.prototype.construction = function () {
         _super.prototype.construction.call(this);

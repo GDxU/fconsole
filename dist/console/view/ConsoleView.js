@@ -10,7 +10,7 @@ var index_1 = require("fgraphics/dist/index");
 var ConsoleView = (function (_super) {
     __extends(ConsoleView, _super);
     function ConsoleView() {
-        _super.call(this);
+        return _super.call(this) || this;
     }
     ConsoleView.prototype.construction = function () {
         _super.prototype.construction.call(this);

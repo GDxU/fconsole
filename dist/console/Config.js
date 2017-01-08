@@ -21,6 +21,9 @@ var Config = (function () {
             moveHelperTooltipText: "Enable Move Helper and press CTRL\nfor choosing an object to move\nwith arrow keys (← ↑ → ↓)",
             movableObjectText: "[MOVABLE]",
         };
+        this.console = {
+            aboveAll: true
+        };
         this.btnSettings = {
             labelSize: 14,
             labelColor: 0xFF9900,

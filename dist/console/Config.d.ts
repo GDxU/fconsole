@@ -19,6 +19,9 @@ export declare class Config {
         moveHelperTooltipText: string;
         movableObjectText: string;
     };
+    console: {
+        aboveAll: boolean;
+    };
     btnSettings: {
         labelSize: number;
         labelColor: number;

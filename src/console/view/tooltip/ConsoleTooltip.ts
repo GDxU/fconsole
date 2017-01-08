@@ -3,9 +3,11 @@ import {
     IDisplayObjectContainerWrapper,
     IGraphicsWrapper,
     ITextWrapper,
-    EngineAdapter,
-    TextWrapperAlign
-} from "fgraphics/dist/index";
+    EngineAdapter
+} from "fgraphics";
+import {
+    Align
+} from "fcore";
 import {FC} from "../../FC";
 
 export class ConsoleTooltip extends BaseTooltip {
@@ -31,13 +33,13 @@ export class ConsoleTooltip extends BaseTooltip {
 
         this.titleLabel = EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.titleLabel);
-        this.titleLabel.align = TextWrapperAlign.CENTER;
+        this.titleLabel.align = Align.CENTER;
         this.titleLabel.color = FC.config.tooltipSettings.titleLabelColor;
         this.titleLabel.size = FC.config.tooltipSettings.titleLabelSize;
 
         this.textLabel = EngineAdapter.instance.createTextWrapper();
         this.contentCont.addChild(this.textLabel);
-        this.textLabel.align = TextWrapperAlign.CENTER;
+        this.textLabel.align = Align.CENTER;
         this.textLabel.color = FC.config.tooltipSettings.textLabelColor;
         this.textLabel.size = FC.config.tooltipSettings.textLabelSize;
     }
