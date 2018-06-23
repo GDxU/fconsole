@@ -1,5 +1,5 @@
 import { BaseConsoleButton } from "../BaseConsoleButton";
-import { InputManagerEventData } from "flibs/dist/index";
+import { InputManagerEventData } from "fsuite";
 export declare class CaptureKeyButton extends BaseConsoleButton {
     private captureKey;
     private captureCode;

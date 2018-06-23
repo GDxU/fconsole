@@ -1,12 +1,16 @@
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var index_1 = require("fcore/dist/index");
-var index_2 = require("fgraphics/dist/index");
-var TooltipManager = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { BaseObject } from "fcore";
+import { DisplayObjectContainer, Point, FApp } from "fsuite";
+var TooltipManager = /** @class */ (function (_super) {
     __extends(TooltipManager, _super);
     function TooltipManager(tooltip) {
         return _super.call(this, tooltip) || this;
@@ -14,14 +18,18 @@ var TooltipManager = (function (_super) {
     TooltipManager.prototype.construction = function (tooltip) {
         _super.prototype.construction.call(this);
         this.tooltip = tooltip;
-        this.mouseShift = new index_1.Point();
-        this.tooltipInsideCont = index_2.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.mouseShift = new Point();
+        this.tooltipInsideCont = new DisplayObjectContainer();
         this.tooltipInsideCont.addChild(this.tooltip.view);
         this.hide();
     };
     TooltipManager.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
-        this.eventListenerHelper.addEventListener(index_2.EngineAdapter.instance.mainTicker, index_2.TickerEvent.TICK, this.onTick);
+        FApp.instance.ticker.add(this.onTick, this);
+    };
+    TooltipManager.prototype.removeListeners = function () {
+        _super.prototype.removeListeners.call(this);
+        FApp.instance.ticker.remove(this.onTick, this);
     };
     TooltipManager.prototype.onTick = function () {
         this.update();
@@ -46,20 +54,21 @@ var TooltipManager = (function (_super) {
         }
         if (!this.tooltip) {
         }
-        var tempPos = new index_1.Point(index_2.EngineAdapter.instance.globalMouseX, index_2.EngineAdapter.instance.globalMouseY);
+        var globalPos = FApp.instance.getGlobalInteractionPosition();
+        var tempPos = globalPos.clone();
         tempPos.x += this.mouseShift.x;
         tempPos.y += this.mouseShift.y;
         if (tempPos.x < 0) {
             tempPos.x = 0;
         }
-        else if (tempPos.x + this.tooltip.view.width > index_2.EngineAdapter.instance.rendererWidth) {
-            tempPos.x = index_2.EngineAdapter.instance.rendererWidth - this.tooltip.view.width;
+        else if (tempPos.x + this.tooltip.view.width > FApp.instance.renderer.width) {
+            tempPos.x = FApp.instance.renderer.width - this.tooltip.view.width;
         }
         if (tempPos.y < 0) {
             tempPos.y = 0;
         }
-        else if (tempPos.y + this.tooltip.view.height > index_2.EngineAdapter.instance.rendererHeight) {
-            tempPos.y = index_2.EngineAdapter.instance.rendererHeight - this.tooltip.view.height;
+        else if (tempPos.y + this.tooltip.view.height > FApp.instance.renderer.height) {
+            tempPos.y = FApp.instance.renderer.height - this.tooltip.view.height;
         }
         tempPos = this.tooltip.view.parent.toLocal(tempPos);
         this.moveTooltipTo(tempPos.x, tempPos.y);
@@ -114,8 +123,8 @@ var TooltipManager = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    TooltipManager.SHOW_DELAY = 0.5;
     return TooltipManager;
-}(index_1.BaseEventListenerObject));
-TooltipManager.SHOW_DELAY = 0.5;
-exports.TooltipManager = TooltipManager;
+}(BaseObject));
+export { TooltipManager };
 //# sourceMappingURL=TooltipManager.js.map

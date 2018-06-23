@@ -1,16 +1,20 @@
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var BaseConsoleView_1 = require("./BaseConsoleView");
-var index_1 = require("fgraphics/dist/index");
-var index_2 = require("fcore/dist/index");
-var index_3 = require("flibs/dist/index");
-var BaseConsoleButton_1 = require("./BaseConsoleButton");
-var FC_1 = require("../FC");
-var DisplayListView = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { KeyboardTools } from "fcore";
+import { FLabel, Point, InteractiveEvent, KeyCodes, FDisplayTools, FApp } from "fsuite";
+import { InputManager, InputManagerEvent } from "fsuite";
+import { BaseConsoleView } from "./BaseConsoleView";
+import { BaseConsoleButton } from "./BaseConsoleButton";
+import { FC } from "../FC";
+var DisplayListView = /** @class */ (function (_super) {
     __extends(DisplayListView, _super);
     function DisplayListView() {
         return _super.call(this) || this;
@@ -18,63 +22,71 @@ var DisplayListView = (function (_super) {
     DisplayListView.prototype.construction = function () {
         _super.prototype.construction.call(this);
         this.captureVisible = true;
-        this.lastCheckedPos = new index_2.Point();
+        this.lastCheckedPos = new Point();
         this.moveObjectIndex = -1;
-        this.moveObjectWrapper = index_1.EngineAdapter.instance.createDisplayObjectWrapper();
-        this.titleLabel.text = FC_1.FC.config.localization.displayListTitle;
+        this.titleLabel.text = FC.config.localization.displayListTitle;
         this.insideContentCont.visible = true;
-        this.additionalInfoBtn = new BaseConsoleButton_1.BaseConsoleButton();
+        this.additionalInfoBtn = new BaseConsoleButton();
         this.insideContentCont.addChild(this.additionalInfoBtn.view);
         this.additionalInfoBtn.tooltipData = {
-            title: FC_1.FC.config.localization.additionalInfoBtnTooltipTitle,
-            text: FC_1.FC.config.localization.additionalInfoBtnTooltipText
+            title: FC.config.localization.additionalInfoBtnTooltipTitle,
+            text: FC.config.localization.additionalInfoBtnTooltipText
         };
-        this.additionalInfoBtn.field.size = FC_1.FC.config.btnSettings.smallSize;
+        this.additionalInfoBtn.field.size = FC.config.btnSettings.smallSize;
         //
         this.additionalInfoBtn.view.y = 5;
-        this.moveHelperBtn = new BaseConsoleButton_1.BaseConsoleButton();
+        this.moveHelperBtn = new BaseConsoleButton();
         this.insideContentCont.addChild(this.moveHelperBtn.view);
         this.moveHelperBtn.tooltipData = {
-            title: FC_1.FC.config.localization.moveHelperTooltipTitle,
-            text: FC_1.FC.config.localization.moveHelperTooltipText
+            title: FC.config.localization.moveHelperTooltipTitle,
+            text: FC.config.localization.moveHelperTooltipText
         };
-        this.moveHelperBtn.field.size = FC_1.FC.config.btnSettings.smallSize;
+        this.moveHelperBtn.field.size = FC.config.btnSettings.smallSize;
         //
         this.moveHelperBtn.view.y = this.additionalInfoBtn.view.y + this.additionalInfoBtn.view.height;
-        this.displayListField = index_1.EngineAdapter.instance.createTextWrapper();
+        this.displayListField = new FLabel();
         this.insideContentCont.addChild(this.displayListField);
-        this.displayListField.color = FC_1.FC.config.displayListSettings.hierarchyLabelColor;
-        this.displayListField.size = FC_1.FC.config.displayListSettings.hierarchyLabelSize;
+        this.displayListField.color = FC.config.displayListSettings.hierarchyLabelColor;
+        this.displayListField.size = FC.config.displayListSettings.hierarchyLabelSize;
         //
         this.displayListField.y = this.moveHelperBtn.view.y + this.moveHelperBtn.view.height + 5;
-        this.closeBtn = this.createTitleBtn("X", { title: FC_1.FC.config.localization.closeBtnTooltipTitle });
-        this.captureBtn.tooltipData.text = FC_1.FC.config.localization.displayListCapturedKeyText;
+        this.closeBtn = this.createTitleBtn("X", { title: FC.config.localization.closeBtnTooltipTitle });
+        this.captureBtn.tooltipData.text = FC.config.localization.displayListCapturedKeyText;
     };
     DisplayListView.prototype.destruction = function () {
         _super.prototype.destruction.call(this);
         this.lastUnderPointData = null;
         this.lastAllObjectsUnderPointList = null;
-        if (this.moveObjectWrapper) {
-            this.moveObjectWrapper.destruction();
-            this.moveObjectWrapper = null;
+        if (this.moveObject) {
+            this.moveObject = null;
         }
         this.prevMoveObject = null;
     };
     DisplayListView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
-        this.eventListenerHelper.addEventListener(index_1.EngineAdapter.instance.mainTicker, index_1.TickerEvent.TICK, this.onTick);
-        this.eventListenerHelper.addEventListener(this.closeBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onClose);
-        this.eventListenerHelper.addEventListener(this.additionalInfoBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onAdditionalInfo);
-        this.eventListenerHelper.addEventListener(this.moveHelperBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onMoveHelper);
-        this.eventListenerHelper.addEventListener(index_3.InputManager.instance, index_3.InputManagerEvent.KEY_DOWN, this.onKeyDown);
+        /*this.eventListenerHelper.addEventListener(
+            EngineAdapter.instance.mainTicker,
+            TickerEvent.TICK,
+            this.onTick
+        );*/
+        FApp.instance.ticker.add(this.onTick, this);
+        this.eventListenerHelper.addEventListener(this.closeBtn.view, InteractiveEvent.TAP, this.onClose);
+        this.eventListenerHelper.addEventListener(this.additionalInfoBtn.view, InteractiveEvent.TAP, this.onAdditionalInfo);
+        this.eventListenerHelper.addEventListener(this.moveHelperBtn.view, InteractiveEvent.TAP, this.onMoveHelper);
+        this.eventListenerHelper.addEventListener(InputManager.instance, InputManagerEvent.KEY_DOWN, this.onKeyDown);
+    };
+    DisplayListView.prototype.removeListeners = function () {
+        _super.prototype.removeListeners.call(this);
+        FApp.instance.ticker.remove(this.onTick, this);
     };
     DisplayListView.prototype.onTick = function () {
         if (this.visible) {
             /*if (this.lastCheckedPos.x != EngineAdapter.instance.globalMouseX ||
              this.lastCheckedPos.y != EngineAdapter.instance.globalMouseY) {*/
-            this.lastCheckedPos.x = index_1.EngineAdapter.instance.globalMouseX;
-            this.lastCheckedPos.y = index_1.EngineAdapter.instance.globalMouseY;
-            var underPointData = index_1.EngineAdapter.instance.getNativeObjectsUnderPoint(index_1.EngineAdapter.instance.stage.object, index_1.EngineAdapter.instance.globalMouseX, index_1.EngineAdapter.instance.globalMouseY);
+            var globalPos = FApp.instance.getGlobalInteractionPosition();
+            this.lastCheckedPos.x = globalPos.x;
+            this.lastCheckedPos.y = globalPos.y;
+            var underPointData = FDisplayTools.getObjectsUnderPoint(FApp.instance.stage, globalPos.x, globalPos.y);
             if (this.forceUpdateUnderPointView || !this.checkUnderPointDataEqual(underPointData, this.lastUnderPointData)) {
                 this.forceUpdateUnderPointView = false;
                 this.lastUnderPointData = underPointData;
@@ -84,11 +96,13 @@ var DisplayListView = (function (_super) {
                 this.displayListField.text = listText;
                 this.arrange();
             }
+            // }
         }
     };
     DisplayListView.prototype.onCaptureKey = function () {
         _super.prototype.onCaptureKey.call(this);
-        var underPointData = index_1.EngineAdapter.instance.getNativeObjectsUnderPoint(index_1.EngineAdapter.instance.stage.object, index_1.EngineAdapter.instance.globalMouseX, index_1.EngineAdapter.instance.globalMouseY);
+        var globalPos = FApp.instance.getGlobalInteractionPosition();
+        var underPointData = FDisplayTools.getObjectsUnderPoint(FApp.instance.stage, globalPos.x, globalPos.y);
         // Log the parsed structure
         console.group("Display list structure:");
         this.groupLogUnderPointData(underPointData);
@@ -102,35 +116,35 @@ var DisplayListView = (function (_super) {
     };
     DisplayListView.prototype.onKeyDown = function (data) {
         if (this.isMoveHelperEnabled) {
-            var tempCode = index_2.KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
-            if (tempCode == index_2.KeyCodes.CONTROL) {
+            var tempCode = KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
+            if (tempCode == KeyCodes.CONTROL) {
                 this.moveObjectIndex--;
                 this.commitData();
             }
             else if (DisplayListView.ARROW_KEY_CODES.indexOf(tempCode) != -1) {
-                if (this.moveObjectWrapper.object) {
+                if (this.moveObject) {
                     var tempChangeX = 0;
                     var tempChangeY = 0;
-                    if (tempCode == index_2.KeyCodes.LEFT_ARROW) {
+                    if (tempCode == KeyCodes.LEFT_ARROW) {
                         tempChangeX = -1;
                     }
-                    else if (tempCode == index_2.KeyCodes.RIGHT_ARROW) {
+                    else if (tempCode == KeyCodes.RIGHT_ARROW) {
                         tempChangeX = 1;
                     }
-                    if (tempCode == index_2.KeyCodes.UP_ARROW) {
+                    if (tempCode == KeyCodes.UP_ARROW) {
                         tempChangeY = -1;
                     }
-                    else if (tempCode == index_2.KeyCodes.DOWN_ARROW) {
+                    else if (tempCode == KeyCodes.DOWN_ARROW) {
                         tempChangeY = 1;
                     }
-                    if (index_3.InputManager.instance.checkIfKeyDown(index_2.KeyCodes.SHIFT)) {
+                    if (InputManager.instance.checkIfKeyDown(KeyCodes.SHIFT)) {
                         tempChangeX *= 10;
                         tempChangeY *= 10;
                     }
-                    this.moveObjectWrapper.x += tempChangeX;
-                    this.moveObjectWrapper.y += tempChangeY;
-                    console.log("Movable object: ", this.moveObjectWrapper.object);
-                    console.log("x: " + this.moveObjectWrapper.x + ", y: " + this.moveObjectWrapper.y);
+                    this.moveObject.x += tempChangeX;
+                    this.moveObject.y += tempChangeY;
+                    console.log("Movable object: ", this.moveObject);
+                    console.log("x: " + this.moveObject.x + ", y: " + this.moveObject.y);
                 }
             }
         }
@@ -144,22 +158,22 @@ var DisplayListView = (function (_super) {
                 tempName = data.object.constructor.name;
             }
             result += prefix + " " + tempName;
-            if (FC_1.FC.config.displayListSettings.nameParamName) {
-                if (data.object[FC_1.FC.config.displayListSettings.nameParamName]) {
-                    result += " (" + data.object[FC_1.FC.config.displayListSettings.nameParamName] + ")";
+            if (FC.config.displayListSettings.nameParamName) {
+                if (data.object[FC.config.displayListSettings.nameParamName]) {
+                    result += " (" + data.object[FC.config.displayListSettings.nameParamName] + ")";
                 }
             }
             if (this.isMoveHelperEnabled) {
-                if (data.object == this.moveObjectWrapper.object) {
-                    result += " " + FC_1.FC.config.localization.movableObjectText;
+                if (data.object == this.moveObject) {
+                    result += " " + FC.config.localization.movableObjectText;
                 }
             }
             if (this.isAdditionalInfoEnabled) {
-                if (FC_1.FC.config.displayListSettings.additionalInfoParams) {
+                if (FC.config.displayListSettings.additionalInfoParams) {
                     result += " - { ";
                     var parsedData = void 0;
                     var tempParamConfig = void 0;
-                    var keys = Object.keys(FC_1.FC.config.displayListSettings.additionalInfoParams);
+                    var keys = Object.keys(FC.config.displayListSettings.additionalInfoParams);
                     var tempKey = void 0;
                     var tempVisualKey = void 0;
                     var keysCount = keys.length;
@@ -171,7 +185,7 @@ var DisplayListView = (function (_super) {
                             }
                             parsedData = data.object[tempKey];
                             //
-                            tempParamConfig = FC_1.FC.config.displayListSettings.additionalInfoParams[tempKey];
+                            tempParamConfig = FC.config.displayListSettings.additionalInfoParams[tempKey];
                             if (tempParamConfig.toFixed || tempParamConfig.toFixed === 0) {
                                 if (parsedData !== Math.floor(parsedData)) {
                                     parsedData = parsedData.toFixed(tempParamConfig.toFixed);
@@ -210,6 +224,7 @@ var DisplayListView = (function (_super) {
                 for (var childIndex = 0; childIndex < childrenCount; childIndex++) {
                     this.groupLogUnderPointData(data.children[childIndex], "    " + prefix);
                 }
+                // console.groupEnd();
             }
         }
     };
@@ -218,13 +233,16 @@ var DisplayListView = (function (_super) {
         // If one of the data objects exists and other doesn't
         if (!!data1 != !!data2) {
             result = false;
+            // If 2 data objects are available
         }
         else if (data1 && data2) {
             if (data1.object != data2.object) {
                 result = false;
+                // If one of data has children and other doesn't have
             }
             else if (!!data1.children != !!data2.children) {
                 result = false;
+                // If there are children arrays in the both data objects
             }
             else if (data1.children && data2.children) {
                 // If length of the children lists are not equal, then data objects are not equal too
@@ -292,42 +310,42 @@ var DisplayListView = (function (_super) {
         }
         if (this.additionalInfoBtn) {
             if (this.isAdditionalInfoEnabled) {
-                this.additionalInfoBtn.label = FC_1.FC.config.localization.additionalInfoBtnPressedLabel;
+                this.additionalInfoBtn.label = FC.config.localization.additionalInfoBtnPressedLabel;
             }
             else {
-                this.additionalInfoBtn.label = FC_1.FC.config.localization.additionalInfoBtnNormalLabel;
+                this.additionalInfoBtn.label = FC.config.localization.additionalInfoBtnNormalLabel;
             }
         }
         if (this.moveHelperBtn) {
             if (this.isMoveHelperEnabled) {
-                this.moveHelperBtn.label = FC_1.FC.config.localization.moveHelperBtnPressedLabel;
+                this.moveHelperBtn.label = FC.config.localization.moveHelperBtnPressedLabel;
                 // Select an object (if index is -1, it means that selection is reset)
                 if (this.moveObjectIndex < -1 || this.moveObjectIndex >= this.lastAllObjectsUnderPointList.length) {
                     this.moveObjectIndex = this.lastAllObjectsUnderPointList.length - 1;
                 }
                 // If there is an object, select it
                 if (this.lastAllObjectsUnderPointList[this.moveObjectIndex]) {
-                    this.moveObjectWrapper.object = this.lastAllObjectsUnderPointList[this.moveObjectIndex];
+                    this.moveObject = this.lastAllObjectsUnderPointList[this.moveObjectIndex];
                 }
                 else {
-                    this.moveObjectWrapper.object = null;
+                    this.moveObject = null;
                 }
             }
             else {
-                this.moveHelperBtn.label = FC_1.FC.config.localization.moveHelperBtnNormalLabel;
+                this.moveHelperBtn.label = FC.config.localization.moveHelperBtnNormalLabel;
                 // Reset selection
-                this.moveObjectWrapper.object = null;
+                this.moveObject = null;
                 this.moveObjectIndex = -1;
             }
             // Update the under point view if a new move object was chosen
-            if (this.prevMoveObject !== this.moveObjectWrapper.object) {
+            if (this.prevMoveObject !== this.moveObject) {
                 this.forceUpdateUnderPointView = true;
             }
-            this.prevMoveObject = this.moveObjectWrapper.object;
+            this.prevMoveObject = this.moveObject;
         }
     };
+    DisplayListView.ARROW_KEY_CODES = [KeyCodes.LEFT_ARROW, KeyCodes.RIGHT_ARROW, KeyCodes.UP_ARROW, KeyCodes.DOWN_ARROW];
     return DisplayListView;
-}(BaseConsoleView_1.BaseConsoleView));
-DisplayListView.ARROW_KEY_CODES = [index_2.KeyCodes.LEFT_ARROW, index_2.KeyCodes.RIGHT_ARROW, index_2.KeyCodes.UP_ARROW, index_2.KeyCodes.DOWN_ARROW];
-exports.DisplayListView = DisplayListView;
+}(BaseConsoleView));
+export { DisplayListView };
 //# sourceMappingURL=DisplayListView.js.map

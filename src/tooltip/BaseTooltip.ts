@@ -1,10 +1,11 @@
-import {IDisplayObjectContainerWrapper, EngineAdapter} from "fgraphics/dist/index";
+import {DisplayObjectContainer} from "fsuite";
+import {BaseObject} from "fcore";
+
 import {ITooltipData} from "./ITooltipData";
-import {BaseObject} from "fcore/dist/index";
 
 export abstract class BaseTooltip extends BaseObject {
 
-    public view:IDisplayObjectContainerWrapper;
+    public view:DisplayObjectContainer;
 
     protected tooltipData:ITooltipData;
 
@@ -12,7 +13,7 @@ export abstract class BaseTooltip extends BaseObject {
     protected construction():void {
         super.construction();
 
-        this.view = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.view = new DisplayObjectContainer();
     }
 
 

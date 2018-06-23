@@ -1,4 +1,5 @@
-import { IDisplayObjectContainerWrapper } from "fgraphics";
+/// <reference types="pixi.js" />
+import { DisplayObjectContainer } from "fsuite";
 import { ConsoleView } from "./view/ConsoleView";
 import { BaseConsoleView } from "./view/BaseConsoleView";
 import { DisplayListView } from "./view/DisplayListView";
@@ -16,12 +17,13 @@ export declare class FC {
     static tooltipManager: TooltipManager;
     static view: ConsoleView;
     static displayListView: DisplayListView;
-    static startInit(root?: IDisplayObjectContainerWrapper, password?: string, config?: Config): void;
+    static startInit(root?: DisplayObjectContainer, password?: string, config?: Config): void;
+    private static onTicker();
     private static onPasswordInput();
     static visible: boolean;
     static showView(view: BaseConsoleView, moveToMouse?: boolean): void;
     static hideView(view: BaseConsoleView): void;
     static toggleView(view: BaseConsoleView, moveToMouse?: boolean): void;
     static moveViewToTopLayer(view: BaseConsoleView): void;
-    static root: IDisplayObjectContainerWrapper;
+    static root: DisplayObjectContainer;
 }

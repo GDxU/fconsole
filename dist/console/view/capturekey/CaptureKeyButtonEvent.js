@@ -1,9 +1,8 @@
-"use strict";
-var CaptuerKeyButtonEvent = (function () {
+var CaptuerKeyButtonEvent = /** @class */ (function () {
     function CaptuerKeyButtonEvent() {
     }
+    CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS = "CAPTURE_KEY_PRESS";
     return CaptuerKeyButtonEvent;
 }());
-CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS = "CAPTURE_KEY_PRESS";
-exports.CaptuerKeyButtonEvent = CaptuerKeyButtonEvent;
+export { CaptuerKeyButtonEvent };
 //# sourceMappingURL=CaptureKeyButtonEvent.js.map

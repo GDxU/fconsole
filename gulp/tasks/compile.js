@@ -12,16 +12,16 @@ gulp.task(
                 )
 
             ).on(
-                "end",
-                function () {
-                    cb();
-                }
+            "end",
+            function () {
+                cb();
+            }
 
-            ).on(
-                "error",
-                function () {
-                    console.error("ERROR! compile.js");
-                }
-            );
+        ).on(
+            "error",
+            function () {
+                console.error("ERROR! compile.js");
+            }
+        );
     }
 );

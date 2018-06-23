@@ -1,9 +1,10 @@
-import { IDisplayObjectContainerWrapper, ITextWrapper } from "fgraphics/dist/index";
-import { BaseEventListenerObject } from "fcore/dist/index";
+/// <reference types="pixi.js" />
+import { DisplayObjectContainer, FLabel } from "fsuite";
+import { BaseObject } from "fcore";
 import { ITooltipData } from "../../tooltip/ITooltipData";
-export declare class BaseConsoleButton extends BaseEventListenerObject {
-    view: IDisplayObjectContainerWrapper;
-    field: ITextWrapper;
+export declare class BaseConsoleButton extends BaseObject {
+    view: DisplayObjectContainer;
+    field: FLabel;
     private _label;
     tooltipData: ITooltipData;
     constructor();

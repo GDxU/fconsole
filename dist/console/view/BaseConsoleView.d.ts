@@ -1,15 +1,16 @@
-import { IDisplayObjectContainerWrapper, ITextWrapper } from "fgraphics/dist/index";
-import { BaseEventListenerObject } from "fcore/dist/index";
+/// <reference types="pixi.js" />
+import { DisplayObjectContainer, FLabel } from "fsuite";
+import { BaseObject } from "fcore";
 import { BaseConsoleButton } from "./BaseConsoleButton";
 import { ITooltipData } from "../../tooltip/ITooltipData";
-export declare class BaseConsoleView extends BaseEventListenerObject {
+export declare class BaseConsoleView extends BaseObject {
     private static CAPTURE_LABEL_FIRST_PART;
     private static NO_CAPTURE_KEY_TEXT;
-    view: IDisplayObjectContainerWrapper;
+    view: DisplayObjectContainer;
     private bgGraphics;
-    protected contentCont: IDisplayObjectContainerWrapper;
-    protected titleCont: IDisplayObjectContainerWrapper;
-    protected insideContentCont: IDisplayObjectContainerWrapper;
+    protected contentCont: DisplayObjectContainer;
+    protected titleCont: DisplayObjectContainer;
+    protected insideContentCont: DisplayObjectContainer;
     private _visible;
     private dragHelper;
     private viewDragStartX;
@@ -17,7 +18,7 @@ export declare class BaseConsoleView extends BaseEventListenerObject {
     private buttonsList;
     private btnsCont;
     private buttonsEventListenerHelper;
-    protected titleLabel: ITextWrapper;
+    protected titleLabel: FLabel;
     private _titleVisible;
     protected captureBtn: BaseConsoleButton;
     private _captureVisible;

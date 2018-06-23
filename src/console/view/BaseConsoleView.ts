@@ -1,23 +1,24 @@
-import {IDisplayObjectContainerWrapper, EngineAdapter, IGraphicsWrapper, ITextWrapper} from "fgraphics/dist/index";
-import {BaseEventListenerObject, EventListenerHelper} from "fcore/dist/index";
-import {DragHelper, DragHelperEvent} from "flibs/dist/index";
+import {DisplayObjectContainer, Graphics, FLabel} from "fsuite";
+import {BaseObject, EventListenerHelper} from "fcore";
+import {DragHelper, DragHelperEvent} from "fsuite";
+
 import {BaseConsoleButton} from "./BaseConsoleButton";
 import {FC} from "../FC";
 import {CaptureKeyButton} from "./capturekey/CaptureKeyButton";
 import {CaptuerKeyButtonEvent} from "./capturekey/CaptureKeyButtonEvent";
 import {ITooltipData} from "../../tooltip/ITooltipData";
 
-export class BaseConsoleView extends BaseEventListenerObject {
+export class BaseConsoleView extends BaseObject {
 
     private static CAPTURE_LABEL_FIRST_PART:string = "Capture key:";
     private static NO_CAPTURE_KEY_TEXT:string = "(click to add)";
 
-    public view:IDisplayObjectContainerWrapper;
-    private bgGraphics:IGraphicsWrapper;
+    public view:DisplayObjectContainer;
+    private bgGraphics:Graphics;
 
-    protected contentCont:IDisplayObjectContainerWrapper;
-    protected titleCont:IDisplayObjectContainerWrapper;
-    protected insideContentCont:IDisplayObjectContainerWrapper;
+    protected contentCont:DisplayObjectContainer;
+    protected titleCont:DisplayObjectContainer;
+    protected insideContentCont:DisplayObjectContainer;
 
     private _visible:boolean;
 
@@ -26,10 +27,10 @@ export class BaseConsoleView extends BaseEventListenerObject {
     private viewDragStartY:number;
 
     private buttonsList:BaseConsoleButton[];
-    private btnsCont:IDisplayObjectContainerWrapper;
+    private btnsCont:DisplayObjectContainer;
     private buttonsEventListenerHelper:EventListenerHelper<string>;
 
-    protected titleLabel:ITextWrapper;
+    protected titleLabel:FLabel;
     private _titleVisible:boolean;
 
     protected captureBtn:BaseConsoleButton;
@@ -54,9 +55,9 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.buttonsList = [];
         this.buttonsEventListenerHelper = new EventListenerHelper<string>(this);
 
-        this.view = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.view = new DisplayObjectContainer();
 
-        this.bgGraphics = EngineAdapter.instance.createGraphicsWrapper();
+        this.bgGraphics = new Graphics();
         this.view.addChild(this.bgGraphics);
         //
         this.bgGraphics.interactive = true;
@@ -64,19 +65,19 @@ export class BaseConsoleView extends BaseEventListenerObject {
         this.dragHelper = new DragHelper();
         this.dragHelper.view = (this.bgGraphics as any);
 
-        this.contentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.contentCont = new DisplayObjectContainer();
         this.view.addChild(this.contentCont);
 
-        this.titleCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.titleCont = new DisplayObjectContainer();
         this.contentCont.addChild(this.titleCont);
 
-        this.titleLabel = EngineAdapter.instance.createTextWrapper();
+        this.titleLabel = new FLabel();
         this.titleCont.addChild(this.titleLabel);
         this.titleLabel.color = FC.config.viewSettings.titleLabelColor;
         this.titleLabel.size = FC.config.viewSettings.titleLabelSize;
         this.titleLabel.text = "Test Title";
 
-        this.btnsCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.btnsCont = new DisplayObjectContainer();
         this.titleCont.addChild(this.btnsCont);
 
         this.captureBtn = new CaptureKeyButton();
@@ -85,7 +86,7 @@ export class BaseConsoleView extends BaseEventListenerObject {
         //
         this.captureBtn.tooltipData = {title: FC.config.localization.captureKeyBtnTooltipTitle};
 
-        this.insideContentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.insideContentCont = new DisplayObjectContainer();
         this.contentCont.addChild(this.insideContentCont);
     }
 

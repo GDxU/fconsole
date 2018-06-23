@@ -1,34 +1,33 @@
 import {
-    IDisplayObjectContainerWrapper,
-    ITextWrapper,
-    EngineAdapter,
-    DisplayObjectWrapperMouseEvent
-} from "fgraphics/dist/index";
-import {BaseEventListenerObject} from "fcore/dist/index";
+    DisplayObjectContainer,
+    FLabel,
+    InteractiveEvent
+} from "fsuite";
+import {BaseObject} from "fcore";
 import {FC} from "../FC";
 import {ITooltipData} from "../../tooltip/ITooltipData";
 
-export class BaseConsoleButton extends BaseEventListenerObject {
+export class BaseConsoleButton extends BaseObject {
 
-    public view:IDisplayObjectContainerWrapper;
-    public field:ITextWrapper;
+    public view: DisplayObjectContainer;
+    public field: FLabel;
 
-    private _label:string = "";
+    private _label: string = "";
 
-    public tooltipData:ITooltipData;
+    public tooltipData: ITooltipData;
 
     constructor() {
         super();
     }
 
-    protected construction():void {
+    protected construction(): void {
         super.construction();
 
-        this.view = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.view = new DisplayObjectContainer();
         this.view.interactive = true;
         this.view.buttonMode = true;
 
-        this.field = EngineAdapter.instance.createTextWrapper();
+        this.field = new FLabel();
         this.view.addChild(this.field);
         this.field.color = FC.config.btnSettings.labelColor;
         this.field.size = FC.config.btnSettings.labelSize;
@@ -38,33 +37,33 @@ export class BaseConsoleButton extends BaseEventListenerObject {
     }
 
 
-    protected addListeners():void {
+    protected addListeners(): void {
         super.addListeners();
 
         this.eventListenerHelper.addEventListener(
             this.view,
-            DisplayObjectWrapperMouseEvent.ROLL_OVER,
+            InteractiveEvent.OVER,
             this.onOver
         );
         this.eventListenerHelper.addEventListener(
             this.view,
-            DisplayObjectWrapperMouseEvent.ROLL_OUT,
+            InteractiveEvent.OUT,
             this.onOut
         );
         this.eventListenerHelper.addEventListener(
             this.view,
-            DisplayObjectWrapperMouseEvent.CLICK,
+            InteractiveEvent.TAP,
             this.onClick
         );
         this.eventListenerHelper.addEventListener(
             this.view,
-            DisplayObjectWrapperMouseEvent.MOUSE_UP_OUTSIDE,
+            InteractiveEvent.UP_OUTSIDE,
             this.onOut
         );
     }
 
 
-    private onOver():void {
+    private onOver(): void {
         this.view.alpha = 1;
 
         if (this.tooltipData) {
@@ -72,18 +71,18 @@ export class BaseConsoleButton extends BaseEventListenerObject {
         }
     }
 
-    private onOut():void {
+    private onOut(): void {
         this.view.alpha = 0.75;
 
         FC.tooltipManager.hide();
     }
 
-    protected onClick():void {
+    protected onClick(): void {
         this.onOut();
     }
 
 
-    protected commitData():void {
+    protected commitData(): void {
         super.commitData();
 
         this.field.text = this.label;
@@ -91,17 +90,17 @@ export class BaseConsoleButton extends BaseEventListenerObject {
         this.arrange();
     }
 
-    protected arrange():void {
+    protected arrange(): void {
         super.arrange();
 
     }
 
 
-    get label():string {
+    get label(): string {
         return this._label;
     }
 
-    set label(value:string) {
+    set label(value: string) {
         if (value == this.label) {
             return;
         }

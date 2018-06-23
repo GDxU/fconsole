@@ -1,13 +1,17 @@
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var BaseConsoleView_1 = require("./BaseConsoleView");
-var FC_1 = require("../FC");
-var index_1 = require("fgraphics/dist/index");
-var ConsoleView = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { BaseConsoleView } from "./BaseConsoleView";
+import { FC } from "../FC";
+import { InteractiveEvent } from "fsuite";
+var ConsoleView = /** @class */ (function (_super) {
     __extends(ConsoleView, _super);
     function ConsoleView() {
         return _super.call(this) || this;
@@ -16,20 +20,20 @@ var ConsoleView = (function (_super) {
         _super.prototype.construction.call(this);
         this.titleVisible = false;
         this.displayListBtn = this.createTitleBtn("DL", {
-            title: FC_1.FC.config.localization.displayListBtnTooltipTitle,
-            text: FC_1.FC.config.localization.displayListBtnTooltipText
+            title: FC.config.localization.displayListBtnTooltipTitle,
+            text: FC.config.localization.displayListBtnTooltipText
         });
-        this.closeBtn = this.createTitleBtn("X", { title: FC_1.FC.config.localization.closeBtnTooltipTitle });
+        this.closeBtn = this.createTitleBtn("X", { title: FC.config.localization.closeBtnTooltipTitle });
     };
     ConsoleView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
-        this.eventListenerHelper.addEventListener(this.displayListBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onDisplayListClick);
-        this.eventListenerHelper.addEventListener(this.closeBtn.view, index_1.DisplayObjectWrapperMouseEvent.CLICK, this.onClose);
+        this.eventListenerHelper.addEventListener(this.displayListBtn.view, InteractiveEvent.TAP, this.onDisplayListClick);
+        this.eventListenerHelper.addEventListener(this.closeBtn.view, InteractiveEvent.TAP, this.onClose);
     };
     ConsoleView.prototype.onDisplayListClick = function () {
-        FC_1.FC.toggleView(FC_1.FC.displayListView);
+        FC.toggleView(FC.displayListView);
     };
     return ConsoleView;
-}(BaseConsoleView_1.BaseConsoleView));
-exports.ConsoleView = ConsoleView;
+}(BaseConsoleView));
+export { ConsoleView };
 //# sourceMappingURL=ConsoleView.js.map

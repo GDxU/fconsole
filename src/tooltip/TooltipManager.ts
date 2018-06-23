@@ -1,53 +1,56 @@
-import {BaseEventListenerObject, Point} from "fcore/dist/index";
-import {IDisplayObjectContainerWrapper, EngineAdapter, TickerEvent} from "fgraphics/dist/index";
+import {BaseObject} from "fcore";
+import {DisplayObjectContainer, Point, FApp} from "fsuite";
+
 import {BaseTooltip} from "./BaseTooltip";
 import {ITooltipData} from "./ITooltipData";
 
-export class TooltipManager extends BaseEventListenerObject {
+export class TooltipManager extends BaseObject {
 
-    private static SHOW_DELAY:Number = 0.5;
+    private static SHOW_DELAY: Number = 0.5;
 
-    private _tooltipCont:IDisplayObjectContainerWrapper;
-    private tooltipInsideCont:IDisplayObjectContainerWrapper;
-    private tooltip:BaseTooltip;
+    private _tooltipCont: DisplayObjectContainer;
+    private tooltipInsideCont: DisplayObjectContainer;
+    private tooltip: BaseTooltip;
 
-    private _mouseShift:Point;
+    private _mouseShift: Point;
 
-    private _visible:boolean;
+    private _visible: boolean;
 
-    constructor(tooltip:BaseTooltip) {
+    constructor(tooltip: BaseTooltip) {
         super(tooltip);
     }
 
 
-    protected construction(tooltip:BaseTooltip):void {
+    protected construction(tooltip: BaseTooltip): void {
         super.construction();
 
         this.tooltip = tooltip;
         this.mouseShift = new Point();
 
-        this.tooltipInsideCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.tooltipInsideCont = new DisplayObjectContainer();
         this.tooltipInsideCont.addChild(this.tooltip.view);
 
         this.hide();
     }
 
-    protected addListeners():void {
+    protected addListeners(): void {
         super.addListeners();
 
-        this.eventListenerHelper.addEventListener(
-            EngineAdapter.instance.mainTicker,
-            TickerEvent.TICK,
-            this.onTick
-        )
+        FApp.instance.ticker.add(this.onTick, this);
     }
 
-    private onTick():void {
+    protected removeListeners(): void {
+        super.removeListeners();
+
+        FApp.instance.ticker.remove(this.onTick, this);
+    }
+
+    private onTick(): void {
         this.update();
     }
 
 
-    public show(data:ITooltipData):void {
+    public show(data: ITooltipData): void {
         this.visible = true;
 
         this.tooltip.data = data;
@@ -55,7 +58,7 @@ export class TooltipManager extends BaseEventListenerObject {
         this.update();
     }
 
-    public hide():void {
+    public hide(): void {
         this.visible = false;
     }
 
@@ -63,7 +66,7 @@ export class TooltipManager extends BaseEventListenerObject {
     /**
      * Обновление подсказки.
      */
-    public update():void {
+    public update(): void {
         if (!this.visible) {
             return;
         }
@@ -74,20 +77,21 @@ export class TooltipManager extends BaseEventListenerObject {
 
         }
 
-        let tempPos:Point = new Point(EngineAdapter.instance.globalMouseX, EngineAdapter.instance.globalMouseY);
+        const globalPos: Point = FApp.instance.getGlobalInteractionPosition();
+        let tempPos: Point = globalPos.clone();
         tempPos.x += this.mouseShift.x;
         tempPos.y += this.mouseShift.y;
 
         if (tempPos.x < 0) {
             tempPos.x = 0;
-        } else if (tempPos.x + this.tooltip.view.width > EngineAdapter.instance.rendererWidth) {
-            tempPos.x = EngineAdapter.instance.rendererWidth - this.tooltip.view.width;
+        } else if (tempPos.x + this.tooltip.view.width > FApp.instance.renderer.width) {
+            tempPos.x = FApp.instance.renderer.width - this.tooltip.view.width;
         }
 
         if (tempPos.y < 0) {
             tempPos.y = 0;
-        } else if (tempPos.y + this.tooltip.view.height > EngineAdapter.instance.rendererHeight) {
-            tempPos.y = EngineAdapter.instance.rendererHeight - this.tooltip.view.height;
+        } else if (tempPos.y + this.tooltip.view.height > FApp.instance.renderer.height) {
+            tempPos.y = FApp.instance.renderer.height - this.tooltip.view.height;
         }
 
         tempPos = this.tooltip.view.parent.toLocal(tempPos);
@@ -101,17 +105,17 @@ export class TooltipManager extends BaseEventListenerObject {
      * @param x
      * @param y
      */
-    protected moveTooltipTo(x:number, y:number):void {
+    protected moveTooltipTo(x: number, y: number): void {
         this.tooltip.view.x = x;
         this.tooltip.view.y = y;
     }
 
 
-    public get tooltipCont():IDisplayObjectContainerWrapper {
+    public get tooltipCont(): DisplayObjectContainer {
         return this._tooltipCont;
     }
 
-    public set tooltipCont(value:IDisplayObjectContainerWrapper) {
+    public set tooltipCont(value: DisplayObjectContainer) {
         if (this.tooltipCont == value) {
             return;
         }
@@ -126,22 +130,22 @@ export class TooltipManager extends BaseEventListenerObject {
     }
 
 
-    get mouseShift():Point {
+    get mouseShift(): Point {
         return this._mouseShift;
     }
 
-    set mouseShift(value:Point) {
+    set mouseShift(value: Point) {
         this._mouseShift = value.clone();
 
         this.update();
     }
 
 
-    private get visible():boolean {
+    private get visible(): boolean {
         return this._visible;
     }
 
-    private set visible(value:boolean) {
+    private set visible(value: boolean) {
         this._visible = value;
 
         this.tooltipInsideCont.visible = this.visible;

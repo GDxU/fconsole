@@ -1,8 +1,9 @@
-import { BaseEventListenerObject, Point } from "fcore/dist/index";
-import { IDisplayObjectContainerWrapper } from "fgraphics/dist/index";
+/// <reference types="pixi.js" />
+import { BaseObject } from "fcore";
+import { DisplayObjectContainer, Point } from "fsuite";
 import { BaseTooltip } from "./BaseTooltip";
 import { ITooltipData } from "./ITooltipData";
-export declare class TooltipManager extends BaseEventListenerObject {
+export declare class TooltipManager extends BaseObject {
     private static SHOW_DELAY;
     private _tooltipCont;
     private tooltipInsideCont;
@@ -12,6 +13,7 @@ export declare class TooltipManager extends BaseEventListenerObject {
     constructor(tooltip: BaseTooltip);
     protected construction(tooltip: BaseTooltip): void;
     protected addListeners(): void;
+    protected removeListeners(): void;
     private onTick();
     show(data: ITooltipData): void;
     hide(): void;
@@ -27,7 +29,7 @@ export declare class TooltipManager extends BaseEventListenerObject {
      * @param y
      */
     protected moveTooltipTo(x: number, y: number): void;
-    tooltipCont: IDisplayObjectContainerWrapper;
+    tooltipCont: DisplayObjectContainer;
     mouseShift: Point;
     private visible;
 }

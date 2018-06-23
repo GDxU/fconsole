@@ -1,17 +1,21 @@
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var index_1 = require("fgraphics/dist/index");
-var index_2 = require("fcore/dist/index");
-var index_3 = require("flibs/dist/index");
-var BaseConsoleButton_1 = require("./BaseConsoleButton");
-var FC_1 = require("../FC");
-var CaptureKeyButton_1 = require("./capturekey/CaptureKeyButton");
-var CaptureKeyButtonEvent_1 = require("./capturekey/CaptureKeyButtonEvent");
-var BaseConsoleView = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { DisplayObjectContainer, Graphics, FLabel } from "fsuite";
+import { BaseObject, EventListenerHelper } from "fcore";
+import { DragHelper, DragHelperEvent } from "fsuite";
+import { BaseConsoleButton } from "./BaseConsoleButton";
+import { FC } from "../FC";
+import { CaptureKeyButton } from "./capturekey/CaptureKeyButton";
+import { CaptuerKeyButtonEvent } from "./capturekey/CaptureKeyButtonEvent";
+var BaseConsoleView = /** @class */ (function (_super) {
     __extends(BaseConsoleView, _super);
     function BaseConsoleView() {
         var _this = _super.call(this) || this;
@@ -26,31 +30,31 @@ var BaseConsoleView = (function (_super) {
         this._titleVisible = true;
         this._captureVisible = false;
         this.buttonsList = [];
-        this.buttonsEventListenerHelper = new index_2.EventListenerHelper(this);
-        this.view = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
-        this.bgGraphics = index_1.EngineAdapter.instance.createGraphicsWrapper();
+        this.buttonsEventListenerHelper = new EventListenerHelper(this);
+        this.view = new DisplayObjectContainer();
+        this.bgGraphics = new Graphics();
         this.view.addChild(this.bgGraphics);
         //
         this.bgGraphics.interactive = true;
-        this.dragHelper = new index_3.DragHelper();
+        this.dragHelper = new DragHelper();
         this.dragHelper.view = this.bgGraphics;
-        this.contentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.contentCont = new DisplayObjectContainer();
         this.view.addChild(this.contentCont);
-        this.titleCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.titleCont = new DisplayObjectContainer();
         this.contentCont.addChild(this.titleCont);
-        this.titleLabel = index_1.EngineAdapter.instance.createTextWrapper();
+        this.titleLabel = new FLabel();
         this.titleCont.addChild(this.titleLabel);
-        this.titleLabel.color = FC_1.FC.config.viewSettings.titleLabelColor;
-        this.titleLabel.size = FC_1.FC.config.viewSettings.titleLabelSize;
+        this.titleLabel.color = FC.config.viewSettings.titleLabelColor;
+        this.titleLabel.size = FC.config.viewSettings.titleLabelSize;
         this.titleLabel.text = "Test Title";
-        this.btnsCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.btnsCont = new DisplayObjectContainer();
         this.titleCont.addChild(this.btnsCont);
-        this.captureBtn = new CaptureKeyButton_1.CaptureKeyButton();
+        this.captureBtn = new CaptureKeyButton();
         this.titleCont.addChild(this.captureBtn.view);
         this.captureBtn.view.y = this.titleLabel.y + this.titleLabel.height;
         //
-        this.captureBtn.tooltipData = { title: FC_1.FC.config.localization.captureKeyBtnTooltipTitle };
-        this.insideContentCont = index_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.captureBtn.tooltipData = { title: FC.config.localization.captureKeyBtnTooltipTitle };
+        this.insideContentCont = new DisplayObjectContainer();
         this.contentCont.addChild(this.insideContentCont);
     };
     BaseConsoleView.prototype.destruction = function () {
@@ -62,21 +66,21 @@ var BaseConsoleView = (function (_super) {
     };
     BaseConsoleView.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
-        this.eventListenerHelper.addEventListener(this.dragHelper, index_3.DragHelperEvent.DRAG_START, this.onDragStart);
-        this.eventListenerHelper.addEventListener(this.dragHelper, index_3.DragHelperEvent.DRAG_UPDATE, this.onDragUpdate);
-        this.eventListenerHelper.addEventListener(this.captureBtn, CaptureKeyButtonEvent_1.CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS, this.onCaptureKey);
+        this.eventListenerHelper.addEventListener(this.dragHelper, DragHelperEvent.DRAG_START, this.onDragStart);
+        this.eventListenerHelper.addEventListener(this.dragHelper, DragHelperEvent.DRAG_UPDATE, this.onDragUpdate);
+        this.eventListenerHelper.addEventListener(this.captureBtn, CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS, this.onCaptureKey);
     };
     BaseConsoleView.prototype.onDragStart = function () {
         this.viewDragStartX = this.view.x;
         this.viewDragStartY = this.view.y;
-        FC_1.FC.moveViewToTopLayer(this);
+        FC.moveViewToTopLayer(this);
     };
     BaseConsoleView.prototype.onDragUpdate = function () {
         this.view.x = this.viewDragStartX + this.dragHelper.changeDragGlobalX;
         this.view.y = this.viewDragStartY + this.dragHelper.changeDragGlobalY;
     };
     BaseConsoleView.prototype.onClose = function () {
-        FC_1.FC.hideView(this);
+        FC.hideView(this);
     };
     BaseConsoleView.prototype.onCaptureKey = function () {
     };
@@ -124,14 +128,14 @@ var BaseConsoleView = (function (_super) {
         else {
             this.insideContentCont.y = 0;
         }
-        var tempWidth = this.contentCont.width + FC_1.FC.config.viewSettings.bgToContentShift.x;
-        var tempHeight = this.contentCont.height + FC_1.FC.config.viewSettings.bgToContentShift.y;
+        var tempWidth = this.contentCont.width + FC.config.viewSettings.bgToContentShift.x;
+        var tempHeight = this.contentCont.height + FC.config.viewSettings.bgToContentShift.y;
         if (tempWidth != this.lastBgWidth || tempHeight != this.lastBgHeight) {
             this.lastBgWidth = tempWidth;
             this.lastBgHeight = tempHeight;
             this.bgGraphics.clear();
-            this.bgGraphics.beginFill(FC_1.FC.config.viewSettings.bgColor, FC_1.FC.config.viewSettings.bgAlpha);
-            this.bgGraphics.lineStyle(FC_1.FC.config.viewSettings.borderWidth, FC_1.FC.config.viewSettings.borderColor, FC_1.FC.config.viewSettings.borderAlpha);
+            this.bgGraphics.beginFill(FC.config.viewSettings.bgColor, FC.config.viewSettings.bgAlpha);
+            this.bgGraphics.lineStyle(FC.config.viewSettings.borderWidth, FC.config.viewSettings.borderColor, FC.config.viewSettings.borderAlpha);
             this.bgGraphics.drawRect(0, 0, tempWidth, tempHeight);
             this.bgGraphics.endFill();
         }
@@ -139,7 +143,7 @@ var BaseConsoleView = (function (_super) {
         this.contentCont.y = this.bgGraphics.y + ((this.bgGraphics.height - this.contentCont.height) >> 1);
     };
     BaseConsoleView.prototype.createTitleBtn = function (label, tooltipData) {
-        var tempBtn = new BaseConsoleButton_1.BaseConsoleButton();
+        var tempBtn = new BaseConsoleButton();
         this.btnsCont.addChild(tempBtn.view);
         tempBtn.label = label;
         tempBtn.tooltipData = tooltipData;
@@ -174,9 +178,9 @@ var BaseConsoleView = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    BaseConsoleView.CAPTURE_LABEL_FIRST_PART = "Capture key:";
+    BaseConsoleView.NO_CAPTURE_KEY_TEXT = "(click to add)";
     return BaseConsoleView;
-}(index_2.BaseEventListenerObject));
-BaseConsoleView.CAPTURE_LABEL_FIRST_PART = "Capture key:";
-BaseConsoleView.NO_CAPTURE_KEY_TEXT = "(click to add)";
-exports.BaseConsoleView = BaseConsoleView;
+}(BaseObject));
+export { BaseConsoleView };
 //# sourceMappingURL=BaseConsoleView.js.map

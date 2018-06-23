@@ -1,15 +1,19 @@
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var BaseConsoleButton_1 = require("../BaseConsoleButton");
-var index_1 = require("flibs/dist/index");
-var index_2 = require("fcore/dist/index");
-var CaptureKeyButtonEvent_1 = require("./CaptureKeyButtonEvent");
-var FC_1 = require("../../FC");
-var CaptureKeyButton = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { BaseConsoleButton } from "../BaseConsoleButton";
+import { InputManager, InputManagerEvent } from "fsuite";
+import { KeyboardTools, StringTools } from "fcore";
+import { CaptuerKeyButtonEvent } from "./CaptureKeyButtonEvent";
+import { FC } from "../../FC";
+var CaptureKeyButton = /** @class */ (function (_super) {
     __extends(CaptureKeyButton, _super);
     function CaptureKeyButton() {
         return _super.call(this) || this;
@@ -19,7 +23,7 @@ var CaptureKeyButton = (function (_super) {
     };
     CaptureKeyButton.prototype.addListeners = function () {
         _super.prototype.addListeners.call(this);
-        this.eventListenerHelper.addEventListener(index_1.InputManager.instance, index_1.InputManagerEvent.KEY_PRESS, this.onKeyPress);
+        this.eventListenerHelper.addEventListener(InputManager.instance, InputManagerEvent.KEY_PRESS, this.onKeyPress);
     };
     CaptureKeyButton.prototype.onClick = function () {
         _super.prototype.onClick.call(this);
@@ -28,26 +32,26 @@ var CaptureKeyButton = (function (_super) {
     CaptureKeyButton.prototype.onKeyPress = function (data) {
         if (this.isClicked) {
             this.isClicked = false;
-            this.captureCode = index_2.KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
-            this.captureKey = index_2.KeyboardTools.getCharFromKeyPressEvent(data.nativeEvent);
+            this.captureCode = KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
+            this.captureKey = KeyboardTools.getCharFromKeyPressEvent(data.nativeEvent);
             this.commitData();
         }
         else if (this.captureCode) {
-            if (index_2.KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent) == this.captureCode) {
-                this.dispatchEvent(CaptureKeyButtonEvent_1.CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS);
+            if (KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent) == this.captureCode) {
+                this.dispatchEvent(CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS);
             }
         }
     };
     CaptureKeyButton.prototype.commitData = function () {
         _super.prototype.commitData.call(this);
         if (this.isClicked) {
-            this.label = FC_1.FC.config.localization.captureKeyBtnPressedLabel;
+            this.label = FC.config.localization.captureKeyBtnPressedLabel;
         }
         else if (this.captureKey) {
-            this.label = index_2.StringTools.substituteList(FC_1.FC.config.localization.captureKeyBtnNormalLabel, this.captureKey);
+            this.label = StringTools.substituteList(FC.config.localization.captureKeyBtnNormalLabel, this.captureKey);
         }
         else {
-            this.label = index_2.StringTools.substituteList(FC_1.FC.config.localization.captureKeyBtnNormalLabel, FC_1.FC.config.localization.captureKeyBtnNoKeyHelpText);
+            this.label = StringTools.substituteList(FC.config.localization.captureKeyBtnNormalLabel, FC.config.localization.captureKeyBtnNoKeyHelpText);
         }
     };
     CaptureKeyButton.prototype.arrange = function () {
@@ -68,6 +72,6 @@ var CaptureKeyButton = (function (_super) {
         configurable: true
     });
     return CaptureKeyButton;
-}(BaseConsoleButton_1.BaseConsoleButton));
-exports.CaptureKeyButton = CaptureKeyButton;
+}(BaseConsoleButton));
+export { CaptureKeyButton };
 //# sourceMappingURL=CaptureKeyButton.js.map

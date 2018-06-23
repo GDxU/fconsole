@@ -1,7 +1,7 @@
 import {BaseConsoleView} from "./BaseConsoleView";
 import {FC} from "../FC";
 import {BaseConsoleButton} from "./BaseConsoleButton";
-import {DisplayObjectWrapperMouseEvent} from "fgraphics/dist/index";
+import {InteractiveEvent} from "fsuite";
 export class ConsoleView extends BaseConsoleView {
 
     private displayListBtn:BaseConsoleButton;
@@ -34,13 +34,13 @@ export class ConsoleView extends BaseConsoleView {
 
         this.eventListenerHelper.addEventListener(
             this.displayListBtn.view,
-            DisplayObjectWrapperMouseEvent.CLICK,
+            InteractiveEvent.TAP,
             this.onDisplayListClick
         );
 
         this.eventListenerHelper.addEventListener(
             this.closeBtn.view,
-            DisplayObjectWrapperMouseEvent.CLICK,
+            InteractiveEvent.TAP,
             this.onClose
         );
     }

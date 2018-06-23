@@ -1,18 +1,14 @@
-"use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require("./TestConsoleClass"));
-__export(require("./index"));
-__export(require("./console/Config"));
-__export(require("./console/FC"));
-__export(require("./tooltip/BaseTooltip"));
-__export(require("./tooltip/TooltipManager"));
-__export(require("./console/view/BaseConsoleButton"));
-__export(require("./console/view/BaseConsoleView"));
-__export(require("./console/view/ConsoleView"));
-__export(require("./console/view/DisplayListView"));
-__export(require("./console/view/capturekey/CaptureKeyButton"));
-__export(require("./console/view/capturekey/CaptureKeyButtonEvent"));
-__export(require("./console/view/tooltip/ConsoleTooltip"));
+export * from './TestConsoleClass';
+export * from './index';
+export * from './console/Config';
+export * from './console/FC';
+export * from './tooltip/BaseTooltip';
+export * from './tooltip/TooltipManager';
+export * from './console/view/BaseConsoleButton';
+export * from './console/view/BaseConsoleView';
+export * from './console/view/ConsoleView';
+export * from './console/view/DisplayListView';
+export * from './console/view/capturekey/CaptureKeyButton';
+export * from './console/view/capturekey/CaptureKeyButtonEvent';
+export * from './console/view/tooltip/ConsoleTooltip';
 //# sourceMappingURL=index.js.map

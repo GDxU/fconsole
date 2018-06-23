@@ -1,22 +1,19 @@
 import {BaseTooltip} from "../../../tooltip/BaseTooltip";
 import {
-    IDisplayObjectContainerWrapper,
-    IGraphicsWrapper,
-    ITextWrapper,
-    EngineAdapter
-} from "fgraphics";
-import {
+    DisplayObjectContainer,
+    Graphics,
+    FLabel,
     Align
-} from "fcore";
+} from "fsuite";
 import {FC} from "../../FC";
 
 export class ConsoleTooltip extends BaseTooltip {
 
-    private contentCont:IDisplayObjectContainerWrapper;
-    private titleLabel:ITextWrapper;
-    private textLabel:ITextWrapper;
+    private contentCont:DisplayObjectContainer;
+    private titleLabel:FLabel;
+    private textLabel:FLabel;
 
-    private bg:IGraphicsWrapper;
+    private bg:Graphics;
 
     constructor() {
         super();
@@ -25,19 +22,19 @@ export class ConsoleTooltip extends BaseTooltip {
     protected construction():void {
         super.construction();
 
-        this.bg = EngineAdapter.instance.createGraphicsWrapper();
+        this.bg = new Graphics();
         this.view.addChild(this.bg);
 
-        this.contentCont = EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.contentCont = new DisplayObjectContainer();
         this.view.addChild(this.contentCont);
 
-        this.titleLabel = EngineAdapter.instance.createTextWrapper();
+        this.titleLabel = new FLabel();
         this.contentCont.addChild(this.titleLabel);
         this.titleLabel.align = Align.CENTER;
         this.titleLabel.color = FC.config.tooltipSettings.titleLabelColor;
         this.titleLabel.size = FC.config.tooltipSettings.titleLabelSize;
 
-        this.textLabel = EngineAdapter.instance.createTextWrapper();
+        this.textLabel = new FLabel();
         this.contentCont.addChild(this.textLabel);
         this.textLabel.align = Align.CENTER;
         this.textLabel.color = FC.config.tooltipSettings.textLabelColor;

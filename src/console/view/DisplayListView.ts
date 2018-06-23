@@ -1,51 +1,53 @@
-import {BaseConsoleView} from "./BaseConsoleView";
+import {KeyboardTools} from "fcore";
 import {
-    EngineAdapter,
-    TickerEvent,
-    IObjectUnderPointVO,
-    ITextWrapper,
-    DisplayObjectWrapperMouseEvent,
-    IDisplayObjectWrapper
-} from "fgraphics/dist/index";
-import {Point, KeyboardTools, KeyCodes} from "fcore/dist/index";
-import {InputManager, InputManagerEvent, InputManagerEventData} from "flibs/dist/index";
+    FLabel,
+    Point,
+    InteractiveEvent,
+    DisplayObject,
+    KeyCodes,
+    IFDisplayObjectUnderPointVO,
+    FDisplayTools,
+    FApp
+} from "fsuite";
+import {InputManager, InputManagerEvent, InputManagerEventData} from "fsuite";
+
+import {BaseConsoleView} from "./BaseConsoleView";
 import {BaseConsoleButton} from "./BaseConsoleButton";
 import {FC} from "../FC";
 
 export class DisplayListView extends BaseConsoleView {
 
-    private static ARROW_KEY_CODES:number[] = [KeyCodes.LEFT_ARROW, KeyCodes.RIGHT_ARROW, KeyCodes.UP_ARROW, KeyCodes.DOWN_ARROW];
+    private static ARROW_KEY_CODES: number[] = [KeyCodes.LEFT_ARROW, KeyCodes.RIGHT_ARROW, KeyCodes.UP_ARROW, KeyCodes.DOWN_ARROW];
 
-    private lastCheckedPos:Point;
-    private displayListField:ITextWrapper;
-    private closeBtn:BaseConsoleButton;
-    private lastUnderPointData:IObjectUnderPointVO;
-    private lastAllObjectsUnderPointList:any[];
+    private lastCheckedPos: Point;
+    private displayListField: FLabel;
+    private closeBtn: BaseConsoleButton;
+    private lastUnderPointData: IFDisplayObjectUnderPointVO;
+    private lastAllObjectsUnderPointList: any[];
 
-    private forceUpdateUnderPointView:boolean;
+    private forceUpdateUnderPointView: boolean;
 
-    protected additionalInfoBtn:BaseConsoleButton;
-    private _isAdditionalInfoEnabled:boolean;
+    protected additionalInfoBtn: BaseConsoleButton;
+    private _isAdditionalInfoEnabled: boolean;
 
-    protected moveHelperBtn:BaseConsoleButton;
-    private _isMoveHelperEnabled:boolean;
-    private moveObjectWrapper:IDisplayObjectWrapper;
-    private prevMoveObject:any;
+    protected moveHelperBtn: BaseConsoleButton;
+    private _isMoveHelperEnabled: boolean;
+    private moveObject: DisplayObject;
+    private prevMoveObject: any;
 
-    private moveObjectIndex:number;
+    private moveObjectIndex: number;
 
     constructor() {
         super();
     }
 
-    protected construction():void {
+    protected construction(): void {
         super.construction();
 
         this.captureVisible = true;
 
         this.lastCheckedPos = new Point();
         this.moveObjectIndex = -1;
-        this.moveObjectWrapper = EngineAdapter.instance.createDisplayObjectWrapper();
 
 
         this.titleLabel.text = FC.config.localization.displayListTitle;
@@ -72,7 +74,7 @@ export class DisplayListView extends BaseConsoleView {
         //
         this.moveHelperBtn.view.y = this.additionalInfoBtn.view.y + this.additionalInfoBtn.view.height;
 
-        this.displayListField = EngineAdapter.instance.createTextWrapper();
+        this.displayListField = new FLabel();
         this.insideContentCont.addChild(this.displayListField);
         this.displayListField.color = FC.config.displayListSettings.hierarchyLabelColor;
         this.displayListField.size = FC.config.displayListSettings.hierarchyLabelSize;
@@ -87,43 +89,43 @@ export class DisplayListView extends BaseConsoleView {
         this.captureBtn.tooltipData.text = FC.config.localization.displayListCapturedKeyText;
     }
 
-    public destruction():void {
+    public destruction(): void {
         super.destruction();
 
         this.lastUnderPointData = null;
         this.lastAllObjectsUnderPointList = null;
 
-        if (this.moveObjectWrapper) {
-            this.moveObjectWrapper.destruction();
-            this.moveObjectWrapper = null;
+        if (this.moveObject) {
+            this.moveObject = null;
         }
         this.prevMoveObject = null;
     }
 
-    protected addListeners():void {
+    protected addListeners(): void {
         super.addListeners();
 
-        this.eventListenerHelper.addEventListener(
+        /*this.eventListenerHelper.addEventListener(
             EngineAdapter.instance.mainTicker,
             TickerEvent.TICK,
             this.onTick
-        );
+        );*/
+        FApp.instance.ticker.add(this.onTick, this);
 
         this.eventListenerHelper.addEventListener(
             this.closeBtn.view,
-            DisplayObjectWrapperMouseEvent.CLICK,
+            InteractiveEvent.TAP,
             this.onClose
         );
 
         this.eventListenerHelper.addEventListener(
             this.additionalInfoBtn.view,
-            DisplayObjectWrapperMouseEvent.CLICK,
+            InteractiveEvent.TAP,
             this.onAdditionalInfo
         );
 
         this.eventListenerHelper.addEventListener(
             this.moveHelperBtn.view,
-            DisplayObjectWrapperMouseEvent.CLICK,
+            InteractiveEvent.TAP,
             this.onMoveHelper
         );
 
@@ -134,18 +136,25 @@ export class DisplayListView extends BaseConsoleView {
         );
     }
 
-    private onTick():void {
+    protected removeListeners(): void {
+        super.removeListeners();
+
+        FApp.instance.ticker.remove(this.onTick, this);
+    }
+
+    private onTick(): void {
         if (this.visible) {
             /*if (this.lastCheckedPos.x != EngineAdapter.instance.globalMouseX ||
              this.lastCheckedPos.y != EngineAdapter.instance.globalMouseY) {*/
 
-            this.lastCheckedPos.x = EngineAdapter.instance.globalMouseX;
-            this.lastCheckedPos.y = EngineAdapter.instance.globalMouseY;
+            const globalPos: Point = FApp.instance.getGlobalInteractionPosition();
+            this.lastCheckedPos.x = globalPos.x;
+            this.lastCheckedPos.y = globalPos.y;
 
-            let underPointData:IObjectUnderPointVO = EngineAdapter.instance.getNativeObjectsUnderPoint(
-                EngineAdapter.instance.stage.object,
-                EngineAdapter.instance.globalMouseX,
-                EngineAdapter.instance.globalMouseY
+            let underPointData: IFDisplayObjectUnderPointVO = FDisplayTools.getObjectsUnderPoint(
+                FApp.instance.stage,
+                globalPos.x,
+                globalPos.y
             );
 
             if (this.forceUpdateUnderPointView || !this.checkUnderPointDataEqual(underPointData, this.lastUnderPointData)) {
@@ -156,7 +165,7 @@ export class DisplayListView extends BaseConsoleView {
                 this.lastAllObjectsUnderPointList = [];
                 this.parseUnderPointDataToSingleList(this.lastUnderPointData, this.lastAllObjectsUnderPointList);
 
-                let listText:string = this.parseUnderPointData(underPointData);
+                let listText: string = this.parseUnderPointData(underPointData);
                 this.displayListField.text = listText;
 
                 this.arrange();
@@ -165,13 +174,14 @@ export class DisplayListView extends BaseConsoleView {
         }
     }
 
-    protected onCaptureKey():void {
+    protected onCaptureKey(): void {
         super.onCaptureKey();
 
-        let underPointData:IObjectUnderPointVO = EngineAdapter.instance.getNativeObjectsUnderPoint(
-            EngineAdapter.instance.stage.object,
-            EngineAdapter.instance.globalMouseX,
-            EngineAdapter.instance.globalMouseY
+        const globalPos: Point = FApp.instance.getGlobalInteractionPosition();
+        let underPointData: IFDisplayObjectUnderPointVO = FDisplayTools.getObjectsUnderPoint(
+            FApp.instance.stage,
+            globalPos.x,
+            globalPos.y
         );
 
         // Log the parsed structure
@@ -180,25 +190,25 @@ export class DisplayListView extends BaseConsoleView {
         console.groupEnd();
     }
 
-    protected onAdditionalInfo():void {
+    protected onAdditionalInfo(): void {
         this.isAdditionalInfoEnabled = !this.isAdditionalInfoEnabled;
     }
 
-    protected onMoveHelper():void {
+    protected onMoveHelper(): void {
         this.isMoveHelperEnabled = !this.isMoveHelperEnabled;
     }
 
-    protected onKeyDown(data:InputManagerEventData):void {
+    protected onKeyDown(data: InputManagerEventData): void {
         if (this.isMoveHelperEnabled) {
-            let tempCode:number = KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
+            let tempCode: number = KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
             if (tempCode == KeyCodes.CONTROL) {
                 this.moveObjectIndex--;
                 this.commitData();
 
             } else if (DisplayListView.ARROW_KEY_CODES.indexOf(tempCode) != -1) {
-                if (this.moveObjectWrapper.object) {
-                    let tempChangeX:number = 0;
-                    let tempChangeY:number = 0;
+                if (this.moveObject) {
+                    let tempChangeX: number = 0;
+                    let tempChangeY: number = 0;
 
                     if (tempCode == KeyCodes.LEFT_ARROW) {
                         tempChangeX = -1;
@@ -217,20 +227,20 @@ export class DisplayListView extends BaseConsoleView {
                         tempChangeY *= 10;
                     }
 
-                    this.moveObjectWrapper.x += tempChangeX;
-                    this.moveObjectWrapper.y += tempChangeY;
-                    console.log("Movable object: ", this.moveObjectWrapper.object);
-                    console.log("x: " + this.moveObjectWrapper.x + ", y: " + this.moveObjectWrapper.y);
+                    this.moveObject.x += tempChangeX;
+                    this.moveObject.y += tempChangeY;
+                    console.log("Movable object: ", this.moveObject);
+                    console.log("x: " + this.moveObject.x + ", y: " + this.moveObject.y);
                 }
             }
         }
     }
 
-    private parseUnderPointData(data:IObjectUnderPointVO, prefix:string = "∟"):string {
-        let result:string = "";
+    private parseUnderPointData(data: IFDisplayObjectUnderPointVO, prefix: string = "∟"): string {
+        let result: string = "";
 
         if (data && data.object) {
-            let tempName:string = data.object.toString();
+            let tempName: string = data.object.toString();
             if (data.object.constructor) {
                 tempName = data.object.constructor.name;
             }
@@ -244,7 +254,7 @@ export class DisplayListView extends BaseConsoleView {
             }
 
             if (this.isMoveHelperEnabled) {
-                if (data.object == this.moveObjectWrapper.object) {
+                if (data.object == this.moveObject) {
                     result += " " + FC.config.localization.movableObjectText;
                 }
             }
@@ -256,11 +266,11 @@ export class DisplayListView extends BaseConsoleView {
                     let parsedData;
                     let tempParamConfig;
 
-                    let keys:string[] = Object.keys(FC.config.displayListSettings.additionalInfoParams);
-                    let tempKey:string;
-                    let tempVisualKey:string;
-                    let keysCount:number = keys.length;
-                    for (let keyIndex:number = 0; keyIndex < keysCount; keyIndex++) {
+                    let keys: string[] = Object.keys(FC.config.displayListSettings.additionalInfoParams);
+                    let tempKey: string;
+                    let tempVisualKey: string;
+                    let keysCount: number = keys.length;
+                    for (let keyIndex: number = 0; keyIndex < keysCount; keyIndex++) {
                         tempKey = keys[keyIndex];
 
                         if (data.object[tempKey] !== undefined) {
@@ -293,9 +303,9 @@ export class DisplayListView extends BaseConsoleView {
             }
 
             if (data.children && data.children.length > 0) {
-                let childPrefix:string = "- " + prefix;
-                let childrenCount:number = data.children.length;
-                for (let childIndex:number = 0; childIndex < childrenCount; childIndex++) {
+                let childPrefix: string = "- " + prefix;
+                let childrenCount: number = data.children.length;
+                for (let childIndex: number = 0; childIndex < childrenCount; childIndex++) {
                     result += "\n" + this.parseUnderPointData(data.children[childIndex], childPrefix);
                 }
             }
@@ -304,7 +314,7 @@ export class DisplayListView extends BaseConsoleView {
         return result;
     }
 
-    private groupLogUnderPointData(data:IObjectUnderPointVO, prefix:string = "∟"):void {
+    private groupLogUnderPointData(data: IFDisplayObjectUnderPointVO, prefix: string = "∟"): void {
         if (data && data.object) {
 
             //console.log(data.object);
@@ -314,8 +324,8 @@ export class DisplayListView extends BaseConsoleView {
             if (data.children && data.children.length > 0) {
                 // console.group(" children");
 
-                let childrenCount:number = data.children.length;
-                for (let childIndex:number = 0; childIndex < childrenCount; childIndex++) {
+                let childrenCount: number = data.children.length;
+                for (let childIndex: number = 0; childIndex < childrenCount; childIndex++) {
                     this.groupLogUnderPointData(data.children[childIndex], "    " + prefix);
                 }
 
@@ -324,8 +334,8 @@ export class DisplayListView extends BaseConsoleView {
         }
     }
 
-    private checkUnderPointDataEqual(data1:IObjectUnderPointVO, data2:IObjectUnderPointVO):boolean {
-        let result:boolean = true;
+    private checkUnderPointDataEqual(data1: IFDisplayObjectUnderPointVO, data2: IFDisplayObjectUnderPointVO): boolean {
+        let result: boolean = true;
 
         // If one of the data objects exists and other doesn't
         if (!!data1 != !!data2) {
@@ -349,8 +359,8 @@ export class DisplayListView extends BaseConsoleView {
 
                 } else {
 
-                    let childrenCount:number = data1.children.length;
-                    for (let childIndex:number = 0; childIndex < childrenCount; childIndex++) {
+                    let childrenCount: number = data1.children.length;
+                    for (let childIndex: number = 0; childIndex < childrenCount; childIndex++) {
                         // If one of the children are not equeal, than stop checking and break the loop
                         if (!this.checkUnderPointDataEqual(data1.children[childIndex], data2.children[childIndex])) {
                             result = false;
@@ -364,13 +374,13 @@ export class DisplayListView extends BaseConsoleView {
         return result;
     }
 
-    private parseUnderPointDataToSingleList(data:IObjectUnderPointVO, list:any[]):void {
+    private parseUnderPointDataToSingleList(data: IFDisplayObjectUnderPointVO, list: any[]): void {
         if (data && data.object) {
             list.push(data.object);
 
             if (data.children && data.children.length > 0) {
-                let childrenCount:number = data.children.length;
-                for (let childIndex:number = 0; childIndex < childrenCount; childIndex++) {
+                let childrenCount: number = data.children.length;
+                for (let childIndex: number = 0; childIndex < childrenCount; childIndex++) {
                     this.parseUnderPointDataToSingleList(data.children[childIndex], list);
                 }
             }
@@ -378,11 +388,11 @@ export class DisplayListView extends BaseConsoleView {
     }
 
 
-    get isAdditionalInfoEnabled():boolean {
+    get isAdditionalInfoEnabled(): boolean {
         return this._isAdditionalInfoEnabled;
     }
 
-    set isAdditionalInfoEnabled(value:boolean) {
+    set isAdditionalInfoEnabled(value: boolean) {
         if (value == this._isAdditionalInfoEnabled) {
             return;
         }
@@ -393,11 +403,11 @@ export class DisplayListView extends BaseConsoleView {
     }
 
 
-    get isMoveHelperEnabled():boolean {
+    get isMoveHelperEnabled(): boolean {
         return this._isMoveHelperEnabled;
     }
 
-    set isMoveHelperEnabled(value:boolean) {
+    set isMoveHelperEnabled(value: boolean) {
         if (value == this._isMoveHelperEnabled) {
             return;
         }
@@ -408,7 +418,7 @@ export class DisplayListView extends BaseConsoleView {
     }
 
 
-    protected commitData():void {
+    protected commitData(): void {
         super.commitData();
 
         if (!this.visible) {
@@ -435,24 +445,24 @@ export class DisplayListView extends BaseConsoleView {
 
                 // If there is an object, select it
                 if (this.lastAllObjectsUnderPointList[this.moveObjectIndex]) {
-                    this.moveObjectWrapper.object = this.lastAllObjectsUnderPointList[this.moveObjectIndex];
+                    this.moveObject = this.lastAllObjectsUnderPointList[this.moveObjectIndex];
 
                 } else {
-                    this.moveObjectWrapper.object = null;
+                    this.moveObject = null;
                 }
 
             } else {
                 this.moveHelperBtn.label = FC.config.localization.moveHelperBtnNormalLabel;
                 // Reset selection
-                this.moveObjectWrapper.object = null;
+                this.moveObject = null;
                 this.moveObjectIndex = -1;
             }
 
             // Update the under point view if a new move object was chosen
-            if (this.prevMoveObject !== this.moveObjectWrapper.object) {
+            if (this.prevMoveObject !== this.moveObject) {
                 this.forceUpdateUnderPointView = true;
             }
-            this.prevMoveObject = this.moveObjectWrapper.object;
+            this.prevMoveObject = this.moveObject;
 
         }
     }

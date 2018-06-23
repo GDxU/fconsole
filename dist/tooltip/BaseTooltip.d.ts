@@ -1,8 +1,9 @@
-import { IDisplayObjectContainerWrapper } from "fgraphics/dist/index";
+/// <reference types="pixi.js" />
+import { DisplayObjectContainer } from "fsuite";
+import { BaseObject } from "fcore";
 import { ITooltipData } from "./ITooltipData";
-import { BaseObject } from "fcore/dist/index";
 export declare abstract class BaseTooltip extends BaseObject {
-    view: IDisplayObjectContainerWrapper;
+    view: DisplayObjectContainer;
     protected tooltipData: ITooltipData;
     protected construction(): void;
     protected commitData(): void;

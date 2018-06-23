@@ -1,9 +1,8 @@
-"use strict";
-var TestConsoleClass = (function () {
+var TestConsoleClass = /** @class */ (function () {
     function TestConsoleClass() {
         alert("TestConsoleClass");
     }
     return TestConsoleClass;
 }());
-exports.TestConsoleClass = TestConsoleClass;
+export { TestConsoleClass };
 //# sourceMappingURL=TestConsoleClass.js.map

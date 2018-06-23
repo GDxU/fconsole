@@ -1,34 +1,37 @@
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var BaseTooltip_1 = require("../../../tooltip/BaseTooltip");
-var fgraphics_1 = require("fgraphics");
-var fcore_1 = require("fcore");
-var FC_1 = require("../../FC");
-var ConsoleTooltip = (function (_super) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { BaseTooltip } from "../../../tooltip/BaseTooltip";
+import { DisplayObjectContainer, Graphics, FLabel, Align } from "fsuite";
+import { FC } from "../../FC";
+var ConsoleTooltip = /** @class */ (function (_super) {
     __extends(ConsoleTooltip, _super);
     function ConsoleTooltip() {
         return _super.call(this) || this;
     }
     ConsoleTooltip.prototype.construction = function () {
         _super.prototype.construction.call(this);
-        this.bg = fgraphics_1.EngineAdapter.instance.createGraphicsWrapper();
+        this.bg = new Graphics();
         this.view.addChild(this.bg);
-        this.contentCont = fgraphics_1.EngineAdapter.instance.createDisplayObjectContainerWrapper();
+        this.contentCont = new DisplayObjectContainer();
         this.view.addChild(this.contentCont);
-        this.titleLabel = fgraphics_1.EngineAdapter.instance.createTextWrapper();
+        this.titleLabel = new FLabel();
         this.contentCont.addChild(this.titleLabel);
-        this.titleLabel.align = fcore_1.Align.CENTER;
-        this.titleLabel.color = FC_1.FC.config.tooltipSettings.titleLabelColor;
-        this.titleLabel.size = FC_1.FC.config.tooltipSettings.titleLabelSize;
-        this.textLabel = fgraphics_1.EngineAdapter.instance.createTextWrapper();
+        this.titleLabel.align = Align.CENTER;
+        this.titleLabel.color = FC.config.tooltipSettings.titleLabelColor;
+        this.titleLabel.size = FC.config.tooltipSettings.titleLabelSize;
+        this.textLabel = new FLabel();
         this.contentCont.addChild(this.textLabel);
-        this.textLabel.align = fcore_1.Align.CENTER;
-        this.textLabel.color = FC_1.FC.config.tooltipSettings.textLabelColor;
-        this.textLabel.size = FC_1.FC.config.tooltipSettings.textLabelSize;
+        this.textLabel.align = Align.CENTER;
+        this.textLabel.color = FC.config.tooltipSettings.textLabelColor;
+        this.textLabel.size = FC.config.tooltipSettings.textLabelSize;
     };
     ConsoleTooltip.prototype.commitData = function () {
         _super.prototype.commitData.call(this);
@@ -57,14 +60,14 @@ var ConsoleTooltip = (function (_super) {
             this.titleLabel.x = 0;
         }
         this.bg.clear();
-        this.bg.beginFill(FC_1.FC.config.tooltipSettings.bgColor, FC_1.FC.config.tooltipSettings.bgAlpha);
-        this.bg.lineStyle(FC_1.FC.config.tooltipSettings.borderWidth, FC_1.FC.config.tooltipSettings.borderColor, FC_1.FC.config.tooltipSettings.borderAlpha);
-        this.bg.drawRect(0, 0, this.contentCont.width + FC_1.FC.config.tooltipSettings.bgToContentShift.x, this.contentCont.height + FC_1.FC.config.tooltipSettings.bgToContentShift.y);
+        this.bg.beginFill(FC.config.tooltipSettings.bgColor, FC.config.tooltipSettings.bgAlpha);
+        this.bg.lineStyle(FC.config.tooltipSettings.borderWidth, FC.config.tooltipSettings.borderColor, FC.config.tooltipSettings.borderAlpha);
+        this.bg.drawRect(0, 0, this.contentCont.width + FC.config.tooltipSettings.bgToContentShift.x, this.contentCont.height + FC.config.tooltipSettings.bgToContentShift.y);
         this.bg.endFill();
         this.contentCont.x = this.bg.x + ((this.bg.width - this.contentCont.width) >> 1);
         this.contentCont.y = this.bg.y + ((this.bg.height - this.contentCont.height) >> 1);
     };
     return ConsoleTooltip;
-}(BaseTooltip_1.BaseTooltip));
-exports.ConsoleTooltip = ConsoleTooltip;
+}(BaseTooltip));
+export { ConsoleTooltip };
 //# sourceMappingURL=ConsoleTooltip.js.map

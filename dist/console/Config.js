@@ -1,5 +1,4 @@
-"use strict";
-var Config = (function () {
+var Config = /** @class */ (function () {
     function Config() {
         this.localization = {
             closeBtnTooltipTitle: "Close",
@@ -65,5 +64,5 @@ var Config = (function () {
     }
     return Config;
 }());
-exports.Config = Config;
+export { Config };
 //# sourceMappingURL=Config.js.map

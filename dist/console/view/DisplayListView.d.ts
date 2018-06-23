@@ -1,5 +1,5 @@
+import { InputManagerEventData } from "fsuite";
 import { BaseConsoleView } from "./BaseConsoleView";
-import { InputManagerEventData } from "flibs/dist/index";
 import { BaseConsoleButton } from "./BaseConsoleButton";
 export declare class DisplayListView extends BaseConsoleView {
     private static ARROW_KEY_CODES;
@@ -13,13 +13,14 @@ export declare class DisplayListView extends BaseConsoleView {
     private _isAdditionalInfoEnabled;
     protected moveHelperBtn: BaseConsoleButton;
     private _isMoveHelperEnabled;
-    private moveObjectWrapper;
+    private moveObject;
     private prevMoveObject;
     private moveObjectIndex;
     constructor();
     protected construction(): void;
     destruction(): void;
     protected addListeners(): void;
+    protected removeListeners(): void;
     private onTick();
     protected onCaptureKey(): void;
     protected onAdditionalInfo(): void;
