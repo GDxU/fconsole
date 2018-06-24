@@ -74,10 +74,12 @@ export class DisplayListView extends BaseConsoleView {
         //
         this.moveHelperBtn.view.y = this.additionalInfoBtn.view.y + this.additionalInfoBtn.view.height;
 
-        this.displayListField = new FLabel();
+        this.displayListField = new FLabel({
+            autosize: true,
+            color: FC.config.displayListSettings.hierarchyLabelColor,
+            size: FC.config.displayListSettings.hierarchyLabelSize
+        });
         this.insideContentCont.addChild(this.displayListField);
-        this.displayListField.color = FC.config.displayListSettings.hierarchyLabelColor;
-        this.displayListField.size = FC.config.displayListSettings.hierarchyLabelSize;
         //
         this.displayListField.y = this.moveHelperBtn.view.y + this.moveHelperBtn.view.height + 5;
 

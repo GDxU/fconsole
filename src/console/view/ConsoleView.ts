@@ -2,16 +2,13 @@ import {BaseConsoleView} from "./BaseConsoleView";
 import {FC} from "../FC";
 import {BaseConsoleButton} from "./BaseConsoleButton";
 import {InteractiveEvent} from "fsuite";
+
 export class ConsoleView extends BaseConsoleView {
 
-    private displayListBtn:BaseConsoleButton;
-    private closeBtn:BaseConsoleButton;
+    private displayListBtn: BaseConsoleButton;
+    private closeBtn: BaseConsoleButton;
 
-    constructor() {
-        super();
-    }
-
-    protected construction():void {
+    protected construction(): void {
         super.construction();
 
         this.titleVisible = false;
@@ -29,7 +26,7 @@ export class ConsoleView extends BaseConsoleView {
         );
     }
 
-    protected addListeners():void {
+    protected addListeners(): void {
         super.addListeners();
 
         this.eventListenerHelper.addEventListener(
@@ -46,7 +43,7 @@ export class ConsoleView extends BaseConsoleView {
     }
 
 
-    private onDisplayListClick():void {
+    private onDisplayListClick(): void {
         FC.toggleView(FC.displayListView);
     }
 }

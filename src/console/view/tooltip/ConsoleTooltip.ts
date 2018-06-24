@@ -28,17 +28,21 @@ export class ConsoleTooltip extends BaseTooltip {
         this.contentCont = new DisplayObjectContainer();
         this.view.addChild(this.contentCont);
 
-        this.titleLabel = new FLabel();
+        this.titleLabel = new FLabel({
+            autosize: true,
+            color: FC.config.tooltipSettings.titleLabelColor,
+            size: FC.config.tooltipSettings.titleLabelSize,
+            align: Align.CENTER
+        });
         this.contentCont.addChild(this.titleLabel);
-        this.titleLabel.align = Align.CENTER;
-        this.titleLabel.color = FC.config.tooltipSettings.titleLabelColor;
-        this.titleLabel.size = FC.config.tooltipSettings.titleLabelSize;
 
-        this.textLabel = new FLabel();
+        this.textLabel = new FLabel({
+            autosize: true,
+            color: FC.config.tooltipSettings.textLabelColor,
+            size: FC.config.tooltipSettings.textLabelSize,
+            align: Align.CENTER
+        });
         this.contentCont.addChild(this.textLabel);
-        this.textLabel.align = Align.CENTER;
-        this.textLabel.color = FC.config.tooltipSettings.textLabelColor;
-        this.textLabel.size = FC.config.tooltipSettings.textLabelSize;
     }
 
 

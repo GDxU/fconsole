@@ -27,10 +27,12 @@ export class BaseConsoleButton extends BaseObject {
         this.view.interactive = true;
         this.view.buttonMode = true;
 
-        this.field = new FLabel();
+        this.field = new FLabel({
+            autosize: true,
+            color: FC.config.btnSettings.labelColor,
+            size: FC.config.btnSettings.labelSize
+        });
         this.view.addChild(this.field);
-        this.field.color = FC.config.btnSettings.labelColor;
-        this.field.size = FC.config.btnSettings.labelSize;
 
         this.commitData();
         this.onOut();

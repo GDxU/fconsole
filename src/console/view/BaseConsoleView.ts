@@ -71,10 +71,12 @@ export class BaseConsoleView extends BaseObject {
         this.titleCont = new DisplayObjectContainer();
         this.contentCont.addChild(this.titleCont);
 
-        this.titleLabel = new FLabel();
+        this.titleLabel = new FLabel({
+            autosize: true,
+            color: FC.config.viewSettings.titleLabelColor,
+            size: FC.config.viewSettings.titleLabelSize
+        });
         this.titleCont.addChild(this.titleLabel);
-        this.titleLabel.color = FC.config.viewSettings.titleLabelColor;
-        this.titleLabel.size = FC.config.viewSettings.titleLabelSize;
         this.titleLabel.text = "Test Title";
 
         this.btnsCont = new DisplayObjectContainer();
