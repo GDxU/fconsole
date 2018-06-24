@@ -26,7 +26,7 @@ export class FC {
     public static view: ConsoleView;
     public static displayListView: DisplayListView;
 
-    static startInit(root?: DisplayObjectContainer, configChanges?: Partial<Config>): void {
+    static startInit(root?: DisplayObjectContainer, configChanges?: any | Partial<Config>): void {
 
         Logger.log("CC: ", FC);
 
@@ -80,18 +80,11 @@ export class FC {
                 }
             }
         );
-        /*FC.eventListenerHelper.addEventListener(
-            EngineAdapter.instance.mainTicker,
-            TickerEvent.TICK,
-            () => {
-                if (FC.config.console.aboveAll) {
-                    DisplayTools.moveObjectToTopLayer(FC.contentCont);
-                }
-            }
-        );*/
+
         FApp.instance.ticker.add(FC.onTicker);
 
         FC.root = root;
+        FC.visible = FC.config.console.defaultVisible;
     }
 
     private static onTicker(): void {

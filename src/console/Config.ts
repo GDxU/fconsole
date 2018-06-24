@@ -30,7 +30,7 @@ export class Config {
 
     public console = {
         aboveAll: true,
-        defaultPassword: "`"
+        defaultVisible: false
     };
 
     public btnSettings = {

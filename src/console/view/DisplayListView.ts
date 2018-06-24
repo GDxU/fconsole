@@ -1,4 +1,4 @@
-import {KeyboardTools} from "fcore";
+import {KeyboardTools, ObjectTools} from "fcore";
 import {
     FLabel,
     Point,
@@ -247,7 +247,7 @@ export class DisplayListView extends BaseConsoleView {
         if (data && data.object) {
             let tempName: string = data.object.toString();
             if (data.object.constructor) {
-                tempName = data.object.constructor.name;
+                tempName = ObjectTools.getConstructorName(data.object);
             }
 
             result += prefix + " " + tempName;
@@ -324,7 +324,12 @@ export class DisplayListView extends BaseConsoleView {
 
             //console.log(data.object);
             //console.dir(data.object);
-            console.log(prefix, data.object);
+            const constructorName: string = ObjectTools.getConstructorName(data.object);
+            let logPrefix: string = prefix;
+            if (constructorName) {
+                logPrefix = prefix + " " + constructorName;
+            }
+            console.log(logPrefix, data.object);
 
             if (data.children && data.children.length > 0) {
                 // console.group(" children");
