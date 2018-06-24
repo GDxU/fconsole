@@ -49,7 +49,6 @@ export class DisplayListView extends BaseConsoleView {
         this.lastCheckedPos = new Point();
         this.moveObjectIndex = -1;
 
-
         this.titleLabel.text = FC.config.localization.displayListTitle;
 
         this.insideContentCont.visible = true;
@@ -89,6 +88,10 @@ export class DisplayListView extends BaseConsoleView {
         );
 
         this.captureBtn.tooltipData.text = FC.config.localization.displayListCapturedKeyText;
+
+        if (FC.config.displayListSettings.defaultCaptureKey) {
+            this.captureBtn.captureKey = FC.config.displayListSettings.defaultCaptureKey;
+        }
     }
 
     public destruction(): void {

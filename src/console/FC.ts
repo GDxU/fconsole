@@ -1,5 +1,5 @@
 import {Point, DisplayObjectContainer, DisplayTools} from "fsuite";
-import {EventListenerHelper, KeyboardTools, Logger} from "fcore";
+import {EventListenerHelper, KeyboardTools, Logger, ObjectTools} from "fcore";
 import {InputManager, InputManagerEvent, InputManagerEventData, FApp} from "fsuite";
 
 import {ConsoleView} from "./view/ConsoleView";
@@ -17,7 +17,7 @@ export class FC {
     private static viewsCont: DisplayObjectContainer;
     private static tooltipsCont: DisplayObjectContainer;
 
-    private static password: string = "";
+    // private static password: string = "";
     private static passwordInputIndex: number = 0;
 
     public static config: Config;
@@ -26,9 +26,15 @@ export class FC {
     public static view: ConsoleView;
     public static displayListView: DisplayListView;
 
-    static startInit(root?: DisplayObjectContainer, password: string = "`", config?: Config): void {
+    static startInit(root?: DisplayObjectContainer, configChanges?: Partial<Config>): void {
 
         Logger.log("CC: ", FC);
+
+        const config: Config = new Config();
+        if (configChanges) {
+            ObjectTools.copyProps(config, configChanges);
+        }
+        FC.config = config;
 
         FC.eventListenerHelper = new EventListenerHelper(FC);
 
@@ -43,13 +49,6 @@ export class FC {
         FC.tooltipsCont = new DisplayObjectContainer();
         FC.contentCont.addChild(FC.tooltipsCont);
 
-        FC.password = password;
-
-        if (!config) {
-            config = new Config();
-        }
-        FC.config = config;
-
         let tempTooltip = new ConsoleTooltip();
         FC.tooltipManager = new TooltipManager(tempTooltip);
         FC.tooltipManager.tooltipCont = FC.tooltipsCont;
@@ -57,7 +56,10 @@ export class FC {
 
         // View
         FC.view = new ConsoleView();
+        FC.hideView(FC.view);
+        //
         FC.displayListView = new DisplayListView();
+        FC.hideView(FC.displayListView);
 
         // Events
         FC.eventListenerHelper.addEventListener(
@@ -65,10 +67,10 @@ export class FC {
             InputManagerEvent.KEY_DOWN,
             (data: InputManagerEventData): void => {
                 let pressedKey: string = KeyboardTools.getKeyFromKeyPressEvent(data.nativeEvent);
-                if (pressedKey === FC.password.charAt(FC.passwordInputIndex)) {
+                if (pressedKey === FC.config.password.charAt(FC.passwordInputIndex)) {
                     FC.passwordInputIndex++;
 
-                    if (FC.passwordInputIndex >= FC.password.length) {
+                    if (FC.passwordInputIndex >= FC.config.password.length) {
                         FC.onPasswordInput();
                         FC.passwordInputIndex = 0;
                     }
@@ -120,6 +122,7 @@ export class FC {
 
     public static showView(view: BaseConsoleView, moveToMouse: boolean = true): void {
         FC.viewsCont.addChild(view.view);
+
         view.visible = true;
         FC.moveViewToTopLayer(view);
 

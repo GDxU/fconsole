@@ -33,7 +33,7 @@ export class BaseConsoleView extends BaseObject {
     protected titleLabel:FLabel;
     private _titleVisible:boolean;
 
-    protected captureBtn:BaseConsoleButton;
+    protected captureBtn:CaptureKeyButton;
     private _captureVisible:boolean;
     // private captureKey:string;
 
@@ -159,6 +159,7 @@ export class BaseConsoleView extends BaseObject {
     protected commitData():void {
         super.commitData();
 
+        this.view.visible = this.visible;
         this.titleLabel.visible = this.titleVisible;
         this.captureBtn.view.visible = this.captureVisible;
 

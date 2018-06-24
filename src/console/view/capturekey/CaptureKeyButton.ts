@@ -10,22 +10,12 @@ export class CaptureKeyButton extends BaseConsoleButton {
     private static NO_CAPTURE_KEY_TEXT:string = "(click to add)";
     private static CLICKED_HELP_TEXT:string = "Press a key";*/
 
-    private captureKey:string;
-    private captureCode:number;
+    private _captureKey: string;
 
-    private _isClicked:boolean;
-
-    constructor() {
-        super();
-    }
-
-    protected construction():void {
-        super.construction();
-
-    }
+    private _isClicked: boolean;
 
 
-    protected addListeners():void {
+    protected addListeners(): void {
         super.addListeners();
 
         this.eventListenerHelper.addEventListener(
@@ -36,41 +26,42 @@ export class CaptureKeyButton extends BaseConsoleButton {
     }
 
 
-    protected onClick():void {
+    protected onClick(): void {
         super.onClick();
 
         this.isClicked = !this.isClicked;
     }
 
-    protected onKeyPress(data:InputManagerEventData):void {
-        if (this.isClicked) {
-            this.isClicked = false;
-            this.captureCode = KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent);
-            this.captureKey = KeyboardTools.getCharFromKeyPressEvent(data.nativeEvent);
+    protected onKeyPress(data: InputManagerEventData): void {
+        if (this.view.worldVisible) {
+            if (this.isClicked) {
+                this.isClicked = false;
+                this.captureKey = KeyboardTools.getCharFromKeyPressEvent(data.nativeEvent);
 
-            this.commitData();
+                this.commitData();
 
-        }else if(this.captureCode) {
-            if (KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent) == this.captureCode) {
-                this.dispatchEvent(CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS);
+            } else if (this.captureCode) {
+                if (KeyboardTools.getCharCodeFromKeyPressEvent(data.nativeEvent) == this.captureCode) {
+                    this.dispatchEvent(CaptuerKeyButtonEvent.CAPTURE_KEY_PRESS);
+                }
             }
         }
     }
 
 
-    protected commitData():void {
+    protected commitData(): void {
         super.commitData();
 
         if (this.isClicked) {
             this.label = FC.config.localization.captureKeyBtnPressedLabel;
 
-        }else if(this.captureKey) {
+        } else if (this.captureKey) {
             this.label = StringTools.substituteList(
                 FC.config.localization.captureKeyBtnNormalLabel,
                 this.captureKey
             );
 
-        }else {
+        } else {
             this.label = StringTools.substituteList(
                 FC.config.localization.captureKeyBtnNormalLabel,
                 FC.config.localization.captureKeyBtnNoKeyHelpText
@@ -78,16 +69,17 @@ export class CaptureKeyButton extends BaseConsoleButton {
         }
     }
 
-    protected arrange():void {
+    protected arrange(): void {
         super.arrange();
 
     }
 
 
-    get isClicked():boolean {
+    get isClicked(): boolean {
         return this._isClicked;
     }
-    set isClicked(value:boolean) {
+
+    set isClicked(value: boolean) {
         if (value == this.isClicked) {
             return;
         }
@@ -95,5 +87,26 @@ export class CaptureKeyButton extends BaseConsoleButton {
         this._isClicked = value;
 
         this.commitData();
+    }
+
+    public get captureKey(): string {
+        return this._captureKey;
+    }
+    public set captureKey(value: string) {
+        if (value === this._captureKey) {
+            return;
+        }
+
+        this._captureKey = value;
+
+        this.commitData();
+    }
+
+    private get captureCode(): number {
+        if (this.captureKey) {
+            return this.captureKey.charCodeAt(0);
+        } else {
+            return undefined;
+        }
     }
 }

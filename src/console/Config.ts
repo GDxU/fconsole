@@ -1,5 +1,7 @@
 export class Config {
 
+    public password: string = "`";
+
     public localization = {
         closeBtnTooltipTitle: "Close",
 
@@ -27,7 +29,8 @@ export class Config {
     };
 
     public console = {
-        aboveAll: true
+        aboveAll: true,
+        defaultPassword: "`"
     };
 
     public btnSettings = {
@@ -50,6 +53,8 @@ export class Config {
     };
 
     public displayListSettings = {
+        defaultCaptureKey: "c",
+
         hierarchyLabelColor: 0xCCCCCC,
         hierarchyLabelSize: 14,
 
