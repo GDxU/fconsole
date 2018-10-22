@@ -1,50 +1,44 @@
-import {DisplayObjectContainer, Graphics, FLabel} from "fsuite";
-import {BaseObject, EventListenerHelper} from "fcore";
-import {DragHelper, DragHelperEvent} from "fsuite";
+import {BaseObject} from "fcore";
+import {DisplayObjectContainer, Graphics, FLabel, DragHelper, DragHelperEvent, FContainer} from "fsuite";
 
-import {BaseConsoleButton} from "./BaseConsoleButton";
 import {FC} from "../FC";
+import {BaseConsoleButton} from "./BaseConsoleButton";
 import {CaptureKeyButton} from "./capturekey/CaptureKeyButton";
 import {CaptuerKeyButtonEvent} from "./capturekey/CaptureKeyButtonEvent";
 import {ITooltipData} from "../../tooltip/ITooltipData";
 
 export class BaseConsoleView extends BaseObject {
 
-    private static CAPTURE_LABEL_FIRST_PART:string = "Capture key:";
-    private static NO_CAPTURE_KEY_TEXT:string = "(click to add)";
+    private static CAPTURE_LABEL_FIRST_PART: string = "Capture key:";
+    private static NO_CAPTURE_KEY_TEXT: string = "(click to add)";
 
-    public view:DisplayObjectContainer;
-    private bgGraphics:Graphics;
+    public view: DisplayObjectContainer;
+    private bgGraphics: Graphics;
 
-    protected contentCont:DisplayObjectContainer;
-    protected titleCont:DisplayObjectContainer;
-    protected insideContentCont:DisplayObjectContainer;
+    protected contentCont: FContainer;
+    protected titleCont: FContainer;
+    protected insideContentCont: FContainer;
 
-    private _visible:boolean;
+    private _visible: boolean;
 
-    private dragHelper:DragHelper;
-    private viewDragStartX:number;
-    private viewDragStartY:number;
+    private dragHelper: DragHelper;
+    private viewDragStartX: number;
+    private viewDragStartY: number;
 
-    private buttonsList:BaseConsoleButton[];
-    private btnsCont:DisplayObjectContainer;
-    private buttonsEventListenerHelper:EventListenerHelper<string>;
+    private topLevelElements: DisplayObjectContainer[];
+    private topLevelCont: DisplayObjectContainer;
 
-    protected titleLabel:FLabel;
-    private _titleVisible:boolean;
+    protected titleLabel: FLabel;
+    private _titleVisible: boolean;
 
-    protected captureBtn:CaptureKeyButton;
-    private _captureVisible:boolean;
+    protected captureBtn: CaptureKeyButton;
+    private _captureVisible: boolean;
     // private captureKey:string;
 
-    public lastBgWidth:number = 0;
-    public lastBgHeight:number = 0;
+    public lastBgWidth: number = 0;
+    public lastBgHeight: number = 0;
 
-    constructor() {
-        super();
-    }
-
-    protected construction():void {
+    protected construction(): void {
         super.construction();
 
         // this.captureKey = "";
@@ -52,10 +46,9 @@ export class BaseConsoleView extends BaseObject {
         this._titleVisible = true;
         this._captureVisible = false;
 
-        this.buttonsList = [];
-        this.buttonsEventListenerHelper = new EventListenerHelper<string>(this);
+        this.topLevelElements = [];
 
-        this.view = new DisplayObjectContainer();
+        this.view = new FContainer();
 
         this.bgGraphics = new Graphics();
         this.view.addChild(this.bgGraphics);
@@ -65,10 +58,10 @@ export class BaseConsoleView extends BaseObject {
         this.dragHelper = new DragHelper();
         this.dragHelper.view = (this.bgGraphics as any);
 
-        this.contentCont = new DisplayObjectContainer();
+        this.contentCont = new FContainer();
         this.view.addChild(this.contentCont);
 
-        this.titleCont = new DisplayObjectContainer();
+        this.titleCont = new FContainer();
         this.contentCont.addChild(this.titleCont);
 
         this.titleLabel = new FLabel({
@@ -79,8 +72,8 @@ export class BaseConsoleView extends BaseObject {
         this.titleCont.addChild(this.titleLabel);
         this.titleLabel.text = "Test Title";
 
-        this.btnsCont = new DisplayObjectContainer();
-        this.titleCont.addChild(this.btnsCont);
+        this.topLevelCont = new FContainer();
+        this.titleCont.addChild(this.topLevelCont);
 
         this.captureBtn = new CaptureKeyButton();
         this.titleCont.addChild(this.captureBtn.view);
@@ -88,21 +81,12 @@ export class BaseConsoleView extends BaseObject {
         //
         this.captureBtn.tooltipData = {title: FC.config.localization.captureKeyBtnTooltipTitle};
 
-        this.insideContentCont = new DisplayObjectContainer();
+        this.insideContentCont = new FContainer();
         this.contentCont.addChild(this.insideContentCont);
     }
 
-    public destruction():void {
-        super.destruction();
 
-        if (this.buttonsEventListenerHelper) {
-            this.buttonsEventListenerHelper.destruction();
-            this.buttonsEventListenerHelper = null;
-        }
-    }
-
-
-    protected addListeners():void {
+    protected addListeners(): void {
         super.addListeners();
 
         this.eventListenerHelper.addEventListener(
@@ -123,31 +107,32 @@ export class BaseConsoleView extends BaseObject {
         );
     }
 
-    private onDragStart():void {
+    private onDragStart(): void {
         this.viewDragStartX = this.view.x;
         this.viewDragStartY = this.view.y;
 
         FC.moveViewToTopLayer(this);
     }
 
-    private onDragUpdate():void {
+    private onDragUpdate(): void {
         this.view.x = this.viewDragStartX + this.dragHelper.changeDragGlobalX;
         this.view.y = this.viewDragStartY + this.dragHelper.changeDragGlobalY;
     }
 
-    protected onClose():void {
+    protected onClose(): void {
         FC.hideView(this);
     }
 
-    protected onCaptureKey():void {
+    protected onCaptureKey(): void {
 
     }
 
 
-    public get visible():boolean {
+    public get visible(): boolean {
         return this._visible;
     }
-    public set visible(value:boolean) {
+
+    public set visible(value: boolean) {
         if (value == this.visible) {
             return;
         }
@@ -156,7 +141,7 @@ export class BaseConsoleView extends BaseObject {
         this.commitData();
     }
 
-    protected commitData():void {
+    protected commitData(): void {
         super.commitData();
 
         this.view.visible = this.visible;
@@ -166,36 +151,36 @@ export class BaseConsoleView extends BaseObject {
         this.arrange();
     }
 
-    protected arrange():void {
+    protected arrange(): void {
 
         // Reset previously set changes
 
-        let tempBtn:BaseConsoleButton;
-        let prevBtn:BaseConsoleButton;
-        let btnsCount:number = this.buttonsList.length;
-        for (let btnIndex:number = 0; btnIndex < btnsCount; btnIndex++) {
-            tempBtn = this.buttonsList[btnIndex];
+        let tempBtn: DisplayObjectContainer;
+        let prevBtn: DisplayObjectContainer;
+        let btnsCount: number = this.topLevelElements.length;
+        for (let btnIndex: number = 0; btnIndex < btnsCount; btnIndex++) {
+            tempBtn = this.topLevelElements[btnIndex];
             if (prevBtn) {
-                tempBtn.view.x = prevBtn.view.x + prevBtn.view.width + 5;
+                tempBtn.x = prevBtn.x + prevBtn.width + 5;
             }
 
             prevBtn = tempBtn;
         }
 
         if (this.titleVisible) {
-            this.btnsCont.x = this.titleLabel.x + this.titleLabel.width + 10;
+            this.topLevelCont.x = this.titleLabel.x + this.titleLabel.width + 10;
         } else {
-            this.btnsCont.x = this.titleLabel.x;
+            this.topLevelCont.x = this.titleLabel.x;
         }
 
         if (this.insideContentCont.visible) {
             this.insideContentCont.y = this.titleCont.y + this.titleCont.height;
-        }else {
+        } else {
             this.insideContentCont.y = 0;
         }
 
-        let tempWidth:number = this.contentCont.width + FC.config.viewSettings.bgToContentShift.x;
-        let tempHeight:number = this.contentCont.height + FC.config.viewSettings.bgToContentShift.y;
+        let tempWidth: number = this.contentCont.width + FC.config.viewSettings.bgToContentShift.x;
+        let tempHeight: number = this.contentCont.height + FC.config.viewSettings.bgToContentShift.y;
         if (tempWidth != this.lastBgWidth || tempHeight != this.lastBgHeight) {
 
             this.lastBgWidth = tempWidth;
@@ -217,21 +202,26 @@ export class BaseConsoleView extends BaseObject {
         this.contentCont.y = this.bgGraphics.y + ((this.bgGraphics.height - this.contentCont.height) >> 1);
     }
 
-    protected createTitleBtn(label:string, tooltipData?:ITooltipData):BaseConsoleButton {
+    protected createTitleBtn(label: string, tooltipData?: ITooltipData): BaseConsoleButton {
         let tempBtn = new BaseConsoleButton();
-        this.btnsCont.addChild(tempBtn.view);
         tempBtn.label = label;
         tempBtn.tooltipData = tooltipData;
 
-        this.buttonsList.push(tempBtn);
+        this.addTitleElement(tempBtn.view);
 
         return tempBtn;
     }
 
-    get titleVisible():boolean {
+    protected addTitleElement(element: DisplayObjectContainer): void {
+        this.topLevelCont.addChild(element);
+        this.topLevelElements.push(element);
+    }
+
+    get titleVisible(): boolean {
         return this._titleVisible;
     }
-    set titleVisible(value:boolean) {
+
+    set titleVisible(value: boolean) {
         if (value == this.titleVisible) {
             return;
         }
@@ -241,10 +231,11 @@ export class BaseConsoleView extends BaseObject {
         this.commitData();
     }
 
-    get captureVisible():boolean {
+    get captureVisible(): boolean {
         return this._captureVisible;
     }
-    set captureVisible(value:boolean) {
+
+    set captureVisible(value: boolean) {
         if (value == this.captureVisible) {
             return;
         }

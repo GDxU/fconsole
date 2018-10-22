@@ -26,6 +26,8 @@ export class Config {
         moveHelperTooltipTitle: "Move Helper",
         moveHelperTooltipText: "Enable Move Helper and press CTRL\nfor choosing an object to move\nwith arrow keys (← ↑ → ↓)",
         movableObjectText: "[MOVABLE]",
+
+        fpsText: "FPS: {0}"
     };
 
     public console = {
@@ -81,5 +83,16 @@ export class Config {
 
         textLabelColor: 0xCCCCCC,
         textLabelSize: 12
+    };
+
+    public fpsSettings = {
+        labelSize: 12,
+        labelColor: 0xFF9900,
+        borderColor: 0xFF9900,
+        borderWidth: 50,
+        borderHeight: 16,
+        fieldToBorderPadding: 2,
+        // Amount of separate fps values, which would be saved, to measure an average fps value
+        cumulativeFpsCount: 60
     };
 }

@@ -1,10 +1,11 @@
-import {BaseTooltip} from "../../../tooltip/BaseTooltip";
 import {
     DisplayObjectContainer,
     Graphics,
     FLabel,
-    Align
+    Align,
+    FContainer
 } from "fsuite";
+import {BaseTooltip} from "../../../tooltip/BaseTooltip";
 import {FC} from "../../FC";
 
 export class ConsoleTooltip extends BaseTooltip {
@@ -25,7 +26,7 @@ export class ConsoleTooltip extends BaseTooltip {
         this.bg = new Graphics();
         this.view.addChild(this.bg);
 
-        this.contentCont = new DisplayObjectContainer();
+        this.contentCont = new FContainer();
         this.view.addChild(this.contentCont);
 
         this.titleLabel = new FLabel({

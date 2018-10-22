@@ -1,6 +1,14 @@
-import {Point, DisplayObjectContainer, DisplayTools} from "fsuite";
 import {EventListenerHelper, KeyboardTools, Logger, ObjectTools} from "fcore";
-import {InputManager, InputManagerEvent, InputManagerEventData, FApp} from "fsuite";
+import {
+    InputManager,
+    InputManagerEvent,
+    InputManagerEventData,
+    FApp,
+    Point,
+    DisplayObjectContainer,
+    DisplayTools,
+    FContainer
+} from "fsuite";
 
 import {ConsoleView} from "./view/ConsoleView";
 import {BaseConsoleView} from "./view/BaseConsoleView";
@@ -38,15 +46,15 @@ export class FC {
 
         FC.eventListenerHelper = new EventListenerHelper(FC);
 
-        // FC.contentCont = new DisplayObjectContainer();
-        FC.contentCont = new DisplayObjectContainer();
+        // FC.contentCont = new FContainer();
+        FC.contentCont = new FContainer();
 
-        // FC.viewsCont = new DisplayObjectContainer();
-        FC.viewsCont = new DisplayObjectContainer();
+        // FC.viewsCont = new FContainer();
+        FC.viewsCont = new FContainer();
         FC.contentCont.addChild(FC.viewsCont);
 
-        // FC.tooltipsCont = new DisplayObjectContainer();
-        FC.tooltipsCont = new DisplayObjectContainer();
+        // FC.tooltipsCont = new FContainer();
+        FC.tooltipsCont = new FContainer();
         FC.contentCont.addChild(FC.tooltipsCont);
 
         let tempTooltip = new ConsoleTooltip();

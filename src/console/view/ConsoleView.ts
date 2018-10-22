@@ -2,11 +2,13 @@ import {BaseConsoleView} from "./BaseConsoleView";
 import {FC} from "../FC";
 import {BaseConsoleButton} from "./BaseConsoleButton";
 import {InteractiveEvent} from "fsuite";
+import {FpsMeterView} from "./fps/FpsMeterView";
 
 export class ConsoleView extends BaseConsoleView {
 
     private displayListBtn: BaseConsoleButton;
     private closeBtn: BaseConsoleButton;
+    private fpsMeter: FpsMeterView;
 
     protected construction(): void {
         super.construction();
@@ -20,6 +22,9 @@ export class ConsoleView extends BaseConsoleView {
                 text: FC.config.localization.displayListBtnTooltipText
             }
         );
+
+        this.addTitleElement(new FpsMeterView());
+
         this.closeBtn = this.createTitleBtn(
             "X",
             {title: FC.config.localization.closeBtnTooltipTitle}

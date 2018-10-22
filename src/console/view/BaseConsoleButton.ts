@@ -1,9 +1,11 @@
+import {BaseObject} from "fcore";
 import {
     DisplayObjectContainer,
     FLabel,
-    InteractiveEvent
+    InteractiveEvent,
+    FContainer
 } from "fsuite";
-import {BaseObject} from "fcore";
+
 import {FC} from "../FC";
 import {ITooltipData} from "../../tooltip/ITooltipData";
 
@@ -23,7 +25,7 @@ export class BaseConsoleButton extends BaseObject {
     protected construction(): void {
         super.construction();
 
-        this.view = new DisplayObjectContainer();
+        this.view = new FContainer();
         this.view.interactive = true;
         this.view.buttonMode = true;
 
