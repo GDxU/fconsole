@@ -1,5 +1,5 @@
 import {BaseObject} from "fcore";
-import {DisplayObjectContainer, Point, FApp} from "fsuite";
+import {DisplayObjectContainer, Point, FApp, FContainer} from "fsuite";
 
 import {BaseTooltip} from "./BaseTooltip";
 import {ITooltipData} from "./ITooltipData";
@@ -27,7 +27,7 @@ export class TooltipManager extends BaseObject {
         this.tooltip = tooltip;
         this.mouseShift = new Point();
 
-        this.tooltipInsideCont = new DisplayObjectContainer();
+        this.tooltipInsideCont = new FContainer();
         this.tooltipInsideCont.addChild(this.tooltip.view);
 
         this.hide();
